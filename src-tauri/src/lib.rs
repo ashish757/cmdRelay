@@ -3,6 +3,22 @@ use tokio::net::TcpListener;
 use tokio_tungstenite::accept_async;
 use futures_util::StreamExt;
 use log::{error, info};
+use serde::Deserialize;
+use enigo::{Enigo, Key, KeyboardControllable};
+
+
+#[allow(non_snake_case)]
+#[derive(Deserialize, Debug)]
+pub struct PldData {
+    pub keyId: String,
+}
+
+#[allow(non_snake_case)]
+#[derive(Deserialize, Debug)]
+pub struct ClientPayload {
+    pub actionType: String,
+    pub payload: PldData,
+}
 
 pub async fn run_server() {
     let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
@@ -13,11 +29,25 @@ pub async fn run_server() {
                 info!("new websocket connection");
 
                 tauri::async_runtime::spawn(async move {
-                    while let Some(msg) = ws.next().await {
 
+                    while let Some(msg) = ws.next().await {
                         if let Ok(m) = msg {
                             if let Ok(txt) = m.into_text() {
-                                info!("Recieved: {:?}", txt);
+                                if let Ok(pld) = serde_json::from_str::<ClientPayload>(&txt) {
+                                    if pld.actionType == "keyPress" {
+                                        info!("received keyPress");
+
+                                        let mut engo = Enigo::new();
+
+                                        match pld.payload.keyId.as_str() {
+                                            "UP" => engo.key_click(Key::UpArrow),
+                                            "DOWN" => engo.key_click(Key::DownArrow),
+                                            "LEFT" => engo.key_click(Key::LeftArrow),
+                                            "RIGHT" => engo.key_click(Key::RightArrow),
+                                            _ => {}
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
