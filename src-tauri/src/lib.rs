@@ -1,19 +1,31 @@
-use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder, Manager, Resource};
+use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder};
 use tokio::net::TcpListener;
 use tokio_tungstenite::accept_async;
 use futures_util::StreamExt;
+use log::{error, info};
 
 pub async fn run_server() {
     let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
 
     while let Ok((stream, _)) = listener.accept().await {
-        let mut ws = accept_async(stream).await.unwrap();
+        match accept_async(stream).await {
+            Ok(mut ws) => {
+                info!("new websocket connection");
 
-        while let Some(msg) = ws.next().await {
-            if let Ok(m) = msg {
-                if let Ok(txt) = m.into_text() {
-                    println!("{}", txt);
-                }
+                tauri::async_runtime::spawn(async move {
+                    while let Some(msg) = ws.next().await {
+
+                        if let Ok(m) = msg {
+                            if let Ok(txt) = m.into_text() {
+                                info!("Recieved: {:?}", txt);
+                            }
+                        }
+                    }
+                });
+
+            }
+            Err(e) => {
+                error!("websocket connection error: {}", e);
             }
         }
     }
@@ -42,7 +54,14 @@ pub fn run() {
 
         Ok(())
     })
-      .plugin(tauri_plugin_log::Builder::new().build())
+      .plugin(
+          tauri_plugin_log::Builder::new()
+              .target(tauri_plugin_log::Target::new(
+                  tauri_plugin_log::TargetKind::Stdout,
+              ))
+              .level(log::LevelFilter::Info)
+              .build()
+      )
       .run(tauri::generate_context!())
       .expect("err");
 
