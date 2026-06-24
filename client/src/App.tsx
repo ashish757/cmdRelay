@@ -5,19 +5,19 @@ export default function App() {
   const [state, setState] = useState("Disconnected");
 
   useEffect(() => {
-    const sckt = new WebSocket('ws://192.168.1.197:3000');
+    const socket = new WebSocket('ws://192.168.1.197:3000');
 
-    sckt.onopen = () => {
+      socket.onopen = () => {
       setState("SYS_LINKED");
     };
 
-    sckt.onclose = () => {
+      socket.onclose = () => {
       setState("Disconnected");
     };
 
-    ws.current = sckt;
+    ws.current = socket;
 
-    return () => sckt.close();
+    return () => socket.close();
   }, []);
 
   const onTap = () => {
@@ -29,16 +29,7 @@ export default function App() {
   return (
       <div
           onClick={onTap}
-          style={{
-            height: '100vh',
-            width: '100vw',
-            backgroundColor: '#1a1a1a',
-            color: state === 'SYS_LINKED' ? '#4ade80' : '#f87171',
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-            fontSize: '2rem'
-          }}
+          className={"text-4xl text-center"}
       >
         {state} (Tap to send ping)
       </div>
