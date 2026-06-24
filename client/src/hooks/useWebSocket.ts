@@ -14,6 +14,7 @@ export function useWebSocket() {
         setStatus("CONNECTING");
 
         const s = new WebSocket(url);
+        ws.current = s;
 
         s.onopen = () => {
             setStatus("CONNECTED");
@@ -21,8 +22,8 @@ export function useWebSocket() {
         }
 
         s.onclose = () => {
-        setStatus("DISCONNECTING");
-            if (timer.current) clearTimeout(timer.current);
+        setStatus("RECONNECTING");
+            timer.current = setTimeout(connect, 3000) as any;
         }
 
         s.onerror = (e) => {
@@ -40,11 +41,11 @@ export function useWebSocket() {
         }
     }, [])
 
-    const send = (payload: any)=> {
+    const sendPayload = (payload: any)=> {
         if(ws.current?.readyState == WebSocket.OPEN) {
             ws.current.send(JSON.stringify(payload));
         }
     }
 
-    return {connectionStatus, send};
+    return {connectionStatus, sendPayload};
 }
