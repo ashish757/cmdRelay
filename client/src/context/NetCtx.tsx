@@ -8,10 +8,10 @@ export function useNet() {
 }
 
 export function NetProvider({ children }: { children: ReactNode }) {
-    const { connectionStatus, send } = useWebSocket();
+    const { connectionStatus, sendPayload } = useWebSocket();
 
     return (
-        <Net.Provider value={{ connectionStatus, send }}>
+        <Net.Provider value={{ connectionStatus, sendPayload }}>
             {children}
         </Net.Provider>
 );
