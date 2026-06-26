@@ -6,6 +6,7 @@ pub struct PayloadData{
     pub keyId: Option<String>,
     pub dx: Option<f64>,
     pub dy: Option<f64>,
+    pub text: Option<String>,
 }
 
 #[allow(non_snake_case)]

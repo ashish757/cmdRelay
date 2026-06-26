@@ -1,5 +1,5 @@
 use crate::types::ClientPayload;
-use crate::input::{execute_keypress, execute_trackpad_move};
+use crate::input::{execute_keypress, execute_text, execute_trackpad_move};
 use log::error;
 
 #[allow(non_snake_case)]
@@ -12,7 +12,11 @@ pub fn route_action(pld: ClientPayload) {
         if let (Some(dx), Some(dy)) = (pld.payload.dx, pld.payload.dy) {
             execute_trackpad_move(dx, dy);
         }
-    } else {
+    } else if pld.actionType == "typing" {
+        if let (Some(text)) = (pld.payload.text) {
+            execute_text(&text);
+        }
+    }else {
         error!("{}", pld.actionType);
     }
 }
