@@ -8,7 +8,7 @@ function MainInterface() {
   const { activeLayout, setIsMenuOpen } = useUI();
 
   return (
-      <main className="h-screen w-screen bg-black flex flex-col overflow-hidden select-none touch-none text-white font-sans relative">
+      <main className="h-screen w-screen pt-16 bg-black flex flex-col overflow-hidden select-none touch-none text-white font-sans relative">
         <ConnectionScreen />
         <MenuOverlay />
 
