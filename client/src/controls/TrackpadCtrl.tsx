@@ -1,4 +1,4 @@
-import {useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import { useNet } from '../context/NetCtx.tsx';
 
 export function TrackpadCtrl() {
@@ -41,7 +41,7 @@ export function TrackpadCtrl() {
 
     return (
         <div className="flex-1 w-full p-4 flex flex-col">
-            <div className="absolute top-4 left-6 h-8 w-8" onClick={toggleRotation}>
+            <div className="absolute top-4 left-5 h-8 w-8" onClick={toggleRotation}>
                 <svg viewBox="0 0 24 24" role="img" xmlns="http://www.w3.org/2000/svg" aria-labelledby="rotateIconTitle" stroke="#FFFFFF" stroke-width="1.6" stroke-linecap="square" stroke-linejoin="miter" fill="none" color="#FFFFFF"><g id="SVGRepo_bgCarrier" stroke-width="0"></g><g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"></g><g id="SVGRepo_iconCarrier"> <title id="rotateIconTitle">Rotate</title> <path d="M22 12l-3 3-3-3"></path> <path d="M2 12l3-3 3 3"></path> <path d="M19.016 14v-1.95A7.05 7.05 0 0 0 8 6.22"></path> <path d="M16.016 17.845A7.05 7.05 0 0 1 5 12.015V10"></path> <path stroke-linecap="round" d="M5 10V9"></path> <path stroke-linecap="round" d="M19 15v-1"></path> </g></svg>
             </div>
             <div
