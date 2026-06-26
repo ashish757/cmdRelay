@@ -5,7 +5,7 @@ export function MenuOverlay() {
 
     const layouts = [
         {id: "arrowKeys", title: "Arrow Keys" },
-        {id: "trackPad", title: "Track Pad" },
+        {id: "trackpad", title: "Track Pad" },
         {id: "media", title: "Media Controls" },
 
 

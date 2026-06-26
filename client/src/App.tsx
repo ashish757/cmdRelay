@@ -2,7 +2,8 @@ import { Provider } from './context/Provider';
 import { useUI } from './context/UICtx';
 import { ConnectionScreen } from './components/ConnectionScreen';
 import { MenuOverlay } from './components/Menu';
-import { ArrowKeysCtrl } from './components/ArrowKeysCtrl';
+import { ArrowKeysCtrl } from './controls/ArrowKeysCtrl.tsx';
+import {TrackpadCtrl} from "./controls/TrackpadCtrl.tsx";
 
 function MainInterface() {
   const { activeLayout, setIsMenuOpen } = useUI();
@@ -19,6 +20,7 @@ function MainInterface() {
         </button>
 
         {activeLayout === 'arrowKeys' ? <ArrowKeysCtrl /> : null}
+          {activeLayout === 'trackpad' ? <TrackpadCtrl /> : null}
       </main>
   );
 }

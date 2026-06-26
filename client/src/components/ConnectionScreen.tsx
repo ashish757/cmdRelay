@@ -3,7 +3,7 @@ import { useNet } from '../context/NetCtx';
 export function ConnectionScreen() {
     const { connectionStatus } = useNet();
 
-    if (connectionStatus === 'CONNECTED') {
+    if (connectionStatus === 'CONNECTED' || import.meta.env.VITE_ENV === 'dev') {
         return null;
     }
 
