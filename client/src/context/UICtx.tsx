@@ -7,7 +7,7 @@ export function useUI() {
 }
 
 export function UIProvider({ children }: { children: ReactNode }) {
-    const [activeLayout, setLayoutState] = useState(localStorage.getItem('layout') || 'arrowKeys');
+    const [activeLayout, setLayoutState] = useState<string>(localStorage.getItem('layout') || 'arrowKeys');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const setActiveLayout = (v: string) => {

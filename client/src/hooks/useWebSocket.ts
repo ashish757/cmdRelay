@@ -22,13 +22,12 @@ export function useWebSocket() {
         }
 
         s.onclose = () => {
-        setStatus("RECONNECTING");
+            setStatus("RECONNECTING");
             timer.current = setTimeout(connect, 3000) as any;
         }
 
-        s.onerror = (e) => {
+        s.onerror = () => {
             setStatus("DISCONNECTED");
-            console.error("WebSocket Error", e);
         }
 
     }

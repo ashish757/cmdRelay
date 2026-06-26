@@ -1,15 +1,8 @@
 import { useUI } from '../context/UICtx';
+import {menuControlConfig} from "../config/ctrlConfig.ts";
 
 export function MenuOverlay() {
     const { isMenuOpen, setIsMenuOpen, activeLayout, setActiveLayout } = useUI();
-
-    const layouts = [
-        {id: "arrowKeys", title: "Arrow Keys" },
-        {id: "trackpad", title: "Track Pad" },
-        {id: "media", title: "Media Controls" },
-
-
-    ]
 
     if (!isMenuOpen) return null;
 
@@ -19,13 +12,13 @@ export function MenuOverlay() {
             <div className="text-3xl mb-8 font-bold">Layouts</div>
             <div className="grid grid-cols-3 gap-6">
                 {
-                    layouts.map((layout) => (
+                    menuControlConfig.map((menuItem) => (
                         <button
-                            key={layout.id}
-                            onClick={() => { setActiveLayout(layout.id); setIsMenuOpen(false); }}
-                            className={`p-4 text-left rounded ${activeLayout === layout.id ? 'bg-green-600' : 'bg-neutral-800'}`}
+                            key={menuItem.id}
+                            onClick={() => { setActiveLayout(menuItem.id); setIsMenuOpen(false); }}
+                            className={`p-4 text-left rounded ${activeLayout === menuItem.id ? 'bg-green-600' : 'bg-neutral-800'}`}
                         >
-                            {layout.title}
+                            {menuItem.title}
                         </button>
                     ))
                 }
