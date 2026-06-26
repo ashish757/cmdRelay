@@ -5,6 +5,7 @@ use log::{error, info};
 
 use crate::types::ClientPayload;
 use crate::input::{execute_keypress, execute_trackpad_move};
+use crate::router::{route_action};
 
 
 fn parse_payload(txt: &str) -> Option<ClientPayload> {
@@ -33,18 +34,7 @@ pub async fn run_server() {
                                 // parse
                                 if let Some(pld) = parse_payload(&txt) {
 
-                                    // route to the correct action
-                                    if pld.actionType == "keyPress" {
-                                        if let Some(key) = pld.payload.keyId {
-                                            execute_keypress(&key);
-                                        }
-                                    } else if pld.actionType == "mouseMove" {
-                                        if let (Some(dx), Some(dy)) = (pld.payload.dx, pld.payload.dy) {
-                                            execute_trackpad_move(dx, dy);
-                                        }
-                                    } else {
-                                        error!("Unknown actionType: {}", pld.actionType);
-                                    }
+                                    route_action(pld);
                                 }
                             }
                         }

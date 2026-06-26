@@ -15,5 +15,7 @@ pub fn execute_keypress(key_id: &str){
 }
 
 pub fn execute_trackpad_move(dx: f64, dy: f64){
+
     info!("Trackpad move:  {}, {}", dx, dy);
+
 }

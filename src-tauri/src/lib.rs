@@ -4,6 +4,8 @@ pub mod types;
 pub mod input;
 pub mod server;
 
+pub mod router;
+
 use crate::server::run_server;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
