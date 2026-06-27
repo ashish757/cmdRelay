@@ -1,6 +1,6 @@
 import {TrackpadCtrl} from "../controls/TrackpadCtrl.tsx";
 import {ArrowKeysCtrl} from "../controls/ArrowKeysCtrl.tsx";
-import * as React from "react";
+import  React from "react";
 import {TextCtrl} from "../controls/TextCtrl.tsx";
 
 export const menuControlConfig = [
