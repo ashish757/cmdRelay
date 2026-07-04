@@ -5,6 +5,9 @@ use tokio_tungstenite::accept_async;
 use futures_util::StreamExt;
 use log::{error, info};
 use enigo::Enigo;
+use std::path::Path;
+use std::fs;
+use futures_util::SinkExt;
 
 use crate::types::ClientPayload;
 use crate::router::{route_action};
@@ -35,6 +38,20 @@ pub async fn run_server() {
         let tx_c = tx.clone();
         match accept_async(stream).await {
             Ok(mut ws) => {
+                // ... inside your tokio::spawn block for a new connection ...
+
+                // 1. Immediately read the master file
+                if Path::new("master_layout.json").exists() {
+                    if let Ok(data) = fs::read_to_string("master_layout.json") {
+                        // 2. Wrap it in your ClientPayload format and send it back
+                        let sync_msg = format!(
+                            r#"{{"actionType": "syncLayout", "payload": {}}}"#,
+                            data
+                        );
+                        let _ = ws.send(tokio_tungstenite::tungstenite::Message::Text(sync_msg)).await;
+                    }
+                }
+
                 info!("New WebSocket connection established");
 
                 tauri::async_runtime::spawn(async move {

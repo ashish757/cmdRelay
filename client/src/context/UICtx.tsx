@@ -7,8 +7,9 @@ export function useUI() {
 }
 
 export function UIProvider({ children }: { children: ReactNode }) {
-    const [activeLayout, setLayoutState] = useState<string>(localStorage.getItem('layout') || 'arrowKeys');
+    const [activeLayout, setLayoutState] = useState<string>(localStorage.getItem('layout') || 'builder');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+    const [activePage, setActivePage] = useState(false);
 
     const setActiveLayout = (v: string) => {
         localStorage.setItem('layout', v);
@@ -16,7 +17,7 @@ export function UIProvider({ children }: { children: ReactNode }) {
     };
 
     return (
-        <UI.Provider value={{ activeLayout, setActiveLayout, isMenuOpen, setIsMenuOpen }}>
+        <UI.Provider value={{ activeLayout, setActiveLayout, isMenuOpen, setIsMenuOpen, activePage, setActivePage }}>
             {children}
         </UI.Provider>
     );

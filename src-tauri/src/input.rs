@@ -50,3 +50,11 @@ pub fn scroll(e: &mut Enigo, dx: i32, dy: i32) {
     e.mouse_scroll_x(dx);
     e.mouse_scroll_y(dy);
 }
+
+pub fn drag_start(e: &mut Enigo) {
+    e.mouse_down(MouseButton::Left);
+}
+
+pub fn drag_end(e: &mut Enigo) {
+    e.mouse_up(MouseButton::Left);
+}
