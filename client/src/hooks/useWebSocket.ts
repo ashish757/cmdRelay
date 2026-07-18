@@ -6,7 +6,7 @@ export function useWebSocket() {
     const ws = useRef<WebSocket| null>(null);
     const timer = useRef<number | null>(null);
 
-    const url = "ws://10.206.99.95:3000";
+    const url = "ws://192.168.1.194:3000";
 
     const connect = () => {
         if(ws.current) ws.current.close();

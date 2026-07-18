@@ -9,10 +9,10 @@
         "id": "232242",
         "label": "Track pad",
         "landscapeGeo": {
-          "h": 2,
-          "w": 2,
-          "x": 5,
-          "y": 7
+          "h": 8,
+          "w": 16,
+          "x": 1,
+          "y": 1
         },
         "portraitGeo": {
           "h": 16,
@@ -86,8 +86,8 @@
         "landscapeGeo": {
           "h": 2,
           "w": 2,
-          "x": 5,
-          "y": 71
+          "x": 4,
+          "y": 7
         },
         "portraitGeo": {
           "h": 2,
@@ -142,5 +142,200 @@
     ],
     "id": "l_1782595429234",
     "title": "Arrow Keys"
+  },
+  {
+    "components": [
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Space"
+        },
+        "id": "c_1784211360805",
+        "label": "Space",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 9,
+          "y": 6
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 10
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Control"
+        },
+        "id": "c_1784211378288",
+        "label": "Control",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 5,
+          "y": 6
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 1,
+          "y": 10
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Alt"
+        },
+        "id": "c_1784211405571",
+        "label": "Option",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 6
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 10
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Meta"
+        },
+        "id": "c_1784211421506",
+        "label": "command",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 6
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 5,
+          "y": 10
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Escape"
+        },
+        "id": "c_1784211444371",
+        "label": "Esc",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 1
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 1,
+          "y": 3
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Shift"
+        },
+        "id": "c_1784211468522",
+        "label": "Shift",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 4
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 1,
+          "y": 8
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Enter"
+        },
+        "id": "c_1784211510855",
+        "label": "Return",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 9,
+          "y": 4
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 8
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "ArrowLeft"
+        },
+        "id": "c_1784215289106",
+        "label": "Left",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 5,
+          "y": 4
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 8
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "ArrowRight"
+        },
+        "id": "c_1784215294873",
+        "label": "Right",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 4
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 5,
+          "y": 8
+        },
+        "type": "btn"
+      }
+    ],
+    "id": "l_1784211350089",
+    "title": "Keys"
   }
 ]

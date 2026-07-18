@@ -1,18 +1,56 @@
 use enigo::{Enigo, Key, KeyboardControllable, MouseButton, MouseControllable};
 use log::{info, error};
 
+use crate::types::KeyAction;
 
-pub fn execute_keypress(e: &mut Enigo, key_id: &str){
-    info!("Key pressed:  {}", key_id);
+
+
+pub fn parse_key(key_id: &str) -> Option<Key> {
+    let chars: Vec<char> = key_id.chars().collect();
+    if chars.len() == 1 {
+        return Some(Key::Layout(chars[0]));
+    }
+
     match key_id {
-        "ArrowLeft" => e.key_down(Key::LeftArrow),
-        "ArrowRight" => e.key_down(Key::RightArrow),
-        "ArrowUp" => e.key_down(Key::UpArrow),
-        "ArrowDown" => e.key_down(Key::DownArrow),
-        "Backspace" => e.key_click(Key::Backspace),
-        "Enter" => e.key_click(Key::Return),
-        "Space" => e.key_click(Key::Space),
-        _ => error!("Unknown key: {}", key_id)
+        "Escape" | "Esc" => Some(Key::Escape),
+        "Shift" => Some(Key::Shift),
+        "Control" => Some(Key::Control),
+        "Alt" => Some(Key::Alt),
+        "Meta" | "OS" => Some(Key::Meta),
+        "ArrowLeft" | "Left" => Some(Key::LeftArrow),
+        "ArrowRight" | "Right" => Some(Key::RightArrow),
+        "ArrowUp" | "Up" => Some(Key::UpArrow),
+        "ArrowDown" | "Down" => Some(Key::DownArrow),
+        "Backspace" => Some(Key::Backspace),
+        "Enter" => Some(Key::Return),
+        "Space" | " " => Some(Key::Space),
+        "Tab" => Some(Key::Tab),
+        "CapsLock" => Some(Key::CapsLock),
+        "F1" => Some(Key::F1),
+        "F2" => Some(Key::F2),
+
+        _ => None,
+    }
+}
+
+pub fn execute_keypress(e: &mut Enigo, key_id: &str, action: KeyAction) {
+    if let Some(enigo_key) = parse_key(key_id) {
+        match action {
+            KeyAction::Down => {
+                info!("Holding down: {}", key_id);
+                e.key_down(enigo_key);
+            }
+            KeyAction::Up => {
+                info!("Releasing: {}", key_id);
+                e.key_up(enigo_key);
+            }
+            KeyAction::Click => {
+                info!("Clicking: {}", key_id);
+                e.key_click(enigo_key);
+            }
+        }
+    } else {
+        error!("Unknown key received from client: {}", key_id);
     }
 }
 

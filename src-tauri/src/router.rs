@@ -1,14 +1,23 @@
 use crate::types::ClientPayload;
+use crate::types::KeyAction;
 use crate::input::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click};
 use log::{error, info};
 use enigo::Enigo;
 use std::fs;
 
+
 #[allow(non_snake_case)]
 pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
     if pld.actionType == "keyPress" {
         if let Some(key) = pld.payload.keyId {
-            execute_keypress(e, &key);
+
+            let action = match pld.payload.state.as_deref() {
+                Some("down") => KeyAction::Down,
+                Some("up") => KeyAction::Up,
+                _ => KeyAction::Click,
+            };
+
+            execute_keypress(e, &key, action);
         }
     } else if pld.actionType == "mouseMove" {
         if let (Some(dx), Some(dy)) = (pld.payload.dx, pld.payload.dy) {

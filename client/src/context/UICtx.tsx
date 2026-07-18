@@ -1,23 +1,39 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
 
-const UI = createContext<any>(null);
+type ViewMode = 'renderer' | 'builder';
+
+interface UIContextType {
+    viewMode: ViewMode;
+    setViewMode: (mode: ViewMode) => void;
+    activeLayoutId: string | null;
+    setActiveLayoutId: (id: string) => void;
+    isMenuOpen: boolean;
+    setIsMenuOpen: (isOpen: boolean) => void;
+}
+
+const UI = createContext<UIContextType | null>(null);
 
 export function useUI() {
-    return useContext(UI);
+    const ctx = useContext(UI);
+    if (!ctx) throw new Error('useUI must be used within UIProvider');
+    return ctx;
 }
 
 export function UIProvider({ children }: { children: ReactNode }) {
-    const [activeLayout, setLayoutState] = useState<string>(localStorage.getItem('layout') || 'builder');
-    const [isMenuOpen, setIsMenuOpen] = useState(false);
-    const [activePage, setActivePage] = useState(false);
+    const savedLayout = localStorage.getItem('activeLayoutId');
 
-    const setActiveLayout = (v: string) => {
-        localStorage.setItem('layout', v);
-        setLayoutState(v);
+    const [activeLayoutId, setActiveLayoutIdState] = useState<string | null>(savedLayout);
+    const [viewMode, setViewMode] = useState<ViewMode>(savedLayout ? 'renderer' : 'builder');
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const setActiveLayoutId = (id: string) => {
+        localStorage.setItem('activeLayoutId', id);
+        setActiveLayoutIdState(id);
+        setViewMode('renderer');
     };
 
     return (
-        <UI.Provider value={{ activeLayout, setActiveLayout, isMenuOpen, setIsMenuOpen, activePage, setActivePage }}>
+        <UI.Provider value={{ viewMode, setViewMode, activeLayoutId, setActiveLayoutId, isMenuOpen, setIsMenuOpen }}>
             {children}
         </UI.Provider>
     );
