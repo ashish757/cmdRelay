@@ -12,6 +12,7 @@ interface ControlLayoutMapping {
 
 export const LayoutComponentMapping: ControlLayoutMapping = {
     "btn":  GenericButtonCtrl,
+    "macro": GenericButtonCtrl,
     "trackpad":  TrackpadCtrl,
     "text":  TextCtrl,
 }

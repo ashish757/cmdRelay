@@ -44,7 +44,7 @@ export function BuilderSidebar(props: SidebarProps) {
                     <select value={activeId} onChange={handleLayoutChange} className="w-full bg-zinc-800 border border-zinc-700 rounded-lg px-3 py-2 text-zinc-200 text-sm focus:border-indigo-500 transition-all">
                         {allControlLayouts.map(layout => <option key={layout.id} value={layout.id}>{layout.title}</option>)}
                     </select>
-                    <button onClick={makeNewLayout} className="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-semibold p-2 rounded-lg text-sm transition-all">
+                    <button onClick={makeNewLayout} className="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-semibold p-2 rounded-lg text-sm transition-all">
                         Create New
                     </button>
                 </div>

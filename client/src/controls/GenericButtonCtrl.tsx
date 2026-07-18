@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { useNet } from "../context/NetCtx.tsx";
 import type { ControlComponent } from "../types/controlLayouts.ts";
 
@@ -8,6 +8,18 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
 
     const [isPressed, setIsPressed] = useState(false);
 
+    const repeatTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
+    const repeatInterval = useRef<ReturnType<typeof setInterval> | null>(null);
+
+    useEffect(() => {
+        return () => stopRepeat();
+    }, []);
+
+    const stopRepeat = () => {
+        if (repeatTimeout.current) clearTimeout(repeatTimeout.current);
+        if (repeatInterval.current) clearInterval(repeatInterval.current);
+    };
+
     const handlePointerDown = (event: React.PointerEvent) => {
         event.preventDefault();
 
@@ -16,13 +28,42 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
         setIsPressed(true);
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
 
-        sendPayload({
-            actionType: data.actionType,
-            payload: {
-                keyId: data.actionValue,
-                state: "down"
+        if (data.actionType === "macro") {
+            sendPayload({
+                actionType: "macro",
+                payload: {
+                    steps: data.actionValue
+                }
+            });
+        } else {
+            sendPayload({
+                actionType: data.actionType,
+                payload: {
+                    keyId: data.actionValue as string,
+                    state: "down"
+                }
+            });
+
+
+            const modifiers = ["Shift", "Control", "Alt", "Meta", "OS"];
+            const isModifier = modifiers.includes(data.actionValue as string);
+
+            if (!isModifier && data.actionType === "keyPress") {
+
+                repeatTimeout.current = setTimeout(() => {
+
+                    repeatInterval.current = setInterval(() => {
+                        sendPayload({
+                            actionType: data.actionType,
+                            payload: {
+                                keyId: data.actionValue as string,
+                                state: "click"
+                            }
+                        });
+                    }, 50);
+                }, 400);
             }
-        });
+        }
     };
 
     const handlePointerRelease = (event: React.PointerEvent) => {
@@ -33,13 +74,18 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
         setIsPressed(false);
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
 
-        sendPayload({
-            actionType: data.actionType,
-            payload: {
-                keyId: data.actionValue,
-                state: "up"
-            }
-        });
+        // 3. Stop the auto-repeat loop when the user lets go
+        stopRepeat();
+
+        if (data.actionType !== "macro") {
+            sendPayload({
+                actionType: data.actionType,
+                payload: {
+                    keyId: data.actionValue as string,
+                    state: "up"
+                }
+            });
+        }
     };
 
     return (
