@@ -1,25 +1,69 @@
 use crate::types::ClientPayload;
 use crate::types::KeyAction;
-use crate::input::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click};
+use crate::input::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click, parse_key};
 use log::{error, info};
 use enigo::Enigo;
+use enigo::KeyboardControllable;
 use std::fs;
-
+use std::thread;
+use std::time::Duration;
 
 #[allow(non_snake_case)]
 pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
     if pld.actionType == "keyPress" {
         if let Some(key) = pld.payload.keyId {
-
             let action = match pld.payload.state.as_deref() {
                 Some("down") => KeyAction::Down,
                 Some("up") => KeyAction::Up,
+                Some("click") => KeyAction::Click,
                 _ => KeyAction::Click,
             };
-
             execute_keypress(e, &key, action);
         }
-    } else if pld.actionType == "mouseMove" {
+    }
+    else if pld.actionType == "macro" {
+        if let Some(steps) = pld.payload.steps {
+
+            // Use a standard detached OS thread instead of an async tokio task
+            thread::spawn(move || {
+                // This Enigo instance is born here and dies here. It never crosses threads.
+                let mut local_enigo = Enigo::new();
+
+                for step in steps {
+                    if step.state == "delay" {
+                        let ms = step.keyId.parse::<u64>().unwrap_or(0);
+                        info!("Macro Delay: {}ms", ms);
+
+                        // Use standard blocking sleep.
+                        // Because this is on its own thread, it won't block your server.
+                        thread::sleep(Duration::from_millis(ms));
+                    } else {
+                        if let Some(enigo_key) = parse_key(&step.keyId) {
+                            match step.state.as_str() {
+                                "down" => {
+                                    info!("Macro Hold: {}", step.keyId);
+                                    local_enigo.key_down(enigo_key);
+                                }
+                                "up" => {
+                                    info!("Macro Release: {}", step.keyId);
+                                    local_enigo.key_up(enigo_key);
+                                }
+                                "click" => {
+                                    info!("Macro Click: {}", step.keyId);
+                                    local_enigo.key_click(enigo_key);
+                                }
+                                _ => error!("Unknown macro state: {}", step.state),
+                            }
+                        } else {
+                            error!("Unknown key in macro: {}", step.keyId);
+                        }
+                    }
+                }
+                info!("Macro sequence completed.");
+            });
+        }
+    }
+    else if pld.actionType == "mouseMove" {
         if let (Some(dx), Some(dy)) = (pld.payload.dx, pld.payload.dy) {
             execute_trackpad_move(e, dx, dy);
         }
