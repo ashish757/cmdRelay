@@ -2,6 +2,7 @@ use tokio::net::TcpListener;
 use tokio::sync::mpsc;
 use std::thread;
 use tokio_tungstenite::accept_async;
+use tokio_tungstenite::tungstenite::Message;
 use futures_util::StreamExt;
 use log::{error, info};
 use enigo::Enigo;
@@ -11,7 +12,6 @@ use futures_util::SinkExt;
 
 use crate::types::ClientPayload;
 use crate::router::{route_action};
-
 
 fn parse_payload(txt: &str) -> Option<ClientPayload> {
     match serde_json::from_str::<ClientPayload>(txt) {
@@ -25,11 +25,11 @@ fn parse_payload(txt: &str) -> Option<ClientPayload> {
 
 pub async fn run_server() {
     let (tx, mut rx) = mpsc::unbounded_channel::<ClientPayload>();
-        thread::spawn(move || {
-        let mut e  = Enigo::new();
-            while let Some(payload) = rx.blocking_recv() {
-                route_action(&mut e, payload);
-            }
+    thread::spawn(move || {
+        let mut e = Enigo::new();
+        while let Some(payload) = rx.blocking_recv() {
+            route_action(&mut e, payload);
+        }
     });
 
     let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
@@ -38,8 +38,6 @@ pub async fn run_server() {
         let tx_c = tx.clone();
         match accept_async(stream).await {
             Ok(mut ws) => {
-                // ... inside your tokio::spawn block for a new connection ...
-
                 // 1. Immediately read the master file
                 if Path::new("master_layout.json").exists() {
                     if let Ok(data) = fs::read_to_string("master_layout.json") {
@@ -48,7 +46,7 @@ pub async fn run_server() {
                             r#"{{"actionType": "syncLayout", "payload": {}}}"#,
                             data
                         );
-                        let _ = ws.send(tokio_tungstenite::tungstenite::Message::Text(sync_msg)).await;
+                        let _ = ws.send(Message::Text(sync_msg)).await;
                     }
                 }
 
@@ -56,14 +54,28 @@ pub async fn run_server() {
 
                 tauri::async_runtime::spawn(async move {
                     while let Some(msg) = ws.next().await {
-                        if let Ok(m) = msg {
-                            if let Ok(txt) = m.into_text() {
+                        match msg {
+                            // ONLY process actual Text frames
+                            Ok(Message::Text(txt)) => {
+                                // Skip completely empty text payloads just in case
+                                if txt.trim().is_empty() {
+                                    continue;
+                                }
 
-                                // parse
                                 if let Some(pld) = parse_payload(&txt) {
-
                                     let _ = tx_c.send(pld);
                                 }
+                            }
+                            // Cleanly exit the spawned task if the client disconnects
+                            Ok(Message::Close(_)) => {
+                                info!("WebSocket connection closed by client");
+                                break;
+                            }
+                            // Ignore Ping, Pong, and Binary frames silently
+                            Ok(_) => continue,
+                            Err(e) => {
+                                error!("WebSocket read error: {}", e);
+                                break;
                             }
                         }
                     }
