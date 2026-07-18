@@ -1,13 +1,13 @@
 {
   "$schema": "https://schema.tauri.app/config/2",
   "productName": "cmdRelay",
-  "version": "0.1.0",
-  "identifier": "com.tauri.dev",
+  "version": "1.0.0",
+  "identifier": "com.cmdrelay.daemon",
   "build": {
     "frontendDist": "../client/dist",
     "devUrl": "http://localhost:5173",
-    "beforeDevCommand": "npm run dev",
-    "beforeBuildCommand": "npm run build"
+    "beforeDevCommand": "cd ../client && npm run dev",
+    "beforeBuildCommand": "cd ../client && npm run build"
   },
   "app": {
     "windows": [
