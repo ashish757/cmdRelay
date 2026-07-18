@@ -3,7 +3,7 @@ import { useUI } from './context/UICtx';
 import { ConnectionScreen } from './components/ConnectionScreen';
 import { MenuOverlay } from './components/Menu';
 import ControlLayoutRenderer from "./components/ControlLayoutRenderer.tsx";
-import { ControlLayoutBuilder } from "./components/ControlLayoutBuilder.tsx";
+import { ControlLayoutBuilder } from "./builder/ControlLayoutBuilder.tsx";
 
 function MainInterface() {
     const { viewMode, isMenuOpen, setIsMenuOpen, activeLayoutId } = useUI();
