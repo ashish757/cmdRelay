@@ -4,6 +4,7 @@ import { ConnectionScreen } from './components/ConnectionScreen';
 import { MenuOverlay } from './components/Menu';
 import ControlLayoutRenderer from "./components/ControlLayoutRenderer.tsx";
 import { ControlLayoutBuilder } from "./builder/ControlLayoutBuilder.tsx";
+import {ServerPairing} from "./components/ServerPairing";
 
 function MainInterface() {
     const { viewMode, isMenuOpen, setIsMenuOpen, activeLayoutId } = useUI();
@@ -51,6 +52,11 @@ function MainInterface() {
 }
 
 export default function App() {
+    const isDesktopDaemon = '__TAURI_INTERNALS__' in window;
+
+    if (isDesktopDaemon) {
+        return <ServerPairing />;
+    }
     return (
         <Provider>
                 <MainInterface />
