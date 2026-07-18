@@ -12,12 +12,15 @@
   "app": {
     "windows": [
       {
+        "label": "main",
         "title": "cmdRelay",
-        "width": 800,
-        "height": 600,
-        "resizable": true,
+        "width": 320,
+        "height": 460,
+        "resizable": false,
+        "maximizable": false,
         "fullscreen": false,
-        "visible": false
+        "visible": false,
+        "center": true
       }
     ],
     "security": {
