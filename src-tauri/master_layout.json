@@ -333,6 +333,64 @@
           "y": 8
         },
         "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "macro",
+          "actionValue": [
+            {
+              "id": "step_1784371499689_eptfnrr",
+              "keyId": "Shift",
+              "state": "down"
+            },
+            {
+              "id": "step_1784371505056_cbhst4q",
+              "keyId": "ArrowRight",
+              "state": "click"
+            },
+            {
+              "id": "step_1784371520106_044lp03",
+              "keyId": "Shift",
+              "state": "up"
+            }
+          ]
+        },
+        "id": "c_1784371486323",
+        "label": "Macro",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 3
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 3
+        },
+        "type": "macro"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "h"
+        },
+        "id": "c_1784372234263",
+        "label": "H",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 4,
+          "y": 6
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 4,
+          "y": 6
+        },
+        "type": "btn"
       }
     ],
     "id": "l_1784211350089",
