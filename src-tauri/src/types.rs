@@ -1,6 +1,15 @@
 use serde::{Deserialize, Serialize};
 
 #[allow(non_snake_case)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
+pub struct MacroStep {
+    pub id: String,
+    pub state: String,
+    pub keyId: String,
+}
+
+
+#[allow(non_snake_case)]
 #[derive(Debug, Deserialize, Serialize)]
 pub struct PayloadData {
     #[serde(skip_serializing_if = "Option::is_none")]
@@ -8,6 +17,9 @@ pub struct PayloadData {
     
     #[serde(skip_serializing_if = "Option::is_none")]
     pub state: Option<String>,
+
+    #[serde(skip_serializing_if = "Option::is_none")]
+    pub steps: Option<Vec<MacroStep>>,
 
     #[serde(skip_serializing_if = "Option::is_none")]
     pub dx: Option<f64>,
