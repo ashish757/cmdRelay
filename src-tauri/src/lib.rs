@@ -4,7 +4,10 @@ use local_ip_address::local_ip;
 pub mod types;
 pub mod input;
 pub mod server;
+pub mod telemetry;
 pub mod router;
+use tokio::sync::broadcast;
+use crate::telemetry::watch_active_window;
 
 use crate::server::run_server;
 
@@ -23,6 +26,12 @@ pub fn run() {
             // --- NEW: Completely hide the macOS Dock Icon ---
             #[cfg(target_os = "macos")]
             let _ = app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
+            let (tx, _rx) = tokio::sync::broadcast::channel::<String>(16);
+
+            let tx_clone_server = tx.clone();
+            let tx_clone_telemetry = tx.clone();
+
 
             // 1. Create the menu items
             let show_btn = MenuItem::with_id(app, "show", "Show QR Code", true, None::<&str>)?;
@@ -50,7 +59,8 @@ pub fn run() {
                 .build(app)?;
 
             // Start the network loop
-            tauri::async_runtime::spawn(run_server());
+            tauri::async_runtime::spawn(run_server(tx_clone_server));
+            tauri::async_runtime::spawn(watch_active_window(tx_clone_telemetry));
 
             Ok(())
         })
