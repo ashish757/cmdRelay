@@ -7,6 +7,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
     const { sendPayload } = useNet();
 
     const [isPressed, setIsPressed] = useState(false);
+    const [isLatched, setIsLatched] = useState(false);
 
     const repeatTimeout = useRef<ReturnType<typeof setTimeout> | null>(null);
     const repeatInterval = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -35,7 +36,16 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                     steps: data.actionValue
                 }
             });
-        } else {
+        }
+        else if (data.actionType === "openApp") {
+            sendPayload({
+                actionType: data.actionType,
+                payload: {
+                    appId: data.actionValue
+                }
+            })
+        }
+        else if (data.actionType === "keyPress") {
             sendPayload({
                 actionType: data.actionType,
                 payload: {
@@ -43,7 +53,6 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                     state: "down"
                 }
             });
-
 
             const modifiers = ["Shift", "Control", "Alt", "Meta", "OS"];
             const isModifier = modifiers.includes(data.actionValue as string);
@@ -63,6 +72,14 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                     }, 50);
                 }, 400);
             }
+        } else if (data.actionType === "keyHoldToggle") {
+            if (!isLatched) {
+                sendPayload({ actionType: "keyPress", payload: { keyId: data.actionValue, state: "down" } });
+                setIsLatched(true);
+            } else {
+                sendPayload({ actionType: "keyPress", payload: { keyId: data.actionValue, state: "up" } });
+                setIsLatched(false);
+            }
         }
     };
 
@@ -74,10 +91,9 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
         setIsPressed(false);
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
 
-        // 3. Stop the auto-repeat loop when the user lets go
         stopRepeat();
 
-        if (data.actionType !== "macro") {
+        if (data.actionType === "keyPress") {
             sendPayload({
                 actionType: data.actionType,
                 payload: {

@@ -85,7 +85,6 @@ export function ControlLayoutBuilder() {
         setTimeout(() => setSaveStatus('idle'), 2000);
     };
 
-    // Shared Helper Methods
     const updateControlComponent = (componentId: string, updates: Partial<ControlComponent>) => {
         setComponentArray(componentArray.map(component => component.id === componentId ? { ...component, ...updates } : component));
     };
@@ -104,7 +103,7 @@ export function ControlLayoutBuilder() {
     };
 
     return (
-        <div className="flex h-screen bg-zinc-950 text-zinc-100 font-sans overflow-hidden selection:bg-indigo-500/30">
+        <div className="flex h-screen bg-background text-text-main font-sans overflow-hidden selection:bg-primary/30">
             <BuilderCanvas
                 isLandscape={isLandscape}
                 setIsLandscape={setIsLandscape}
@@ -112,6 +111,7 @@ export function ControlLayoutBuilder() {
                 setComponentArray={setComponentArray}
                 selectedId={selectedId}
                 setSelectedId={setSelectedId}
+                removeControlComponent={removeControlComponent}
             />
             <BuilderSidebar
                 allControlLayouts={allControlLayouts}
@@ -126,9 +126,6 @@ export function ControlLayoutBuilder() {
                 isLandscape={isLandscape}
                 updateControlComponent={updateControlComponent}
                 updateGeometry={updateGeometry}
-                removeControlComponent={removeControlComponent}
-                isListening={isListening}
-                setIsListening={setIsListening}
             />
         </div>
     );

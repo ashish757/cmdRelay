@@ -1,35 +1,41 @@
-import {TrackpadCtrl} from "../controls/TrackpadCtrl.tsx";
-import  React from "react";
-import {TextCtrl} from "../controls/TextCtrl.tsx";
-import type {ControlLayout} from "../types/controlLayouts.ts";
-import {GenericButtonCtrl} from "../controls/GenericButtonCtrl.tsx";
+import React from "react";
+import { TrackpadCtrl } from "../controls/TrackpadCtrl.tsx";
+import { TextCtrl } from "../controls/TextCtrl.tsx";
+import { GenericButtonCtrl } from "../controls/GenericButtonCtrl.tsx";
+import { ButtonInspector } from '../builder/inspectors/ButtonInspector';
+import { TextInspector } from '../builder/inspectors/TextInspector';
+import type { ControlLayout } from "../types/controlLayouts.ts";
+import type { InspectorProps } from "../types/inspector.ts";
 
-
-interface ControlLayoutMapping {
-    [key: string]: React.FC<any>;
+export interface ControlConfig {
+    title: string;
+    component: React.FC<any>;
+    inspector: React.FC<InspectorProps> | null;
 }
 
-
-export const LayoutComponentMapping: ControlLayoutMapping = {
-    "btn":  GenericButtonCtrl,
-    "macro": GenericButtonCtrl,
-    "trackpad":  TrackpadCtrl,
-    "text":  TextCtrl,
-}
-
-
+export const controlElementsRegistry: Record<string, ControlConfig> = {
+    'btn': {
+        title: 'Button',
+        component: GenericButtonCtrl,
+        inspector: ButtonInspector, 
+    },
+    'trackpad': {
+        title: 'Trackpad',
+        component: TrackpadCtrl,
+        inspector: null,
+    },
+    'text': {
+        title: 'Text Input/Typing',
+        component: TextCtrl,
+        inspector: TextInspector,
+    },
+};
 
 export const preBuiltLayoutsMenu = [
     {id: "l_17429234", title: "Gamer" },
 ]
 
-export const menuControlConfig = [
-    {id: "builder", title: "Edit Layout" },
-]
-
-
 export const preBuiltLayouts: ControlLayout[] = [
-
 
     {
         "id": "l_17429234",

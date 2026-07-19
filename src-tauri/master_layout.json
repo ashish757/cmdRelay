@@ -240,7 +240,7 @@
           "h": 2,
           "w": 2,
           "x": 3,
-          "y": 1
+          "y": 2
         },
         "portraitGeo": {
           "h": 2,
@@ -252,7 +252,7 @@
       },
       {
         "data": {
-          "actionType": "keyPress",
+          "actionType": "keyHoldToggle",
           "actionValue": "Shift"
         },
         "id": "c_1784211468522",
@@ -339,29 +339,34 @@
           "actionType": "macro",
           "actionValue": [
             {
-              "id": "step_1784371499689_eptfnrr",
-              "keyId": "Shift",
+              "id": "step_1784465081750_6g25awt",
+              "keyId": "MetaLeft",
               "state": "down"
             },
             {
-              "id": "step_1784371505056_cbhst4q",
-              "keyId": "ArrowRight",
+              "id": "step_1784466802168_zp6u6ua",
+              "keyId": "Space",
               "state": "click"
             },
             {
-              "id": "step_1784371520106_044lp03",
-              "keyId": "Shift",
+              "id": "step_1784466803967_9x7iqxg",
+              "keyId": "Digit4",
+              "state": "click"
+            },
+            {
+              "id": "step_1784466804717_dgc7hf5",
+              "keyId": "MetaLeft",
               "state": "up"
             }
           ]
         },
         "id": "c_1784371486323",
-        "label": "Macro",
+        "label": "clipboard",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
-          "x": 7,
-          "y": 3
+          "x": 15,
+          "y": 1
         },
         "portraitGeo": {
           "h": 2,
@@ -369,25 +374,205 @@
           "x": 7,
           "y": 3
         },
-        "type": "macro"
+        "type": "btn"
       },
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "h"
+          "actionValue": "KeyH"
         },
         "id": "c_1784372234263",
         "label": "H",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
-          "x": 4,
-          "y": 6
+          "x": 5,
+          "y": 2
+        },
+        "portraitGeo": {
+          "h": 1,
+          "w": 2,
+          "x": 3,
+          "y": 7
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "KeyA"
+        },
+        "id": "c_1784383620618",
+        "label": "A",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 7,
+          "y": 2
+        },
+        "portraitGeo": {
+          "h": 1,
+          "w": 2,
+          "x": 1,
+          "y": 7
+        },
+        "type": "btn"
+      },
+      {
+        "appId": "Safari",
+        "data": {
+          "actionType": "openApp",
+          "actionValue": "Finder"
+        },
+        "id": "c_1784385634400",
+        "label": "Finder",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 11,
+          "y": 1
         },
         "portraitGeo": {
           "h": 2,
           "w": 2,
           "x": 4,
+          "y": 3
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "F1"
+        },
+        "id": "c_1784459563577",
+        "label": "+",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 13,
+          "y": 3
+        },
+        "portraitGeo": {
+          "h": 3,
+          "w": 6,
+          "x": 2,
+          "y": 13
+        },
+        "type": "trackpad"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Backspace"
+        },
+        "id": "c_1784463300611",
+        "label": "x",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 9,
+          "y": 2
+        },
+        "portraitGeo": {
+          "h": 1,
+          "w": 2,
+          "x": 5,
+          "y": 7
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "macro",
+          "actionValue": [
+            {
+              "id": "step_1784463573571_649y8jd",
+              "keyId": "Control",
+              "state": "down"
+            },
+            {
+              "id": "step_1784463583538_v4r0ebh",
+              "keyId": "ArrowLeft",
+              "state": "click"
+            },
+            {
+              "id": "step_1784463591505_fe24toi",
+              "keyId": "Control",
+              "state": "up"
+            }
+          ]
+        },
+        "id": "c_1784463552171",
+        "label": "<",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 13,
+          "y": 5
+        },
+        "portraitGeo": {
+          "h": 1,
+          "w": 1,
+          "x": 7,
+          "y": 7
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "macro",
+          "actionValue": [
+            {
+              "id": "step_1784463608171_uvqmign",
+              "keyId": "Control",
+              "state": "down"
+            },
+            {
+              "id": "step_1784463608354_08qxroo",
+              "keyId": "ArrowRight",
+              "state": "click"
+            },
+            {
+              "id": "step_1784463609055_vib27n6",
+              "keyId": "Control",
+              "state": "up"
+            }
+          ]
+        },
+        "id": "c_1784463560521",
+        "label": ">",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 15,
+          "y": 5
+        },
+        "portraitGeo": {
+          "h": 1,
+          "w": 1,
+          "x": 8,
+          "y": 7
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "keyPress",
+          "actionValue": "Digit4"
+        },
+        "id": "c_1784466119040",
+        "label": "4",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 11,
+          "y": 5
+        },
+        "portraitGeo": {
+          "h": 1,
+          "w": 1,
+          "x": 2,
           "y": 6
         },
         "type": "btn"
@@ -395,5 +580,10 @@
     ],
     "id": "l_1784211350089",
     "title": "Keys"
+  },
+  {
+    "components": [],
+    "id": "l_1784460690778",
+    "title": "New Layout"
   }
 ]

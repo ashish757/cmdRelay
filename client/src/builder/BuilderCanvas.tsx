@@ -8,6 +8,7 @@ interface CanvasProps {
     setComponentArray: (arr: ControlComponent[]) => void;
     selectedId: string | null;
     setSelectedId: (id: string | null) => void;
+    removeControlComponent: (id: string) => void;
 }
 
 type DragState = {
@@ -16,7 +17,7 @@ type DragState = {
     originY: number; originWidth: number; originHeight: number;
 };
 
-export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, setComponentArray, selectedId, setSelectedId }: CanvasProps) {
+export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, setComponentArray, selectedId, setSelectedId, removeControlComponent }: CanvasProps) {
     const [dragState, setDragState] = useState<DragState | null>(null);
 
     const cellSize = 48;
@@ -123,15 +124,26 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
                             >
                                 <span className="truncate px-2 pointer-events-none drop-shadow-md">{component.label || component.type}</span>
                                 {isSelected && (
+                                    <>
                                     <div
                                         onPointerDown={(event) => { event.stopPropagation(); handlePointerDown(event, component.id, 'resize'); }}
                                         onPointerMove={handlePointerMove}
                                         onPointerUp={handlePointerUp}
                                         onPointerCancel={handlePointerUp}
-                                        className="absolute -bottom-2 -right-2 w-6 h-6 bg-zinc-100 rounded-full cursor-nwse-resize shadow-lg z-30 flex items-center justify-center border-2 border-indigo-500 hover:scale-110 transition-transform"
-                                    ><div className="w-1.5 h-1.5 bg-indigo-600 rounded-full pointer-events-none" /></div>
+                                        className="absolute -bottom-2 -right-2 w-6 h-6 bg-text-main rounded-full cursor-nwse-resize shadow-lg z-30 flex items-center justify-center border-2 border-primary hover:scale-110 transition-transform"
+                                    ><div className="w-1.5 h-1.5 bg-primary rounded-full pointer-events-none" /></div>
+                                    <button
+                                    onPointerDown={(e) => {
+                                    e.stopPropagation();
+                                    removeControlComponent(component.id);
+                                }}
+                                className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center cursor-pointer shadow-lg z-40 border-2 border-background hover:scale-110 hover:bg-red-400 transition-transform"
+                            >
+                                <span className="text-white text-[10px] font-bold">✕</span>
+                            </button>         </>
                                 )}
                             </div>
+
                         );
                     })}
                 </div>

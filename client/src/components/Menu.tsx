@@ -1,9 +1,12 @@
 import { useUI } from '../context/UICtx';
-import { menuControlConfig, preBuiltLayoutsMenu } from "../config/ctrlConfig.ts";
+import { preBuiltLayoutsMenu } from "../config/ctrlConfig.ts";
 import type { ControlLayout } from "../types/controlLayouts.ts";
+import { useTheme } from '../hooks/useTheme';
+import { Moon, Sun } from 'lucide-react';
 
 export function MenuOverlay() {
     const { isMenuOpen, setIsMenuOpen, activeLayoutId, setActiveLayoutId, viewMode, setViewMode } = useUI();
+    const { theme, toggleTheme } = useTheme();
 
     if (!isMenuOpen) return null;
 
@@ -34,8 +37,8 @@ export function MenuOverlay() {
                         }}
                         className={`p-5 text-left rounded-xl font-semibold transition-all ${
                             activeLayoutId === control.id && viewMode === 'renderer'
-                                ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)]'
-                                : 'bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800'
+                                ? 'bg-primary text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
+                                : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
                         }`}
                     >
                         {control.title}
@@ -43,7 +46,7 @@ export function MenuOverlay() {
                 ))}
             </div>
 
-            <h2 className="text-2xl mt-12 mb-6 font-bold text-zinc-100">Templates & Tools</h2>
+            <h2 className="text-2xl mt-12 mb-6 font-bold">Templates & Tools</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {preBuiltLayoutsMenu.map((menuItem) => (
                     <button
@@ -62,9 +65,7 @@ export function MenuOverlay() {
                     </button>
                 ))}
 
-                {menuControlConfig.map((menuItem) => (
                     <button
-                        key={menuItem.id}
                         onClick={() => {
                             setViewMode('builder');
                             setIsMenuOpen(false);
@@ -77,7 +78,6 @@ export function MenuOverlay() {
                     >
                         Layout Settings
                     </button>
-                ))}
             </div>
         </div>
     );

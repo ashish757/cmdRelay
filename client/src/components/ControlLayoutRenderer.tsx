@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { preBuiltLayouts, LayoutComponentMapping } from "../config/ctrlConfig.ts";
+import { preBuiltLayouts, controlElementsRegistry } from "../config/ctrlConfig.ts";
 import { type ControlLayout } from "../types/controlLayouts.ts";
 
 const useDeviceOrientation = () => {
@@ -12,6 +12,11 @@ const useDeviceOrientation = () => {
     }, []);
 
     return isLandscape;
+};
+
+const legacyTypeMap: Record<string, string> = {
+    'macro': 'btn',
+    'appOpener': 'btn'
 };
 
 export default function ControlLayoutRenderer({ activeLayout }: { activeLayout: string }) {
@@ -42,7 +47,9 @@ export default function ControlLayoutRenderer({ activeLayout }: { activeLayout: 
                 }}
             >
                 {componentList.map((component) => {
-                    const ComponentToRender = LayoutComponentMapping[component.type];
+                    const resolvedType = legacyTypeMap[component.type] || component.type;
+
+                    const ComponentToRender = controlElementsRegistry[resolvedType]?.component;
 
                     if (!ComponentToRender) return null;
 
