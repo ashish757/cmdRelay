@@ -86,7 +86,7 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
             backgroundGrid.push(
                 <div
                     key={`bg-${row}-${col}`}
-                    className="border border-border/40 border-dashed rounded-md hover:bg-surface/50 transition-colors duration-200 cursor-crosshair"
+                    className="border border-border/90 border-dashed rounded-md hover:bg-surface/50 transition-colors duration-200 cursor-crosshair"
                     style={{ gridRow: row, gridColumn: col }}
                     onClick={() => addControlComponent(col, row)}
                 />

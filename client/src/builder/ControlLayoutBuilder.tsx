@@ -67,6 +67,28 @@ export function ControlLayoutBuilder() {
         loadControlLayout(newControlLayout);
     };
 
+    const deleteLayout = async (layoutIdToDelete: string) => {
+        if (!window.confirm("Are you sure you want to delete this layout? This action cannot be undone.")) {
+            return;
+        }
+
+        const updatedLayouts = allControlLayouts.filter(layout => layout.id !== layoutIdToDelete);
+
+        setAllControlLayouts(updatedLayouts);
+        localStorage.setItem('layouts', JSON.stringify(updatedLayouts));
+
+        if (activeId === layoutIdToDelete) {
+            if (updatedLayouts.length > 0) {
+                loadControlLayout(updatedLayouts[0]);
+            } else {
+                makeNewLayout();
+            }
+        }
+
+        await sendPayload({ actionType: "deleteLayout", payload: { id: layoutIdToDelete } });
+    };
+
+
     const handleLayoutChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const targetValue = event.target.value;
         const foundLayout = allControlLayouts.find(layout => layout.id === targetValue);
@@ -126,6 +148,7 @@ export function ControlLayoutBuilder() {
                 isLandscape={isLandscape}
                 updateControlComponent={updateControlComponent}
                 updateGeometry={updateGeometry}
+                deleteLayout={deleteLayout}
             />
         </div>
     );

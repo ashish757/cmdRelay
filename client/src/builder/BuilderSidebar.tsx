@@ -17,13 +17,14 @@ interface SidebarProps {
     isLandscape: boolean;
     updateControlComponent: (id: string, updates: Partial<ControlComponent>) => void;
     updateGeometry: (id: string, axis: keyof Geo, value: number) => void;
+    deleteLayout: (id: string) => void;
 }
 
 
 export function BuilderSidebar(props: SidebarProps) {
     const {
         allControlLayouts, activeId, layoutTitle, setLayoutTitle, handleLayoutChange, makeNewLayout, handleSave, saveStatus,
-        selectedComp, isLandscape, updateControlComponent, updateGeometry
+        selectedComp, isLandscape, updateControlComponent, updateGeometry, deleteLayout
     } = props;
 
     const activeGeo = selectedComp ? (isLandscape ? selectedComp.landscapeGeo : selectedComp.portraitGeo) : null;
@@ -53,6 +54,18 @@ export function BuilderSidebar(props: SidebarProps) {
                                     <option key={layout.id} value={layout.id}>{layout.title}</option>
                                 ))}
                             </select>
+
+                            <button
+                                onClick={() => deleteLayout(activeId)}
+                                className="shrink-0 flex items-center justify-center w-[42px] h-[42px] text-red-400 bg-red-400/10 border border-border hover:border-red-400/30 rounded-lg transition-colors"
+                                title="Delete Current Layout"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M3 6h18"></path>
+                                    <path d="M19 6v14c0 1-1 2-2 2H7c-1 0-2-1-2-2V6"></path>
+                                    <path d="M8 6V4c0-1 1-2 2-2h4c1 0 2 1 2 2v2"></path>
+                                </svg>
+                            </button>
 
                             <button
                                 onClick={makeNewLayout}
