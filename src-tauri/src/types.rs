@@ -36,3 +36,26 @@ pub enum KeyAction {
     Up,
     Click,
 }
+
+
+
+#[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct DiscoverySettings {
+    pub known_apps: Vec<String>,
+}
+
+impl Default for DiscoverySettings {
+    fn default() -> Self {
+        Self {
+            known_apps: Vec::new(),
+        }
+    }
+}
+
+#[derive(Debug, Deserialize, Serialize, Clone, Default)]
+#[serde(rename_all = "camelCase")]
+pub struct AppSettings {
+    #[serde(default)]
+    pub discovery: DiscoverySettings,
+}

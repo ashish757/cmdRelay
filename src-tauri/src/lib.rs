@@ -6,6 +6,9 @@ pub mod system_actions;
 pub mod server;
 pub mod telemetry_service;
 pub mod controllers;
+
+pub mod scan_installed_apps;
+
 use crate::telemetry_service::watch_active_window;
 
 use crate::server::run_server;
