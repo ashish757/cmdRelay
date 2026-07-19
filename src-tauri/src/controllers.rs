@@ -89,19 +89,19 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
         "saveLayout" => {
             if let Some(layouts_array) = pld.payload.layouts {
                 if let Ok(json_string) = serde_json::to_string_pretty(&layouts_array) {
-                    let _ = fs::write("../layouts.json", json_string);
+                    let _ = fs::write("layouts.json", json_string);
                     info!("Layout saved to layouts.json");
                 }
             }
         }
         "deleteLayout" => {
             if let Some(layout_id) = pld.payload.id {
-                if let Ok(file_content) = fs::read_to_string("../layouts.json") {
+                if let Ok(file_content) = fs::read_to_string("layouts.json") {
                     if let Ok(mut layouts) = serde_json::from_str::<Vec<serde_json::Value>>(&file_content) {
                         layouts.retain(|l| l.get("id").and_then(|id| id.as_str()) != Some(&layout_id));
 
                         if let Ok(json_string) = serde_json::to_string_pretty(&layouts) {
-                            let _ = fs::write("../layouts.json", json_string);
+                            let _ = fs::write("layouts.json", json_string);
                             info!("Layout {} successfully deleted from layouts.json", layout_id);
                         }
                     }

@@ -53,18 +53,19 @@ pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
                     let (mut ws_writer, mut ws_reader) = ws.split();
 
                     // Instantly push layout context synchronization state
-                    if Path::new("../layouts.json").exists() {
-                        if let Ok(data) = fs::read_to_string("../layouts.json") {
+                    if Path::new("layouts.json").exists() {
+                        if let Ok(data) = fs::read_to_string("layouts.json") {
                             let sync_msg = format!(
                                 r#"{{"actionType": "syncLayout", "payload": {}}}"#,
                                 data
                             );
                             let _ = ws_writer.send(Message::Text(sync_msg)).await;
+                            info!("Layout sync ");
                         }
                     }
                     if Path::new("settings.json").exists() {
                         if let Ok(settings_data) = fs::read_to_string("settings.json") {
-                            let sync_msg = format!(r#"{{"actionType": "syncSettings", "payload": {}}}"#, settings_data);
+                            let sync_msg = format!(r#"{{"actionType": "syncApps", "payload": {}}}"#, settings_data);
                             let _ = ws_writer.send(Message::Text(sync_msg)).await;
                         }
                     }
