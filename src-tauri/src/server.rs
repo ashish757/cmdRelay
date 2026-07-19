@@ -62,6 +62,12 @@ pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
                             let _ = ws_writer.send(Message::Text(sync_msg)).await;
                         }
                     }
+                    if Path::new("settings.json").exists() {
+                        if let Ok(settings_data) = fs::read_to_string("settings.json") {
+                            let sync_msg = format!(r#"{{"actionType": "syncSettings", "payload": {}}}"#, settings_data);
+                            let _ = ws_writer.send(Message::Text(sync_msg)).await;
+                        }
+                    }
 
                     // Concurrent connection loop for this specific client
                     loop {
