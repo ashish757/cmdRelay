@@ -1,5 +1,6 @@
 import { createContext, useContext, type ReactNode } from 'react';
 import { useWebSocket } from '../hooks/useWebSocket';
+import { useUI } from './UICtx.tsx';
 
 const Net = createContext<any>(null);
 
@@ -8,11 +9,13 @@ export function useNet() {
 }
 
 export function NetProvider({ children }: { children: ReactNode }) {
-    const { connectionStatus, sendPayload, currentApp } = useWebSocket();
+    const { setActiveLayoutId, viewMode } = useUI();
+
+    const { connectionStatus, sendPayload, currentApp, layouts, knownApps } = useWebSocket(setActiveLayoutId, viewMode);
 
     return (
-        <Net.Provider value={{ connectionStatus, sendPayload, currentApp }}>
+        <Net.Provider value={{ connectionStatus, sendPayload, currentApp, layouts, knownApps }}>
             {children}
         </Net.Provider>
-);
+    );
 }

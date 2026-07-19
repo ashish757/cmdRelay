@@ -15,7 +15,7 @@ export function MenuOverlay() {
     return (
         <div className="fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col p-10 text-text-main overflow-y-auto">
             
-            <div className="flex justify-between items-center mb-6">
+            <div className="flex justify-between items-center mb-6 pr-4">
                 <h2 className="text-2xl font-bold">Your Layouts</h2>
                 
                 <button

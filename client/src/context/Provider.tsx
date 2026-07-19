@@ -4,10 +4,10 @@ import { UIProvider } from './UICtx';
 
 export function Provider({ children }: { children: ReactNode }) {
     return (
-        <NetProvider>
-            <UIProvider>
+        <UIProvider>
+            <NetProvider>
                 {children}
-            </UIProvider>
-        </NetProvider>
+            </NetProvider>
+        </UIProvider>
     );
 }
