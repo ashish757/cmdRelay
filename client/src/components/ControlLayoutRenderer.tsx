@@ -33,7 +33,7 @@ export default function ControlLayoutRenderer({ activeLayout }: { activeLayout: 
     const totalRows = isLandscape ? 8 : 16;
 
     return (
-        <div className="fixed inset-0 bg-black overflow-hidden p-2">
+        <div className="fixed inset-0 bg-background overflow-hidden p-2">
             <div
                 className="w-full h-full grid gap-2"
                 style={{

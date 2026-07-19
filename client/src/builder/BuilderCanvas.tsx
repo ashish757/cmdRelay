@@ -85,7 +85,7 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
             backgroundGrid.push(
                 <div
                     key={`bg-${row}-${col}`}
-                    className="border border-gray-400 border-dashed rounded-md hover:bg-white/40 transition-colors duration-200 cursor-crosshair"
+                    className="border border-border/40 border-dashed rounded-md hover:bg-surface/50 transition-colors duration-200 cursor-crosshair"
                     style={{ gridRow: row, gridColumn: col }}
                     onClick={() => addControlComponent(col, row)}
                 />
@@ -94,14 +94,14 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
     }
 
     return (
-        <div className="flex-1 flex flex-col items-center justify-center relative bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-zinc-900 to-zinc-950 shadow-inner overflow-hidden">
-            <div className="absolute top-8 left-8 flex p-1 bg-zinc-900/80 rounded-xl border border-zinc-800 backdrop-blur-xl z-0 shadow-2xl">
-                <button onClick={() => setIsLandscape(false)} className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${!isLandscape ? 'bg-indigo-500 text-white shadow-md' : 'text-zinc-400 hover:text-white'}`}>Portrait</button>
-                <button onClick={() => setIsLandscape(true)} className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${isLandscape ? 'bg-indigo-500 text-white shadow-md' : 'text-zinc-400 hover:text-white'}`}>Landscape</button>
+        <div className="flex-1 flex flex-col items-center justify-center relative bg-[radial-gradient(ellipse_at_center,var(--tw-gradient-stops))] from-surface to-background shadow-inner overflow-hidden">
+            <div className="absolute top-8 left-8 flex p-1 bg-surface/80 rounded-xl border border-border backdrop-blur-xl z-0 shadow-2xl">
+                <button onClick={() => setIsLandscape(false)} className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${!isLandscape ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main'}`}>Portrait</button>
+                <button onClick={() => setIsLandscape(true)} className={`px-6 py-2 rounded-lg font-semibold text-sm transition-all duration-300 ${isLandscape ? 'bg-primary text-white shadow-md' : 'text-text-muted hover:text-text-main'}`}>Landscape</button>
             </div>
 
             <div
-                className="bg-[#09090b] border-4 border-zinc-800 rounded-3xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ring-1 ring-white/5 relative shrink-0"
+                className="bg-background border-4 border-border rounded-3xl p-5 shadow-[0_20px_50px_rgba(0,0,0,0.5)] ring-1 ring-border/10 relative shrink-0"
                 style={{ width: (cols * cellSize) + 30, height: (rows * cellSize) + 30, transition: "width 0.6s cubic-bezier(0.16, 1, 0.3, 1), height 0.6s cubic-bezier(0.16, 1, 0.3, 1)" }}
             >
                 <div className="w-full h-full grid gap-1 relative place-content-center" style={{ gridTemplateColumns: `repeat(${cols}, ${cellSize - 4}px)`, gridTemplateRows: `repeat(${rows}, ${cellSize - 4}px)` }}>
@@ -117,7 +117,7 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
                                 onPointerMove={handlePointerMove}
                                 onPointerUp={handlePointerUp}
                                 onPointerCancel={handlePointerUp}
-                                className={`flex items-center justify-center rounded-md font-bold text-sm tracking-wide select-none w-full h-full cursor-grab active:cursor-grabbing backdrop-blur-md transition-all duration-200 ${isSelected ? 'border-2 border-indigo-500 bg-indigo-500/20 text-indigo-100 shadow-[0_0_30px_rgba(99,102,241,0.3)] z-20 scale-[1.02]' : 'border-2 border-white/10 bg-white/5 text-zinc-300 z-10 hover:border-white/20 hover:bg-white/10'}`}
+                                className={`flex items-center justify-center rounded-md font-bold text-sm tracking-wide select-none w-full h-full cursor-grab active:cursor-grabbing backdrop-blur-md transition-all duration-200 ${isSelected ? 'border-2 border-primary bg-primary/20 text-text-main shadow-md z-20 scale-[1.02]' : 'border-2 border-border/50 bg-surface/80 text-text-muted z-10 hover:border-border hover:bg-surface'}`}
                                 style={{ gridColumnStart: componentGeometry.x, gridColumnEnd: `span ${componentGeometry.w}`, gridRowStart: componentGeometry.y, gridRowEnd: `span ${componentGeometry.h}`, position: 'relative', touchAction: 'none' }}
                                 onClick={(e) => { e.stopPropagation(); setSelectedId(component.id); }}
                             >

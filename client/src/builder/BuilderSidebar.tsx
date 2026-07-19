@@ -59,15 +59,27 @@ export function BuilderSidebar(props: SidebarProps) {
                 </div>
             </div>
 
-            <div className="flex-1 p-5 overflow-y-auto">
+            <div className="flex-1 p-5 overflow-y-auto custom-scrollbar">
                 {selectedComp && activeGeo ? (
-                    <div className="space-y-6">
-                        <div className="space-y-3">
-                            <h3 className="text-xs font-bold text-zinc-500 uppercase">Configuration</h3>
+                    <div className="space-y-2 pb-10">
+                        <div className="flex items-center gap-2 mb-4 px-1">
+                            <BoxSelect className="w-4 h-4 text-primary" />
+                            <h3 className="text-sm font-bold text-text-main">Selected Control Settings</h3>
+                        </div>
+
+                        <Accordion title="Control Appearance" defaultExpanded={true}>
                             <div className="grid gap-2">
-                                <label className="text-[10px] uppercase text-zinc-500 font-bold">Type</label>
-                                <select value={selectedComp.type} onChange={(e) => updateControlComponent(selectedComp.id, { type: e.target.value })} className="w-full bg-zinc-950 border border-zinc-800 rounded-lg px-3 py-2 text-sm text-zinc-300">
-                                    {Object.keys(LayoutComponentMapping).map(k => <option key={k} value={k}>{k}</option>)}
+                                <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Widget Type</label>
+                                <select
+                                    value={selectedComp.type}
+                                    onChange={(e) => updateControlComponent(selectedComp.id, { type: e.target.value })}
+                                    className="w-full bg-surface border border-border rounded-lg px-3 py-2 text-sm text-text-main outline-none"
+                                >
+                                    {Object.keys(controlElementsRegistry).map(key => (
+                                        <option key={key} value={key}>
+                                            {controlElementsRegistry[key].title}
+                                        </option>
+                                    ))}
                                 </select>
                             </div>
                         </div>
@@ -94,14 +106,39 @@ export function BuilderSidebar(props: SidebarProps) {
                             </div>
                         </div>
 
-                        <button onClick={() => removeControlComponent(selectedComp.id)} className="w-full text-xs text-red-400 hover:text-red-300 font-bold uppercase tracking-widest pt-2 border-t border-zinc-800 mt-4">
-                            Delete Component
-                        </button>
+                        <div className="p-5 space-y-4">
+                            <p className="text-xs text-text-muted">
+                                This layout will automatically activate on your phone when this application is focused on your computer.
+                            </p>
+                            <div className="space-y-2">
+                                <label className="text-[10px] uppercase font-bold text-text-muted tracking-widest">Application Name</label>
+                                <input
+                                    type="text"
+                                    placeholder="e.g., Spotify, VS Code"
+                                    className="w-full bg-surface border border-border rounded-lg p-3 text-sm text-text-main focus:outline-none focus:border-primary"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="p-4 bg-surface/50 border-t border-border flex justify-end gap-2">
+                            <button
+                                onClick={() => setIsAppModalOpen(false)}
+                                className="px-4 py-2 text-xs font-bold text-text-muted hover:text-text-main transition-colors tracking-widest uppercase"
+                            >
+                                Cancel
+                            </button>
+                            <button
+                                onClick={() => {
+                                    setIsAppModalOpen(false);
+                                }}
+                                className="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-xs font-bold transition-colors tracking-widest uppercase"
+                            >
+                                Save Mapping
+                            </button>
+                        </div>
                     </div>
-                ) : (
-                    <div className="text-center text-zinc-600 text-sm mt-10">Select an item to edit</div>
-                )}
-            </div>
+                </div>
+            )}
         </div>
     );
 }

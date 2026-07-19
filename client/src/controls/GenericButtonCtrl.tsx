@@ -95,9 +95,9 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             onPointerCancel={handlePointerRelease}
             className={`
                 w-full h-full rounded-lg transition-all duration-75 flex items-center justify-center text-sm md:text-lg font-bold shadow-md select-none touch-none border-2
-                ${isPressed
-                ? 'bg-indigo-600 border-indigo-400 text-white scale-[0.97] shadow-[inset_0_4px_12px_rgba(0,0,0,0.3)]'
-                : 'bg-zinc-800 border-zinc-700/50 text-zinc-200'
+                ${isPressed || isLatched
+                ? 'bg-primary border-primary text-white scale-[0.97] shadow-[inset_0_4px_12px_rgba(0,0,0,0.3)]'
+                : 'bg-surface border-border/50 text-text-main'
             }
             `}
         >

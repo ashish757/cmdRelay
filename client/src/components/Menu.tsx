@@ -12,6 +12,7 @@ export function MenuOverlay() {
     return (
         <div className="fixed inset-0 bg-neutral-950/95 backdrop-blur-md z-40 flex flex-col p-10 text-white overflow-y-auto">
             <h2 className="text-2xl mb-6 font-bold text-zinc-100">Your Layouts</h2>
+        <div className="fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col p-10 text-text-main overflow-y-auto">
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {customLayouts.map((control) => (
@@ -43,8 +44,8 @@ export function MenuOverlay() {
                         }}
                         className={`p-5 text-left rounded-xl font-semibold transition-all ${
                             activeLayoutId === menuItem.id && viewMode === 'renderer'
-                                ? 'bg-indigo-600 text-white shadow-[0_0_15px_rgba(79,70,229,0.4)]'
-                                : 'bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800'
+                                ? 'bg-primary text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
+                                : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
                         }`}
                     >
                         {menuItem.title}
@@ -61,10 +62,10 @@ export function MenuOverlay() {
                         className={`p-5 text-left rounded-xl font-semibold transition-all ${
                             viewMode === 'builder'
                                 ? 'bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]'
-                                : 'bg-zinc-900 border border-zinc-800 text-zinc-300 hover:bg-zinc-800'
+                                : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
                         }`}
                     >
-                        {menuItem.title}
+                        Layout Settings
                     </button>
                 ))}
             </div>

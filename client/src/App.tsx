@@ -5,25 +5,30 @@ import { MenuOverlay } from './components/Menu';
 import ControlLayoutRenderer from "./components/ControlLayoutRenderer.tsx";
 import { ControlLayoutBuilder } from "./builder/ControlLayoutBuilder.tsx";
 import {ServerPairing} from "./components/ServerPairing";
+import {useNet} from "./context/NetCtx.tsx";
+import { useTheme } from './hooks/useTheme';
 
 function MainInterface() {
     const { viewMode, isMenuOpen, setIsMenuOpen, activeLayoutId } = useUI();
+    const {currentApp} = useNet();
+    useTheme();
 
     return (
-        <main className="h-screen w-screen bg-black flex flex-col overflow-hidden select-none touch-none text-white font-sans relative">
+        <main className="h-screen w-screen bg-background flex flex-col overflow-hidden select-none touch-none text-text-main font-sans relative transition-colors duration-200">
+
             <ConnectionScreen />
             <MenuOverlay />
 
             <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="absolute top-6 right-6 z-50 w-12 h-12 flex items-center justify-center bg-zinc-900/80 backdrop-blur-md rounded-xl border border-zinc-700 shadow-xl transition-transform active:scale-95 hover:bg-zinc-800"
+                className="absolute top-2 right-4 z-50 w-10 h-10 flex items-center justify-center bg-surface/80 backdrop-blur-md rounded-lg border border-border shadow-xl transition-transform active:scale-95 hover:bg-surface"
             >
                 {isMenuOpen ? (
-                    <span className="text-2xl font-bold text-zinc-300">✕</span>
+                    <span className="text-2xl font-bold text-text-muted">✕</span>
                 ) : (
                     <svg
                         viewBox="0 -0.5 21 21"
-                        className="w-6 h-6 text-zinc-300"
+                        className="w-5 h-5 text-text-main"
                         fill="currentColor"
                     >
                         <g transform="translate(-83.000000, -40.000000)">
@@ -33,7 +38,6 @@ function MainInterface() {
                 )}
             </button>
 
-            {/* STRICT VIEW RENDERING */}
             <div className="flex-1 w-full h-full relative">
                 {viewMode === 'builder' ? (
                     <ControlLayoutBuilder />
@@ -41,7 +45,7 @@ function MainInterface() {
                     activeLayoutId ? (
                         <ControlLayoutRenderer activeLayout={activeLayoutId} />
                     ) : (
-                        <div className="flex items-center justify-center h-full w-full bg-zinc-950 text-zinc-500 font-semibold tracking-wide">
+                        <div className="flex items-center justify-center h-full w-full bg-surface text-text-muted font-semibold tracking-wide">
                             No layout selected. Open the menu to choose one.
                         </div>
                     )
