@@ -3,6 +3,7 @@ import {useEffect, useRef, useState} from "react";
 
 export function useWebSocket() {
     const [connectionStatus, setStatus] = useState("Connecting");
+    const [currentApp, setCurrentApp] = useState("");
     const ws = useRef<WebSocket| null>(null);
     const timer = useRef<number | null>(null);
 
@@ -27,6 +28,9 @@ export function useWebSocket() {
 
             if (msg.actionType === "syncLayout") {
                 localStorage.setItem('layouts', JSON.stringify(msg.payload));
+            }else if (msg.type === "APP_SWITCHED") {
+                setCurrentApp(msg.app);
+                console.log("Received APP_SWITCHED", msg.app);
             }
         };
 
@@ -58,5 +62,5 @@ export function useWebSocket() {
         return "fail"
     }
 
-    return {connectionStatus, sendPayload};
+    return {connectionStatus, sendPayload, currentApp};
 }

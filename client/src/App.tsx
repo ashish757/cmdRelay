@@ -51,6 +51,9 @@ function MainInterface() {
                     )
                 )}
             </div>
+            <div className="absolute top-1 left-1 text-text-muted">
+                {currentApp}
+            </div>
         </main>
     );
 }

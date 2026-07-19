@@ -10,9 +10,19 @@ export function MenuOverlay() {
     const customLayouts: ControlLayout[] = JSON.parse(localStorage.getItem("layouts") || "[]");
 
     return (
-        <div className="fixed inset-0 bg-neutral-950/95 backdrop-blur-md z-40 flex flex-col p-10 text-white overflow-y-auto">
-            <h2 className="text-2xl mb-6 font-bold text-zinc-100">Your Layouts</h2>
         <div className="fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col p-10 text-text-main overflow-y-auto">
+            
+            <div className="flex justify-between items-center mb-6">
+                <h2 className="text-2xl font-bold">Your Layouts</h2>
+                
+                <button
+                    onClick={toggleTheme}
+                    className="p-3 rounded-full bg-surface border border-border text-text-muted hover:text-text-main hover:bg-border/50 transition-all flex items-center justify-center shadow-sm"
+                    aria-label="Toggle theme"
+                >
+                    {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+                </button>
+            </div>
 
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {customLayouts.map((control) => (
