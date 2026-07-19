@@ -98,7 +98,7 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
             if let Some(layout_id) = pld.payload.id {
                 if let Ok(file_content) = fs::read_to_string("layouts.json") {
                     if let Ok(mut layouts) = serde_json::from_str::<Vec<serde_json::Value>>(&file_content) {
-                        layouts.retain(|l| l.get("id").and_then(|id| id.as_str()) != Some(&layout_id));
+                        layouts.retain(|l| l.get("id").and_then(|id| id.as_str()) != Some(layout_id.as_str()));
 
                         if let Ok(json_string) = serde_json::to_string_pretty(&layouts) {
                             let _ = fs::write("layouts.json", json_string);
@@ -109,7 +109,7 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
             }
         }
         "saveSettings" => {
-            // Assuming you add a `settings` field to your PayloadData struct
+
             if let Some(settings_obj) = pld.payload.settings {
                 if let Ok(json_string) = serde_json::to_string_pretty(&settings_obj) {
                     let _ = fs::write("settings.json", json_string);
