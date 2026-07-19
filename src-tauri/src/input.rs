@@ -6,28 +6,54 @@ use crate::types::KeyAction;
 
 
 pub fn parse_key(key_id: &str) -> Option<Key> {
-    let chars: Vec<char> = key_id.chars().collect();
-    if chars.len() == 1 {
-        return Some(Key::Layout(chars[0]));
-    }
-
     match key_id {
-        "Escape" | "Esc" => Some(Key::Escape),
-        "Shift" => Some(Key::Shift),
-        "Control" => Some(Key::Control),
-        "Alt" => Some(Key::Alt),
-        "Meta" | "OS" => Some(Key::Meta),
-        "ArrowLeft" | "Left" => Some(Key::LeftArrow),
-        "ArrowRight" | "Right" => Some(Key::RightArrow),
-        "ArrowUp" | "Up" => Some(Key::UpArrow),
-        "ArrowDown" | "Down" => Some(Key::DownArrow),
+        "Digit0" => Some(Key::Raw(29)),
+        "Digit1" => Some(Key::Raw(18)),
+        "Digit2" => Some(Key::Raw(19)),
+        "Digit3" => Some(Key::Raw(20)),
+        "Digit4" => Some(Key::Raw(21)),
+        "Digit5" => Some(Key::Raw(23)),
+        "Digit6" => Some(Key::Raw(22)),
+        "Digit7" => Some(Key::Raw(26)),
+        "Digit8" => Some(Key::Raw(28)),
+        "Digit9" => Some(Key::Raw(25)),
+
+        "Numpad0" => Some(Key::Raw(82)),
+        "Numpad1" => Some(Key::Raw(83)),
+        "Numpad2" => Some(Key::Raw(84)),
+        "Numpad3" => Some(Key::Raw(85)),
+        "Numpad4" => Some(Key::Raw(86)),
+        "Numpad5" => Some(Key::Raw(87)),
+        "Numpad6" => Some(Key::Raw(88)),
+        "Numpad7" => Some(Key::Raw(89)),
+        "Numpad8" => Some(Key::Raw(91)),
+        "Numpad9" => Some(Key::Raw(92)),
+
+        "MetaLeft" | "MetaRight" | "Meta" => Some(Key::Meta),
+        "ShiftLeft" | "ShiftRight" | "Shift" => Some(Key::Shift),
+        "ControlLeft" | "ControlRight" | "Control" => Some(Key::Control),
+        "AltLeft" | "AltRight" | "Alt" => Some(Key::Alt),
+
+
+        "Escape" => Some(Key::Escape),
         "Backspace" => Some(Key::Backspace),
         "Enter" => Some(Key::Return),
-        "Space" | " " => Some(Key::Space),
+        "Space" => Some(Key::Space),
         "Tab" => Some(Key::Tab),
         "CapsLock" => Some(Key::CapsLock),
+        "ArrowUp" => Some(Key::UpArrow),
+        "ArrowDown" => Some(Key::DownArrow),
+        "ArrowLeft" => Some(Key::LeftArrow),
+        "ArrowRight" => Some(Key::RightArrow),
         "F1" => Some(Key::F1),
         "F2" => Some(Key::F2),
+        "F3" => Some(Key::F3),
+        "F4" => Some(Key::F4),
+
+        // --- 5. Dynamic Fallback (KeyA -> 'A', KeyZ -> 'Z') ---
+        id if id.starts_with("Key") => {
+            id.chars().last().map(|c| Key::Layout(c))
+        },
 
         _ => None,
     }

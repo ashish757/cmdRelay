@@ -6,7 +6,6 @@ pub mod input;
 pub mod server;
 pub mod telemetry;
 pub mod router;
-use tokio::sync::broadcast;
 use crate::telemetry::watch_active_window;
 
 use crate::server::run_server;
@@ -58,7 +57,6 @@ pub fn run() {
                 })
                 .build(app)?;
 
-            // Start the network loop
             tauri::async_runtime::spawn(run_server(tx_clone_server));
             tauri::async_runtime::spawn(watch_active_window(tx_clone_telemetry));
 
