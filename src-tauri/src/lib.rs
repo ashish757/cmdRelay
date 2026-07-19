@@ -2,11 +2,11 @@ use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder, Manager};
 use local_ip_address::local_ip;
 
 pub mod types;
-pub mod input;
+pub mod system_actions;
 pub mod server;
-pub mod telemetry;
-pub mod router;
-use crate::telemetry::watch_active_window;
+pub mod telemetry_service;
+pub mod controllers;
+use crate::telemetry_service::watch_active_window;
 
 use crate::server::run_server;
 

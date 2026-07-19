@@ -12,7 +12,7 @@ use futures_util::SinkExt;
 use tokio::sync::broadcast;
 
 use crate::types::ClientPayload;
-use crate::router::route_action;
+use crate::controllers::route_action;
 
 fn parse_payload(txt: &str) -> Option<ClientPayload> {
     match serde_json::from_str::<ClientPayload>(txt) {
@@ -53,8 +53,8 @@ pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
                     let (mut ws_writer, mut ws_reader) = ws.split();
 
                     // Instantly push layout context synchronization state
-                    if Path::new("master_layout.json").exists() {
-                        if let Ok(data) = fs::read_to_string("master_layout.json") {
+                    if Path::new("../layouts.json").exists() {
+                        if let Ok(data) = fs::read_to_string("../layouts.json") {
                             let sync_msg = format!(
                                 r#"{{"actionType": "syncLayout", "payload": {}}}"#,
                                 data

@@ -1,52 +1,35 @@
 use serde::{Deserialize, Serialize};
 
-#[allow(non_snake_case)]
 #[derive(Debug, Deserialize, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
 pub struct MacroStep {
     pub id: String,
     pub state: String,
-    pub keyId: String,
+    pub key_id: String,
 }
 
-
-#[allow(non_snake_case)]
 #[derive(Debug, Deserialize, Serialize)]
+#[serde(rename_all = "camelCase")]
 pub struct PayloadData {
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub keyId: Option<String>,
-    
-    #[serde(skip_serializing_if = "Option::is_none")]
-    pub appId: Option<String>,
-    
-    #[serde(skip_serializing_if = "Option::is_none")]
+    pub id: Option<String>,
+    pub key_id: Option<String>,
+    pub app_id: Option<String>,
     pub state: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub steps: Option<Vec<MacroStep>>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub dx: Option<f64>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub dy: Option<f64>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub text: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub name: Option<String>,
-
-    #[serde(skip_serializing_if = "Option::is_none")]
     pub layouts: Option<serde_json::Value>,
+    pub settings: Option<serde_json::Value>,
 }
 
-#[allow(non_snake_case)]
 #[derive(Debug, Deserialize)]
+#[serde(rename_all = "camelCase")]
 pub struct ClientPayload {
-    pub actionType: String,
+    pub action_type: String,
     pub payload: PayloadData,
 }
-
 
 pub enum KeyAction {
     Down,
