@@ -141,6 +141,9 @@
       }
     ],
     "id": "l_1782595429234",
+    "targetApps": [
+      "RustRover"
+    ],
     "title": "Arrow Keys"
   },
   {
@@ -579,6 +582,9 @@
       }
     ],
     "id": "l_1784211350089",
+    "targetApps": [
+      "Google Chrome"
+    ],
     "title": "Keys"
   },
   {
