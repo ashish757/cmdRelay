@@ -4,8 +4,9 @@ import type { ControlComponent, Geo, ControlLayout } from "../types/controlLayou
 import { BuilderCanvas } from './BuilderCanvas';
 import { BuilderSidebar } from './BuilderSidebar';
 
+
 export function ControlLayoutBuilder() {
-    const { sendPayload } = useNet();
+    const { sendPayload, layouts: globalLayouts } = useNet();
 
     // 1. Core State
     const [allControlLayouts, setAllControlLayouts] = useState<ControlLayout[]>([]);
@@ -22,17 +23,19 @@ export function ControlLayoutBuilder() {
     const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     useEffect(() => {
-        const cache = localStorage.getItem('layouts');
-        if (cache) {
-            try {
-                const parsedData = JSON.parse(cache);
-                if (Array.isArray(parsedData) && parsedData.length > 0) {
-                    setAllControlLayouts(parsedData);
-                    loadControlLayout(parsedData[0]);
-                } else makeNewLayout();
-            } catch (error) { makeNewLayout(); }
-        } else makeNewLayout();
-    }, []);
+        if (globalLayouts && globalLayouts.length > 0) {
+            setAllControlLayouts(globalLayouts);
+
+            if (!activeId) {
+                loadControlLayout(globalLayouts[0]);
+            } else {
+                const updatedActive = globalLayouts.find((l: ControlLayout) => l.id === activeId);
+                if (updatedActive) loadControlLayout(updatedActive);
+            }
+        } else if (globalLayouts && globalLayouts.length === 0) {
+            makeNewLayout();
+        }
+    }, [globalLayouts]);
 
     useEffect(() => {
         if (!isListening || !selectedId) return;
@@ -51,6 +54,14 @@ export function ControlLayoutBuilder() {
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
     }, [isListening, selectedId]);
+
+    const activeLayout = allControlLayouts.find(l => l.id === activeId);
+
+    const updateLayoutApps = (newApps: string[]) => {
+        setAllControlLayouts(prev => prev.map(l =>
+            l.id === activeId ? { ...l, targetApps: newApps } : l
+        ));
+    };
 
     const loadControlLayout = (layout: ControlLayout) => {
         setActiveId(layout.id);
@@ -96,9 +107,10 @@ export function ControlLayoutBuilder() {
     };
 
     const handleSave = async () => {
-        const updated = allControlLayouts.map(l =>
-            l.id === activeId ? { ...l, title: layoutTitle, components: componentArray } : l
-        );
+        const updated = allControlLayouts.map(l => {
+            console.log("Saving", l);
+            return l.id === activeId ? {...l, title: layoutTitle, components: componentArray} : l
+        });
         setAllControlLayouts(updated);
         localStorage.setItem('layouts', JSON.stringify(updated));
 
@@ -149,6 +161,8 @@ export function ControlLayoutBuilder() {
                 updateControlComponent={updateControlComponent}
                 updateGeometry={updateGeometry}
                 deleteLayout={deleteLayout}
+                activeLayout={activeLayout}
+                updateLayoutApps={updateLayoutApps}
             />
         </div>
     );

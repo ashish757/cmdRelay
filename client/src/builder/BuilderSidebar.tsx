@@ -1,8 +1,10 @@
-import React, {useState} from 'react';
+import React from 'react';
 import { controlElementsRegistry } from '../config/ctrlConfig.ts';
 import type { ControlComponent, Geo, ControlLayout } from "../types/controlLayouts.ts";
 import { Accordion } from '../components/Accordion';
-import { MonitorSmartphone, Settings2, BoxSelect } from 'lucide-react';
+import { MonitorSmartphone, BoxSelect } from 'lucide-react';
+import {useNet} from "../context/NetCtx.tsx";
+import {SearchableDropdown} from "../components/SearchableDropdown.tsx";
 
 interface SidebarProps {
     allControlLayouts: ControlLayout[];
@@ -18,18 +20,22 @@ interface SidebarProps {
     updateControlComponent: (id: string, updates: Partial<ControlComponent>) => void;
     updateGeometry: (id: string, axis: keyof Geo, value: number) => void;
     deleteLayout: (id: string) => void;
+    updateLayoutApps: (apps: string[]) => void;
+    activeLayout: ControlLayout | undefined;
 }
 
 
 export function BuilderSidebar(props: SidebarProps) {
     const {
         allControlLayouts, activeId, layoutTitle, setLayoutTitle, handleLayoutChange, makeNewLayout, handleSave, saveStatus,
-        selectedComp, isLandscape, updateControlComponent, updateGeometry, deleteLayout
+        selectedComp, isLandscape, updateControlComponent, updateGeometry, deleteLayout, updateLayoutApps, activeLayout
     } = props;
+
+    const { knownApps } = useNet();
+    const selectedApps = activeLayout?.targetApps || [];
 
     const activeGeo = selectedComp ? (isLandscape ? selectedComp.landscapeGeo : selectedComp.portraitGeo) : null;
     const SpecificInspector = selectedComp ? controlElementsRegistry[selectedComp.type]?.inspector : null;
-    const [isAppModalOpen, setIsAppModalOpen] = useState(false);
 
     return (
         <div className="w-[440px] shrink-0 bg-background flex flex-col shadow-2xl border-l border-border relative z-20">
@@ -88,14 +94,31 @@ export function BuilderSidebar(props: SidebarProps) {
                     </div>
                 </div>
 
-                <div className="mt-5">
-                    <button onClick={() => setIsAppModalOpen(true)} className="w-full flex items-center justify-between bg-surface hover:bg-border/50 border border-border rounded-lg p-3 transition-colors group">
-                        <div className="flex flex-col items-start">
-                            <span className="text-[10px] font-bold uppercase text-text-muted tracking-widest">Target Application</span>
-                            <span className="text-sm font-semibold text-text-muted group-hover:text-text-main">Global (All Apps)</span>
-                        </div>
-                        <Settings2 className="w-4 h-4 text-text-muted group-hover:text-primary" />
-                    </button>
+                <div className="mt-5 space-y-2">
+                    <label className="text-[10px] uppercase font-bold text-text-muted tracking-widest px-1">
+                        Mapped Applications
+                    </label>
+
+                    <div className="flex flex-wrap gap-2 px-1">
+                        {selectedApps.map(app => (
+                            <div key={app} className="flex items-center gap-1 bg-primary/20 text-primary px-2.5 py-1 rounded-md text-[10px] font-bold border border-primary/30">
+                                {app}
+                                <button
+                                    onClick={() => updateLayoutApps(selectedApps.filter(a => a !== app))}
+                                    className="hover:text-white transition-colors ml-1"
+                                >✕</button>
+                            </div>
+                        ))}
+                    </div>
+
+                    <SearchableDropdown
+                        options={knownApps.filter((app: string) => !selectedApps.includes(app))}
+                        value=""
+                        placeholder="Search to add an app..."
+                        onChange={(newApp) => {
+                            updateLayoutApps([...selectedApps, newApp]);
+                        }}
+                    />
                 </div>
 
                 <button onClick={handleSave} disabled={saveStatus === 'success'} className={`w-full mt-4 font-bold p-2.5 rounded-lg text-xs tracking-wider uppercase transition-all flex items-center justify-center gap-2 ${saveStatus === 'idle' ? 'bg-primary hover:bg-primary/80 text-white shadow-lg shadow-primary/20' : ''} ${saveStatus === 'success' ? 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/50' : ''} ${saveStatus === 'error' ? 'bg-red-500/20 text-red-400 border border-red-500/50 animate-pulse' : ''}`}>
@@ -105,14 +128,9 @@ export function BuilderSidebar(props: SidebarProps) {
                 </button>
             </div>
 
-            <div className="flex-1 p-5 overflow-y-auto custom-scrollbar">
+            <div className="flex-1 p-1 overflow-y-auto custom-scrollbar">
                 {selectedComp && activeGeo ? (
                     <div className="space-y-2 pb-10">
-                        <div className="flex items-center gap-2 mb-4 px-1">
-                            <BoxSelect className="w-4 h-4 text-primary" />
-                            <h3 className="text-sm font-bold text-text-main">Selected Control Settings</h3>
-                        </div>
-
                         <Accordion title="Control Appearance" defaultExpanded={true}>
                             <div className="grid gap-2">
                                 <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Widget Type</label>
@@ -157,48 +175,6 @@ export function BuilderSidebar(props: SidebarProps) {
                     </div>
                 )}
             </div>
-
-            {isAppModalOpen && (
-                <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm">
-                    <div className="bg-background border border-border rounded-xl shadow-2xl w-[400px] flex flex-col overflow-hidden animate-in fade-in zoom-in-95 duration-200">
-                        <div className="p-4 border-b border-border flex justify-between items-center bg-surface/50">
-                            <h3 className="font-bold text-sm text-text-main">Map Layout to Application</h3>
-                            <button onClick={() => setIsAppModalOpen(false)} className="text-text-muted hover:text-text-main">✕</button>
-                        </div>
-
-                        <div className="p-5 space-y-4">
-                            <p className="text-xs text-text-muted">
-                                This layout will automatically activate on your phone when this application is focused on your computer.
-                            </p>
-                            <div className="space-y-2">
-                                <label className="text-[10px] uppercase font-bold text-text-muted tracking-widest">Application Name</label>
-                                <input
-                                    type="text"
-                                    placeholder="e.g., Spotify, VS Code"
-                                    className="w-full bg-surface border border-border rounded-lg p-3 text-sm text-text-main focus:outline-none focus:border-primary"
-                                />
-                            </div>
-                        </div>
-
-                        <div className="p-4 bg-surface/50 border-t border-border flex justify-end gap-2">
-                            <button
-                                onClick={() => setIsAppModalOpen(false)}
-                                className="px-4 py-2 text-xs font-bold text-text-muted hover:text-text-main transition-colors tracking-widest uppercase"
-                            >
-                                Cancel
-                            </button>
-                            <button
-                                onClick={() => {
-                                    setIsAppModalOpen(false);
-                                }}
-                                className="px-4 py-2 bg-primary hover:bg-primary/80 text-white rounded-lg text-xs font-bold transition-colors tracking-widest uppercase"
-                            >
-                                Save Mapping
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            )}
         </div>
     );
 }

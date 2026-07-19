@@ -20,5 +20,6 @@ export interface ControlComponent {
 export interface ControlLayout {
     id: string;
     title: string;
+    targetApps?: string[];
     components: ControlComponent[];
 }
