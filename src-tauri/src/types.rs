@@ -16,6 +16,9 @@ pub struct PayloadData {
     pub keyId: Option<String>,
     
     #[serde(skip_serializing_if = "Option::is_none")]
+    pub appId: Option<String>,
+    
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub state: Option<String>,
 
     #[serde(skip_serializing_if = "Option::is_none")]

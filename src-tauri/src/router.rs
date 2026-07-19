@@ -7,6 +7,7 @@ use enigo::KeyboardControllable;
 use std::fs;
 use std::thread;
 use std::time::Duration;
+use std::process::Command;
 
 #[allow(non_snake_case)]
 pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
@@ -21,12 +22,24 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
             execute_keypress(e, &key, action);
         }
     }
+    else if pld.actionType == "openApp" {
+        if let Some(appId) = pld.payload.appId {
+            info!("Attempting to open/focus application: {}", appId);
+            let status = Command::new("open").arg("-a").arg(&appId).status();
+
+            match status {
+                Ok(s) if s.success() => info!("Successfully targeted {}", appId),
+                Ok(_) => error!("Failed to target {}: command returned non-zero status", appId),
+                Err(e) => error!("Failed to execute focus command for {}: {}", appId, e),
+            }
+        }
+
+
+    }
     else if pld.actionType == "macro" {
         if let Some(steps) = pld.payload.steps {
 
-            // Use a standard detached OS thread instead of an async tokio task
             thread::spawn(move || {
-                // This Enigo instance is born here and dies here. It never crosses threads.
                 let mut local_enigo = Enigo::new();
 
                 for step in steps {
@@ -34,8 +47,6 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
                         let ms = step.keyId.parse::<u64>().unwrap_or(0);
                         info!("Macro Delay: {}ms", ms);
 
-                        // Use standard blocking sleep.
-                        // Because this is on its own thread, it won't block your server.
                         thread::sleep(Duration::from_millis(ms));
                     } else {
                         if let Some(enigo_key) = parse_key(&step.keyId) {
