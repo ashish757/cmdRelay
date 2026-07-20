@@ -21,16 +21,24 @@ export function useUI() {
 
 export function UIProvider({ children }: { children: ReactNode }) {
     const savedLayout = localStorage.getItem('activeLayoutId');
+    const savedViewMode: ViewMode = localStorage.getItem('viewMode') as ViewMode;
 
     const [activeLayoutId, setActiveLayoutIdState] = useState<string | null>(savedLayout);
-    const [viewMode, setViewMode] = useState<ViewMode>(savedLayout ? 'renderer' : 'builder');
+    const [viewMode, setView] = useState<ViewMode>(savedViewMode);
     const [isMenuOpen, setIsMenuOpen] = useState(false);
+
+    const setViewMode = (mode: ViewMode) => {
+        localStorage.setItem('viewMode', mode);
+        setView(mode);
+    }
 
     const setActiveLayoutId = (id: string) => {
         localStorage.setItem('activeLayoutId', id);
         setActiveLayoutIdState(id);
-        setViewMode('renderer');
+        setViewMode("renderer")
     };
+
+
 
     return (
         <UI.Provider value={{ viewMode, setViewMode, activeLayoutId, setActiveLayoutId, isMenuOpen, setIsMenuOpen }}>

@@ -1,16 +1,15 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNet } from '../context/NetCtx.tsx';
 import type { ControlComponent, Geo, ControlLayout } from "../types/controlLayouts.ts";
 import { BuilderCanvas } from './BuilderCanvas';
 import { BuilderSidebar } from './BuilderSidebar';
-
 
 export function ControlLayoutBuilder() {
     const { sendPayload, layouts: globalLayouts } = useNet();
 
     // 1. Core State
     const [allControlLayouts, setAllControlLayouts] = useState<ControlLayout[]>([]);
-    const [activeId, setActiveId] = useState<string>('');
+    const [activeId, setActiveId] = useState<string>(localStorage.getItem("builderLayoutId") || "");
     const [layoutTitle, setLayoutTitle] = useState<string>('');
     const [componentArray, setComponentArray] = useState<ControlComponent[]>([]);
 
@@ -22,20 +21,22 @@ export function ControlLayoutBuilder() {
     const [isListening, setIsListening] = useState<boolean>(false);
     const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-    useEffect(() => {
-        if (globalLayouts && globalLayouts.length > 0) {
-            setAllControlLayouts(globalLayouts);
+    const hasLoadedData = useRef(false);
 
-            if (!activeId) {
-                loadControlLayout(globalLayouts[0]);
-            } else {
-                const updatedActive = globalLayouts.find((l: ControlLayout) => l.id === activeId);
-                if (updatedActive) loadControlLayout(updatedActive);
-            }
-        } else if (globalLayouts && globalLayouts.length === 0) {
-            makeNewLayout();
+    useEffect(() => {
+        if (!globalLayouts) return;
+
+        setAllControlLayouts(globalLayouts);
+
+        if (!hasLoadedData.current && globalLayouts.length > 0) {
+            const savedId = localStorage.getItem("builderLayoutId");
+            const targetLayout = globalLayouts.find((l: ControlLayout) => l.id === savedId) || globalLayouts[0];
+
+            loadControlLayout(targetLayout);
+            hasLoadedData.current = true;
         }
-    }, [globalLayouts]);
+
+    }, [globalLayouts]); 
 
     useEffect(() => {
         if (!isListening || !selectedId) return;
@@ -65,6 +66,7 @@ export function ControlLayoutBuilder() {
 
     const loadControlLayout = (layout: ControlLayout) => {
         setActiveId(layout.id);
+        localStorage.setItem('builderLayoutId', layout.id); // Centralized storage save
         setLayoutTitle(layout.title);
         setComponentArray(layout.components || []);
         setSelectedId(null);
@@ -99,7 +101,6 @@ export function ControlLayoutBuilder() {
         await sendPayload({ actionType: "deleteLayout", payload: { id: layoutIdToDelete } });
     };
 
-
     const handleLayoutChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const targetValue = event.target.value;
         const foundLayout = allControlLayouts.find(layout => layout.id === targetValue);
@@ -108,9 +109,9 @@ export function ControlLayoutBuilder() {
 
     const handleSave = async () => {
         const updated = allControlLayouts.map(l => {
-            console.log("Saving", l);
-            return l.id === activeId ? {...l, title: layoutTitle, components: componentArray} : l
+            return l.id === activeId ? { ...l, title: layoutTitle, components: componentArray } : l
         });
+
         setAllControlLayouts(updated);
         localStorage.setItem('layouts', JSON.stringify(updated));
 
