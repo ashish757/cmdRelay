@@ -47,7 +47,7 @@ export function ControlLayoutBuilder() {
             if (keyName === ' ') keyName = 'Space';
 
             setComponentArray(prev => prev.map(c =>
-                c.id !== selectedId ? c : { ...c, data: { ...c.data, actionType: 'keyPress', actionValue: keyName } }
+                c.id !== selectedId ? c : { ...c, data: { ...c.data, actionType: 'keyPress', actionValue: { ...c.data.actionValue, keyId: keyName } } }
             ));
             setIsListening(false);
         };

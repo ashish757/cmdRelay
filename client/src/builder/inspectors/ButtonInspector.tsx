@@ -5,6 +5,9 @@ import { AppOpenerInspector } from './AppOpenerInspector';
 import { MacroInspector } from './MacroInspector';
 import { CommandInspector } from './CommandInspector';
 
+import { ACTION_TYPE_OPTIONS } from '../../types/controlLayouts';
+import type { ActionType } from '../../types/controlLayouts';
+
 export const ButtonInspector: React.FC<InspectorProps> = (props) => {
     const { selectedComp, updateControlComponent } = props;
     const actionType = selectedComp.data?.actionType || 'none';
@@ -17,17 +20,14 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                     value={actionType}
                     onChange={(e) => {
                         updateControlComponent(selectedComp.id, {
-                            data: { ...selectedComp.data, actionType: e.target.value, actionValue: '' }
+                            data: { ...selectedComp.data, actionType: e.target.value as ActionType, actionValue: {} }
                         });
                     }}
                     className="w-full bg-background border border-border rounded-lg px-3 py-2 text-sm text-text-main focus:outline-none focus:border-primary"
                 >
-                    <option value="none">None</option>
-                    <option value="keyPress">Trigger Key Press</option>
-                    <option value="keyHoldToggle">Hold Key (Toggle)</option>
-                    <option value="macro">Run Macro Sequence</option>
-                    <option value="openApp">Launch Application</option>
-                    <option value="terminalCommand">Execute Command</option>
+                    {ACTION_TYPE_OPTIONS.map(opt => (
+                        <option key={opt.value} value={opt.value}>{opt.label}</option>
+                    ))}
                 </select>
             </div>
 
@@ -47,9 +47,9 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                         <div className="grid gap-2">
                             <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Key Value</label>
                             <KeyCaptureInput
-                                value={selectedComp.data?.actionValue as string || ''}
+                                value={selectedComp.data?.actionValue?.keyId || ''}
                                 onChange={(newVal: string) => updateControlComponent(selectedComp.id, {
-                                    data: { ...selectedComp.data, actionValue: newVal }
+                                    data: { ...selectedComp.data, actionValue: { ...selectedComp.data.actionValue, keyId: newVal } }
                                 })}
                             />
                         </div>

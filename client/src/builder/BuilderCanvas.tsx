@@ -31,7 +31,7 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
 
         setComponentArray([...componentArray, {
             id: newId, type: 'btn', label: 'Btn', portraitGeo, landscapeGeo,
-            data: { actionType: 'keyPress', actionValue: 'Space' }
+            data: { actionType: 'keyPress', actionValue: { keyId: 'Space' } }
         }]);
         setSelectedId(newId);
     };

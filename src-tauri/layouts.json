@@ -4,7 +4,7 @@
       {
         "data": {
           "actionType": "none",
-          "actionValue": "none"
+          "actionValue": {}
         },
         "id": "232242",
         "label": "Track pad",
@@ -31,7 +31,7 @@
       {
         "data": {
           "actionType": "none",
-          "actionValue": "none"
+          "actionValue": {}
         },
         "id": "432432",
         "label": "Live Typing",
@@ -58,7 +58,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "ArrowUp"
+          "actionValue": {
+            "keyId": "ArrowUp"
+          }
         },
         "id": "132",
         "label": "Up",
@@ -79,7 +81,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "ArrowDown"
+          "actionValue": {
+            "keyId": "ArrowDown"
+          }
         },
         "id": "133",
         "label": "Down",
@@ -100,7 +104,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "ArrowRight"
+          "actionValue": {
+            "keyId": "ArrowRight"
+          }
         },
         "id": "c_1783165075156",
         "label": "Right",
@@ -121,7 +127,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "ArrowLeft"
+          "actionValue": {
+            "keyId": "ArrowLeft"
+          }
         },
         "id": "c_1783165086707",
         "label": "Left",
@@ -151,7 +159,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Space"
+          "actionValue": {
+            "keyId": "Space"
+          }
         },
         "id": "c_1784211360805",
         "label": "Space",
@@ -172,7 +182,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Control"
+          "actionValue": {
+            "keyId": "Control"
+          }
         },
         "id": "c_1784211378288",
         "label": "Control",
@@ -193,7 +205,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Alt"
+          "actionValue": {
+            "keyId": "Alt"
+          }
         },
         "id": "c_1784211405571",
         "label": "Option",
@@ -214,7 +228,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Meta"
+          "actionValue": {
+            "keyId": "Meta"
+          }
         },
         "id": "c_1784211421506",
         "label": "command",
@@ -235,7 +251,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Escape"
+          "actionValue": {
+            "keyId": "Escape"
+          }
         },
         "id": "c_1784211444371",
         "label": "Esc",
@@ -256,7 +274,9 @@
       {
         "data": {
           "actionType": "keyHoldToggle",
-          "actionValue": "Shift"
+          "actionValue": {
+            "keyId": "Shift"
+          }
         },
         "id": "c_1784211468522",
         "label": "Shift",
@@ -277,7 +297,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Enter"
+          "actionValue": {
+            "keyId": "Enter"
+          }
         },
         "id": "c_1784211510855",
         "label": "Return",
@@ -298,7 +320,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "ArrowLeft"
+          "actionValue": {
+            "keyId": "ArrowLeft"
+          }
         },
         "id": "c_1784215289106",
         "label": "Left",
@@ -319,7 +343,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "ArrowRight"
+          "actionValue": {
+            "keyId": "ArrowRight"
+          }
         },
         "id": "c_1784215294873",
         "label": "Right",
@@ -340,28 +366,30 @@
       {
         "data": {
           "actionType": "macro",
-          "actionValue": [
-            {
-              "id": "step_1784465081750_6g25awt",
-              "keyId": "MetaLeft",
-              "state": "down"
-            },
-            {
-              "id": "step_1784466802168_zp6u6ua",
-              "keyId": "Space",
-              "state": "click"
-            },
-            {
-              "id": "step_1784466803967_9x7iqxg",
-              "keyId": "Digit4",
-              "state": "click"
-            },
-            {
-              "id": "step_1784466804717_dgc7hf5",
-              "keyId": "MetaLeft",
-              "state": "up"
-            }
-          ]
+          "actionValue": {
+            "steps": [
+              {
+                "id": "step_1784465081750_6g25awt",
+                "keyId": "MetaLeft",
+                "state": "down"
+              },
+              {
+                "id": "step_1784466802168_zp6u6ua",
+                "keyId": "Space",
+                "state": "click"
+              },
+              {
+                "id": "step_1784466803967_9x7iqxg",
+                "keyId": "Digit4",
+                "state": "click"
+              },
+              {
+                "id": "step_1784466804717_dgc7hf5",
+                "keyId": "MetaLeft",
+                "state": "up"
+              }
+            ]
+          }
         },
         "id": "c_1784371486323",
         "label": "clipboard",
@@ -382,7 +410,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "KeyH"
+          "actionValue": {
+            "keyId": "KeyH"
+          }
         },
         "id": "c_1784372234263",
         "label": "H",
@@ -403,7 +433,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "KeyA"
+          "actionValue": {
+            "keyId": "KeyA"
+          }
         },
         "id": "c_1784383620618",
         "label": "A",
@@ -425,7 +457,9 @@
         "appId": "Safari",
         "data": {
           "actionType": "openApp",
-          "actionValue": "Finder"
+          "actionValue": {
+            "appId": "Finder"
+          }
         },
         "id": "c_1784385634400",
         "label": "Finder",
@@ -446,7 +480,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "F1"
+          "actionValue": {
+            "keyId": "F1"
+          }
         },
         "id": "c_1784459563577",
         "label": "+",
@@ -467,7 +503,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Backspace"
+          "actionValue": {
+            "keyId": "Backspace"
+          }
         },
         "id": "c_1784463300611",
         "label": "x",
@@ -488,23 +526,25 @@
       {
         "data": {
           "actionType": "macro",
-          "actionValue": [
-            {
-              "id": "step_1784463573571_649y8jd",
-              "keyId": "Control",
-              "state": "down"
-            },
-            {
-              "id": "step_1784463583538_v4r0ebh",
-              "keyId": "ArrowLeft",
-              "state": "click"
-            },
-            {
-              "id": "step_1784463591505_fe24toi",
-              "keyId": "Control",
-              "state": "up"
-            }
-          ]
+          "actionValue": {
+            "steps": [
+              {
+                "id": "step_1784463573571_649y8jd",
+                "keyId": "Control",
+                "state": "down"
+              },
+              {
+                "id": "step_1784463583538_v4r0ebh",
+                "keyId": "ArrowLeft",
+                "state": "click"
+              },
+              {
+                "id": "step_1784463591505_fe24toi",
+                "keyId": "Control",
+                "state": "up"
+              }
+            ]
+          }
         },
         "id": "c_1784463552171",
         "label": "<",
@@ -525,23 +565,25 @@
       {
         "data": {
           "actionType": "macro",
-          "actionValue": [
-            {
-              "id": "step_1784463608171_uvqmign",
-              "keyId": "Control",
-              "state": "down"
-            },
-            {
-              "id": "step_1784463608354_08qxroo",
-              "keyId": "ArrowRight",
-              "state": "click"
-            },
-            {
-              "id": "step_1784463609055_vib27n6",
-              "keyId": "Control",
-              "state": "up"
-            }
-          ]
+          "actionValue": {
+            "steps": [
+              {
+                "id": "step_1784463608171_uvqmign",
+                "keyId": "Control",
+                "state": "down"
+              },
+              {
+                "id": "step_1784463608354_08qxroo",
+                "keyId": "ArrowRight",
+                "state": "click"
+              },
+              {
+                "id": "step_1784463609055_vib27n6",
+                "keyId": "Control",
+                "state": "up"
+              }
+            ]
+          }
         },
         "id": "c_1784463560521",
         "label": ">",
@@ -562,7 +604,9 @@
       {
         "data": {
           "actionType": "keyPress",
-          "actionValue": "Digit4"
+          "actionValue": {
+            "keyId": "Digit4"
+          }
         },
         "id": "c_1784466119040",
         "label": "4",

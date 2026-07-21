@@ -33,12 +33,12 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             sendPayload({
                 actionType: "macro",
                 payload: {
-                    steps: data.actionValue
+                    steps: data.actionValue?.steps
                 }
             });
         }
         else if(data.actionType === "terminalCommand") {
-            const termData = data.actionValue as any;
+            const termData = data.actionValue;
 
             sendPayload({
                 actionType: data.actionType,
@@ -53,7 +53,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             sendPayload({
                 actionType: data.actionType,
                 payload: {
-                    appId: data.actionValue
+                    appId: data.actionValue?.appId
                 }
             })
         }
@@ -61,13 +61,13 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             sendPayload({
                 actionType: data.actionType,
                 payload: {
-                    keyId: data.actionValue as string,
+                    keyId: data.actionValue?.keyId,
                     state: "down"
                 }
             });
 
             const modifiers = ["Shift", "Control", "Alt", "Meta", "OS"];
-            const isModifier = modifiers.includes(data.actionValue as string);
+            const isModifier = modifiers.includes(data.actionValue?.keyId || "");
 
             if (!isModifier && data.actionType === "keyPress") {
 
@@ -77,7 +77,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                         sendPayload({
                             actionType: data.actionType,
                             payload: {
-                                keyId: data.actionValue as string,
+                                keyId: data.actionValue?.keyId,
                                 state: "click"
                             }
                         });
@@ -86,10 +86,10 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             }
         } else if (data.actionType === "keyHoldToggle") {
             if (!isLatched) {
-                sendPayload({ actionType: "keyPress", payload: { keyId: data.actionValue, state: "down" } });
+                sendPayload({ actionType: "keyPress", payload: { keyId: data.actionValue?.keyId, state: "down" } });
                 setIsLatched(true);
             } else {
-                sendPayload({ actionType: "keyPress", payload: { keyId: data.actionValue, state: "up" } });
+                sendPayload({ actionType: "keyPress", payload: { keyId: data.actionValue?.keyId, state: "up" } });
                 setIsLatched(false);
             }
         }
@@ -109,7 +109,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             sendPayload({
                 actionType: data.actionType,
                 payload: {
-                    keyId: data.actionValue as string,
+                    keyId: data.actionValue?.keyId,
                     state: "up"
                 }
             });

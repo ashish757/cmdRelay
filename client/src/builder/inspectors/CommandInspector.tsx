@@ -2,16 +2,17 @@ import React from 'react';
 import type { InspectorProps } from '../../types/inspector';
 
 export const CommandInspector: React.FC<InspectorProps> = ({ selectedComp, updateControlComponent }) => {
-    const terminalData = typeof selectedComp.data?.actionValue === 'object'
-        ? selectedComp.data.actionValue
-        : { command: selectedComp.data?.actionValue || '', inBackground: false };
+    const terminalData = {
+        command: selectedComp.data?.actionValue?.command || '',
+        inBackground: selectedComp.data?.actionValue?.inBackground || false
+    };
 
     const updateTerminalData = (updates: Partial<{ command: string; inBackground: boolean }>) => {
         updateControlComponent(selectedComp.id, {
             data: {
                 ...selectedComp.data,
                 actionType: 'terminalCommand',
-                actionValue: { ...terminalData, ...updates } as any
+                actionValue: { ...selectedComp.data?.actionValue, ...terminalData, ...updates }
             }
         });
     };

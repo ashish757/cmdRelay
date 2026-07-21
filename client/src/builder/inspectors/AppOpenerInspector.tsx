@@ -12,10 +12,10 @@ export function AppOpenerInspector({ selectedComp, updateControlComponent }: any
 
             <SearchableDropdown
                 options={knownApps}
-                value={selectedComp.data?.appId || ""}
+                value={selectedComp.data?.actionValue?.appId || ""}
                 onChange={(selectedApp) => {
                     updateControlComponent(selectedComp.id, {
-                        data: { ...selectedComp.data, appId: selectedApp }
+                        data: { ...selectedComp.data, actionValue: { ...selectedComp.data?.actionValue, appId: selectedApp } }
                     });
                 }}
             />

@@ -60,7 +60,7 @@ export const preBuiltLayouts: ControlLayout[] = [
                 },
                 "data": {
                     "actionType": "keyPress",
-                    "actionValue": "A"
+                    "actionValue": { "keyId": "A" }
                 }
             },
             {
@@ -81,7 +81,7 @@ export const preBuiltLayouts: ControlLayout[] = [
                 },
                 "data": {
                     "actionType": "keyPress",
-                    "actionValue": "S"
+                    "actionValue": { "keyId": "S" }
                 }
             }
         ]

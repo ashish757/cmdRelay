@@ -1,24 +1,17 @@
 import React from 'react';
 import type { InspectorProps } from '../../types/inspector';
+import type { MacroStep } from '../../types/controlLayouts';
 import { KeyCaptureInput } from '../../components/KeyCaptureInput';
 import { ChevronDown, ChevronUp } from "lucide-react"
 
 const DEFAULT_DELAY = 500;
 
-export type MacroStep = {
-    id: string;
-    state: 'click' | 'down' | 'up' | 'delay';
-    keyId: string;
-};
-
 export const MacroInspector: React.FC<InspectorProps> = ({ selectedComp, updateControlComponent }) => {
-    const steps: MacroStep[] = Array.isArray(selectedComp.data?.actionValue)
-        ? selectedComp.data.actionValue
-        : [];
+    const steps: MacroStep[] = selectedComp.data?.actionValue?.steps || [];
 
     const updateSteps = (newSteps: MacroStep[]) => {
         updateControlComponent(selectedComp.id, {
-            data: { ...selectedComp.data, actionType: 'macro', actionValue: newSteps as any }
+            data: { ...selectedComp.data, actionType: 'macro', actionValue: { ...selectedComp.data?.actionValue, steps: newSteps } }
         });
     };
 
