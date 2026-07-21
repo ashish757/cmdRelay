@@ -13,7 +13,6 @@ export function ServerPairing() {
     }, []);
 
     return (
-        // Full screen, native dark background, system fonts, prevent dragging/selecting
         <div className="w-screen h-screen bg-background flex flex-col items-center justify-center p-6 cursor-default select-none overflow-hidden font-sans">
 
             <h2 className="text-[20px] font-semibold tracking-tight text-center text-text-main mb-1.5">

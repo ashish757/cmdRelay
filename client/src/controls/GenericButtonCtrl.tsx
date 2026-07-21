@@ -37,6 +37,18 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                 }
             });
         }
+        else if(data.actionType === "terminalCommand") {
+            const termData = data.actionValue as any;
+
+            sendPayload({
+                actionType: data.actionType,
+                payload: {
+                    command: termData.command,
+                    inBackground: !!termData?.inBackground,
+                }
+            });
+
+        }
         else if (data.actionType === "openApp") {
             sendPayload({
                 actionType: data.actionType,

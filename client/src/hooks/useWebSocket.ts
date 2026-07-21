@@ -11,7 +11,7 @@ export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: 
     const timer = useRef<number | null>(null);
 
     const serverIp = window.location.hostname;
-    const url = `ws://${serverIp}:3000`;
+    const url = `ws://${serverIp}:3000/ws`;
 
     useEffect(() => {
         const connect = () => {

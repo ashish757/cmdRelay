@@ -3,6 +3,7 @@ import type { InspectorProps } from '../../types/inspector';
 import { KeyCaptureInput } from '../../components/KeyCaptureInput';
 import { AppOpenerInspector } from './AppOpenerInspector';
 import { MacroInspector } from './MacroInspector';
+import { CommandInspector } from './CommandInspector';
 
 export const ButtonInspector: React.FC<InspectorProps> = (props) => {
     const { selectedComp, updateControlComponent } = props;
@@ -26,12 +27,11 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                     <option value="keyHoldToggle">Hold Key (Toggle)</option>
                     <option value="macro">Run Macro Sequence</option>
                     <option value="openApp">Launch Application</option>
+                    <option value="terminalCommand">Execute Command</option>
                 </select>
             </div>
 
             <div className="space-y-3 pt-4 border-t border-border mt-4">
-
-
                 <div className="grid gap-2">
                     <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Button Title</label>
                     <input
@@ -61,6 +61,10 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
 
                     {actionType === 'macro' && (
                         <MacroInspector {...props} />
+                    )}
+
+                    {actionType === 'terminalCommand' && (
+                        <CommandInspector {...props} />
                     )}
                 </div>
             </div>
