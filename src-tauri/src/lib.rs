@@ -16,7 +16,7 @@ use crate::server::run_server;
 #[tauri::command]
 fn get_server_url() -> Result<String, String> {
     match local_ip() {
-        Ok(ip) => Ok(format!("http://{}:5173", ip)),
+        Ok(ip) => Ok(format!("http://{}:3000", ip)),
         Err(e) => Err(format!("Failed to get local IP: {}", e)),
     }
 }
@@ -25,7 +25,6 @@ fn get_server_url() -> Result<String, String> {
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
-            // --- NEW: Completely hide the macOS Dock Icon ---
             #[cfg(target_os = "macos")]
             let _ = app.set_activation_policy(tauri::ActivationPolicy::Accessory);
 
@@ -35,12 +34,10 @@ pub fn run() {
             let tx_clone_telemetry = tx.clone();
 
 
-            // 1. Create the menu items
             let show_btn = MenuItem::with_id(app, "show", "Show QR Code", true, None::<&str>)?;
             let quit_btn = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
             let menu = Menu::with_items(app, &[&show_btn, &quit_btn])?;
 
-            // 2. Build the tray
             TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
                 .menu(&menu)

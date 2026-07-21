@@ -1,11 +1,10 @@
 use serde::{Deserialize, Serialize};
 
-#[derive(Debug, Deserialize, Serialize, Clone)]
+#[derive(Debug, Deserialize)]
 #[serde(rename_all = "camelCase")]
-pub struct MacroStep {
-    pub id: String,
-    pub state: String,
-    pub key_id: String,
+pub struct ClientPayload {
+    pub action_type: String,
+    pub payload: PayloadData,
 }
 
 #[derive(Debug, Deserialize, Serialize)]
@@ -22,14 +21,19 @@ pub struct PayloadData {
     pub name: Option<String>,
     pub layouts: Option<serde_json::Value>,
     pub settings: Option<serde_json::Value>,
+    pub command: Option<String>,
+    pub in_background: Option<bool>,
 }
 
-#[derive(Debug, Deserialize)]
+#[derive(Debug, Deserialize, Serialize, Clone)]
 #[serde(rename_all = "camelCase")]
-pub struct ClientPayload {
-    pub action_type: String,
-    pub payload: PayloadData,
+pub struct MacroStep {
+    pub id: String,
+    pub state: String,
+    pub key_id: String,
 }
+
+
 
 pub enum KeyAction {
     Down,

@@ -4,10 +4,10 @@
   "version": "1.0.0",
   "identifier": "com.cmdrelay.daemon",
   "build": {
-    "frontendDist": "../client/dist",
     "devUrl": "http://localhost:5173",
-    "beforeDevCommand": "cd ../client && npm run dev",
-    "beforeBuildCommand": "cd ../client && npm run build"
+    "beforeDevCommand": "cd ../client && npm run dev -- --host",
+    "beforeBuildCommand": "cd ../client && npm run build",
+    "frontendDist": "../client/dist"
   },
   "app": {
     "windows": [

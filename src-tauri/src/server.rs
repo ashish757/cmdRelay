@@ -1,18 +1,33 @@
-use tokio::net::TcpListener;
-use tokio::sync::mpsc;
+use axum::{
+    extract::{
+        ws::{Message as AxumMessage, WebSocket, WebSocketUpgrade},
+        State,
+    },
+    http::{header, StatusCode, Uri},
+    response::{IntoResponse},
+    routing::get,
+    Router,
+};
+use rust_embed::RustEmbed;
+use tokio::sync::{broadcast, mpsc};
 use std::thread;
-use tokio_tungstenite::accept_async;
-use tokio_tungstenite::tungstenite::Message;
-use futures_util::StreamExt;
 use log::{error, info};
 use enigo::Enigo;
+use std::sync::Arc;
 use std::path::Path;
 use std::fs;
-use futures_util::SinkExt;
-use tokio::sync::broadcast;
 
 use crate::types::ClientPayload;
 use crate::controllers::route_action;
+
+#[derive(RustEmbed)]
+#[folder = "../client/dist"]
+struct Assets;
+
+struct AppState {
+    action_tx: mpsc::UnboundedSender<ClientPayload>,
+    telemetry_tx: broadcast::Sender<String>,
+}
 
 fn parse_payload(txt: &str) -> Option<ClientPayload> {
     match serde_json::from_str::<ClientPayload>(txt) {
@@ -25,7 +40,6 @@ fn parse_payload(txt: &str) -> Option<ClientPayload> {
 }
 
 pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
-    // 1. Separate the input broadcast channel from the Enigo action queue
     let (action_tx, mut action_rx) = mpsc::unbounded_channel::<ClientPayload>();
 
     thread::spawn(move || {
@@ -35,89 +49,93 @@ pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
         }
     });
 
-    let listener = TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    info!("Server listening on port 3000");
+    let state = Arc::new(AppState {
+        action_tx,
+        telemetry_tx,
+    });
 
-    while let Ok((stream, _)) = listener.accept().await {
-        let action_tx_clone = action_tx.clone();
+    let app = Router::new()
+        .route("/ws", get(ws_handler))
+        .fallback(static_handler)
+        .with_state(state);
 
-        // 2. Each unique connected device gets its own independent telemetry subscription
-        let mut current_telemetry_rx = telemetry_tx.subscribe();
+    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
+    info!("HTTP and WebSocket Server listening on 0.0.0.0:3000");
 
-        match accept_async(stream).await {
-            Ok(ws) => {
-                info!("New WebSocket connection established");
+    axum::serve(listener, app).await.unwrap();
+}
 
-                tauri::async_runtime::spawn(async move {
-                    // 3. Split socket into distinct Write and Read streams
-                    let (mut ws_writer, mut ws_reader) = ws.split();
+async fn static_handler(uri: Uri) -> impl IntoResponse {
+    let mut path = uri.path().trim_start_matches('/');
+    if path.is_empty() {
+        path = "index.html";
+    }
 
-                    // Instantly push layout context synchronization state
-                    if Path::new("layouts.json").exists() {
-                        if let Ok(data) = fs::read_to_string("layouts.json") {
-                            let sync_msg = format!(
-                                r#"{{"actionType": "syncLayout", "payload": {}}}"#,
-                                data
-                            );
-                            let _ = ws_writer.send(Message::Text(sync_msg)).await;
-                            info!("Layout sync ");
-                        }
+    match Assets::get(path) {
+        Some(content) => {
+            let mime = mime_guess::from_path(path).first_or_octet_stream();
+            ([(header::CONTENT_TYPE, mime.as_ref())], content.data).into_response()
+        }
+        None => (StatusCode::NOT_FOUND, "404 Not Found").into_response(),
+    }
+}
+
+async fn ws_handler(
+    ws: WebSocketUpgrade,
+    State(state): State<Arc<AppState>>,
+) -> impl IntoResponse {
+    ws.on_upgrade(|socket| handle_socket(socket, state))
+}
+
+async fn handle_socket(mut socket: WebSocket, state: Arc<AppState>) {
+    info!("New WebSocket connection established");
+    let mut current_telemetry_rx = state.telemetry_tx.subscribe();
+
+    if Path::new("layouts.json").exists() {
+        if let Ok(data) = fs::read_to_string("layouts.json") {
+            let sync_msg = format!(
+                r#"{{"actionType": "syncLayout", "payload": {}}}"#,
+                data
+            );
+            let _ = socket.send(AxumMessage::Text(sync_msg.into())).await;
+            info!("Layout sync sent to client");
+        }
+    }
+
+    if Path::new("settings.json").exists() {
+        if let Ok(settings_data) = fs::read_to_string("settings.json") {
+            let sync_msg = format!(r#"{{"actionType": "syncApps", "payload": {}}}"#, settings_data);
+            let _ = socket.send(AxumMessage::Text(sync_msg.into())).await;
+            info!("Settings sync sent to client");
+        }
+    }
+
+    loop {
+        tokio::select! {
+            telemetry_res = current_telemetry_rx.recv() => {
+                if let Ok(app_data) = telemetry_res {
+                    if socket.send(AxumMessage::Text(app_data.into())).await.is_err() {
+                        break;
                     }
-                    if Path::new("settings.json").exists() {
-                        if let Ok(settings_data) = fs::read_to_string("settings.json") {
-                            let sync_msg = format!(r#"{{"actionType": "syncApps", "payload": {}}}"#, settings_data);
-                            let _ = ws_writer.send(Message::Text(sync_msg)).await;
-                        }
-                    }
-
-                    // Concurrent connection loop for this specific client
-                    loop {
-                        tokio::select! {
-                            // Branch A: Catch active app telemetry changes and write to phone
-                            telemetry_res = current_telemetry_rx.recv() => {
-                                match telemetry_res {
-                                    Ok(app_data) => {
-                                        if let Err(e) = ws_writer.send(Message::Text(app_data)).await {
-                                            error!("Failed to send telemetry event: {}", e);
-                                            break;
-                                        }
-                                    }
-                                    Err(e) => {
-                                        error!("Telemetry receiver channel lag error: {}", e);
-                                    }
-                                }
-                            }
-
-                            // Branch B: Catch incoming command controls sent from phone
-                            incoming_msg = ws_reader.next() => {
-                                match incoming_msg {
-                                    Some(Ok(Message::Text(txt))) => {
-                                        if txt.trim().is_empty() {
-                                            continue;
-                                        }
-                                        if let Some(pld) = parse_payload(&txt) {
-                                            let _ = action_tx_clone.send(pld);
-                                        }
-                                    }
-                                    Some(Ok(Message::Close(_))) => {
-                                        info!("WebSocket connection closed cleanly by client");
-                                        break;
-                                    }
-                                    Some(Ok(_)) => continue, // Disregard binary/ping frames safely
-                                    Some(Err(e)) => {
-                                        error!("WebSocket read error: {}", e);
-                                        break;
-                                    }
-                                    None => {
-                                        break; // Stream terminated cleanly
-                                    }
-                                }
-                            }
-                        }
-                    }
-                });
+                }
             }
-            Err(e) => error!("WebSocket handshake connection error: {}", e),
+
+            incoming_msg = socket.recv() => {
+                match incoming_msg {
+                    Some(Ok(AxumMessage::Text(txt))) => {
+                        if !txt.trim().is_empty() {
+                            if let Some(pld) = parse_payload(&txt) {
+                                let _ = state.action_tx.send(pld);
+                            }
+                        }
+                    }
+                    Some(Ok(AxumMessage::Close(_))) | None => {
+                        info!("WebSocket connection closed cleanly by client");
+                        break;
+                    }
+                    _ => continue,
+                }
+            }
         }
     }
 }

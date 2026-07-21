@@ -1,5 +1,5 @@
 use crate::types::{ClientPayload, KeyAction};
-use crate::system_actions::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click, parse_key};
+use crate::system_actions::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click, execute_terminal_command, parse_key};
 use log::{error, info};
 use enigo::Enigo;
 use enigo::KeyboardControllable;
@@ -115,6 +115,16 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
                     let _ = fs::write("settings.json", json_string);
                     info!("Settings saved to disk");
                 }
+            }
+        }
+
+        "terminalCommand" => {
+            if let Some(cmd) = pld.payload.command {
+                // Default to opening the terminal if in_background isn't strictly true
+                let in_bg = pld.payload.in_background.unwrap_or(false);
+                execute_terminal_command(&cmd, in_bg);
+            } else {
+                log::error!("Received terminalCommand without a command string");
             }
         }
         _ => error!("Unknown action_type: {}", pld.action_type),

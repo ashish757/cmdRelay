@@ -1,5 +1,6 @@
 use enigo::{Enigo, Key, KeyboardControllable, MouseButton, MouseControllable};
 use log::{info, error};
+use std::process::Command;
 
 use crate::types::KeyAction;
 
@@ -121,4 +122,40 @@ pub fn drag_start(e: &mut Enigo) {
 
 pub fn drag_end(e: &mut Enigo) {
     e.mouse_up(MouseButton::Left);
+}
+
+
+
+pub fn execute_terminal_command(command: &str, in_background: bool) {
+    if in_background {
+        info!("Executing background shell command: {}", command);
+
+        // Spawn a non-blocking background child process on macOS/Linux
+        if let Err(e) = Command::new("sh")
+            .arg("-c")
+            .arg(command)
+            .spawn()
+        {
+            error!("Failed to run background command: {}", e);
+        }
+    } else {
+        info!("Launching Terminal.app with command: {}", command);
+
+        // Sanitize double quotes and backslashes so AppleScript doesn't break
+        let escaped_cmd = command.replace('\\', "\\\\").replace('"', "\\\"");
+
+        // AppleScript to open Terminal, execute command, and bring window to front
+        let script = format!(
+            "tell application \"Terminal\"\n do script \"{}\"\n activate\nend tell",
+            escaped_cmd
+        );
+
+        if let Err(e) = Command::new("osascript")
+            .arg("-e")
+            .arg(&script)
+            .spawn()
+        {
+            error!("Failed to launch Terminal via osascript: {}", e);
+        }
+    }
 }
