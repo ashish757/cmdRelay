@@ -5,7 +5,7 @@ import { AppOpenerInspector } from './AppOpenerInspector';
 import { MacroInspector } from './MacroInspector';
 import { CommandInspector } from './CommandInspector';
 
-import { ACTION_TYPE_OPTIONS } from '../../types/controlLayouts';
+import { ACTION_TYPE_OPTIONS } from '../../config/ctrlConfig';
 import type { ActionType } from '../../types/controlLayouts';
 
 export const ButtonInspector: React.FC<InspectorProps> = (props) => {

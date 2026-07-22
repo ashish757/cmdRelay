@@ -23,6 +23,7 @@
       "Finder",
       "Font Book",
       "Freeform",
+      "Fusion",
       "Games",
       "Google Chrome",
       "Home",
@@ -70,6 +71,7 @@
       "TextEdit",
       "Time Machine",
       "Tips",
+      "UserNotificationCenter",
       "Userscripts-Mac-App",
       "Visual Studio Code",
       "VoiceMemos",
@@ -79,6 +81,7 @@
       "WhatsApp",
       "Zed",
       "app",
+      "cer_dialog",
       "cmdRelay",
       "iPhone Mirroring",
       "loginwindow"

@@ -1,14 +1,24 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
+import type { ViewMode } from "../types/controlLayouts.ts";
+import type { SystemTelemetry } from "../types/telemetry.ts";
 
-
-export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: string) {
+export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: ViewMode) {
     const [connectionStatus, setStatus] = useState("Connecting");
     const [currentApp, setCurrentApp] = useState("");
     const [knownApps, setKnownApps] = useState<string[]>([]);
     const [layouts, setLayouts] = useState<any[]>([]);
+    const [sysInfo, setSysInfo] = useState<SystemTelemetry>({});
 
     const ws = useRef<WebSocket | null>(null);
     const timer = useRef<number | null>(null);
+
+    const viewModeRef = useRef(viewMode);
+    const setActiveLayoutIdRef = useRef(setActiveLayoutId);
+
+    useEffect(() => {
+        viewModeRef.current = viewMode;
+        setActiveLayoutIdRef.current = setActiveLayoutId;
+    }, [viewMode, setActiveLayoutId]);
 
     const serverIp = window.location.hostname;
     const url = `ws://${serverIp}:3000/ws`;
@@ -16,7 +26,6 @@ export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: 
     useEffect(() => {
         const connect = () => {
             if (ws.current) ws.current.close();
-
             setStatus("CONNECTING");
 
             const s = new WebSocket(url);
@@ -36,9 +45,9 @@ export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: 
                         setLayouts(msg.payload);
                     }
                     else if (msg.actionType === "APP_SWITCHED") {
-
                         setCurrentApp(msg.payload.appId);
-                        if(viewMode !== "builder") {
+
+                        if (viewModeRef.current !== "layoutBuilder") {
                             const savedData = localStorage.getItem('layouts');
                             const savedLayouts = savedData ? JSON.parse(savedData) : [];
 
@@ -47,13 +56,15 @@ export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: 
                             );
 
                             if (matchingLayout) {
-                                setActiveLayoutId(matchingLayout.id);
+                                setActiveLayoutIdRef.current(matchingLayout.id);
                             }
                         }
                     }
                     else if (msg.actionType === "syncApps" || msg.actionType === "syncAppList") {
                         const apps = msg.payload.apps || (msg.payload.discovery && msg.payload.discovery.knownApps) || [];
                         setKnownApps(apps);
+                    } else if (msg.actionType === "systemTelemetry") {
+                        setSysInfo(msg.payload);
                     }
                 } catch (error) {
                     console.error("Error handling WebSocket message:", error);
@@ -76,15 +87,15 @@ export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: 
             if (ws.current) ws.current.close();
             if (timer.current) clearTimeout(timer.current);
         }
-    }, [setActiveLayoutId, url]);
+    }, [url]);
 
-    const sendPayload = (payload: any): string => {
+    const sendPayload = useCallback((payload: any): string => {
         if (ws.current?.readyState === WebSocket.OPEN) {
             ws.current.send(JSON.stringify(payload));
             return "success";
         }
         return "fail";
-    }
+    }, []);
 
-    return { connectionStatus, sendPayload, currentApp, layouts, knownApps };
+    return { connectionStatus, sendPayload, currentApp, layouts, knownApps, sysInfo };
 }
