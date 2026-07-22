@@ -46,13 +46,13 @@ jobs:
         run: npm install
 
       - name: build and publish Tauri app
-        uses: tauri-apps/tauri-action@v2
+        uses: tauri-apps/tauri-action@v0 # <-- CHANGE THIS LINE FROM v2 TO v0
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-          tagName: v__VERSION__
-          releaseName: 'cmdRelay v__VERSION__'
-          releaseBody: 'See the assets below to download and install this version.'
-          releaseDraft: true
-          prerelease: false
-          args: ${{ matrix.args }}
+            tagName: v__VERSION__
+            releaseName: 'cmdRelay v__VERSION__'
+            releaseBody: 'See the assets below to download and install this version.'
+            releaseDraft: true
+            prerelease: false
+            args: ${{ matrix.args }}
