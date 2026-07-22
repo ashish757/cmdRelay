@@ -1,13 +1,6 @@
 export type ActionType = 'none' | 'keyPress' | 'keyHoldToggle' | 'macro' | 'openApp' | 'terminalCommand';
 
-export const ACTION_TYPE_OPTIONS: { value: ActionType; label: string }[] = [
-    { value: 'none', label: 'None' },
-    { value: 'keyPress', label: 'Trigger Key Press' },
-    { value: 'keyHoldToggle', label: 'Hold Key (Toggle)' },
-    { value: 'macro', label: 'Run Macro Sequence' },
-    { value: 'openApp', label: 'Launch Application' },
-    { value: 'terminalCommand', label: 'Execute Command' },
-];
+export type ViewMode = 'controlLayout' | 'layoutBuilder' | "systemInfo";
 
 export interface Geo {
     h: number;

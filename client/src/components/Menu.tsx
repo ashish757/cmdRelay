@@ -1,8 +1,9 @@
 import { useUI } from '../context/UICtx';
-import { preBuiltLayoutsMenu } from "../config/ctrlConfig.ts";
+import {MENU_OPTIONS, type MenuItem, preBuiltLayouts} from "../config/ctrlConfig.ts";
 import type { ControlLayout } from "../types/controlLayouts.ts";
 import { useTheme } from '../hooks/useTheme';
 import { Moon, Sun } from 'lucide-react';
+import type {ViewMode} from "../types/controlLayouts.ts";
 
 export function MenuOverlay() {
     const { isMenuOpen, setIsMenuOpen, activeLayoutId, setActiveLayoutId, viewMode, setViewMode } = useUI();
@@ -11,6 +12,12 @@ export function MenuOverlay() {
     if (!isMenuOpen) return null;
 
     const customLayouts: ControlLayout[] = JSON.parse(localStorage.getItem("layouts") || "[]");
+
+    const handleMenuOptionClick = (control: ControlLayout | MenuItem, view: ViewMode) => {
+        if(view == "controlLayout") setActiveLayoutId(control.id);
+        setViewMode(view)
+        setIsMenuOpen(false);
+    }
 
     return (
         <div className="fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col p-10 text-text-main overflow-y-auto">
@@ -31,12 +38,9 @@ export function MenuOverlay() {
                 {customLayouts.map((control) => (
                     <button
                         key={control.id}
-                        onClick={() => {
-                            setActiveLayoutId(control.id);
-                            setIsMenuOpen(false);
-                        }}
+                        onClick={() => handleMenuOptionClick(control, "controlLayout")}
                         className={`p-5 text-left rounded-xl font-semibold transition-all ${
-                            activeLayoutId === control.id && viewMode === 'renderer'
+                            activeLayoutId === control.id && viewMode === 'controlLayout'
                                 ? 'bg-primary text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
                                 : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
                         }`}
@@ -48,16 +52,27 @@ export function MenuOverlay() {
 
             <h2 className="text-2xl mt-12 mb-6 font-bold">Templates & Tools</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {preBuiltLayoutsMenu.map((menuItem) => (
+                {preBuiltLayouts.map((control: ControlLayout) => (
+                    <button
+                        key={control.id}
+                        onClick={() => handleMenuOptionClick(control, "controlLayout")}
+                        className={`p-5 text-left rounded-xl font-semibold transition-all ${
+                            activeLayoutId === control.id && viewMode === 'controlLayout'
+                                ? 'bg-primary text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
+                                : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
+                        }`}
+                    >
+                        {control.title}
+                    </button>
+                ))}
+
+                {MENU_OPTIONS.map((menuItem) => (
                     <button
                         key={menuItem.id}
-                        onClick={() => {
-                            setActiveLayoutId(menuItem.id);
-                            setIsMenuOpen(false);
-                        }}
+                        onClick={() => handleMenuOptionClick(menuItem, menuItem.viewType)}
                         className={`p-5 text-left rounded-xl font-semibold transition-all ${
-                            activeLayoutId === menuItem.id && viewMode === 'renderer'
-                                ? 'bg-primary text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
+                             viewMode === menuItem.viewType
+                                ? 'bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]'
                                 : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
                         }`}
                     >
@@ -65,19 +80,6 @@ export function MenuOverlay() {
                     </button>
                 ))}
 
-                    <button
-                        onClick={() => {
-                            setViewMode('builder');
-                            setIsMenuOpen(false);
-                        }}
-                        className={`p-5 text-left rounded-xl font-semibold transition-all ${
-                            viewMode === 'builder'
-                                ? 'bg-emerald-600 text-white shadow-[0_0_15px_rgba(16,185,129,0.4)]'
-                                : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
-                        }`}
-                    >
-                        Layout Settings
-                    </button>
             </div>
         </div>
     );

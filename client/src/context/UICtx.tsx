@@ -1,6 +1,6 @@
 import { createContext, useContext, useState, type ReactNode } from 'react';
+import type {ViewMode} from "../types/controlLayouts.ts";
 
-type ViewMode = 'renderer' | 'builder';
 
 interface UIContextType {
     viewMode: ViewMode;
@@ -35,7 +35,6 @@ export function UIProvider({ children }: { children: ReactNode }) {
     const setActiveLayoutId = (id: string) => {
         localStorage.setItem('activeLayoutId', id);
         setActiveLayoutIdState(id);
-        setViewMode("renderer")
     };
 
 
