@@ -52,12 +52,11 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            # If triggered by a tag, use that exact tag name. Otherwise fallback to the config version.
           tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}
           releaseName: "cmdRelay ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}"
 
-            # We removed `releaseBody` so GitHub automatically creates a changelog based on the previous tag
+            # 1. CHANGED THIS TO FALSE! Now it publishes instantly.
+          releaseDraft: false
 
-          releaseDraft: true
           prerelease: false
           args: ${{ matrix.args }}
