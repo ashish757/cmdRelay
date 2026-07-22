@@ -54,7 +54,7 @@ jobs:
         with:
             # If triggered by a tag, use that exact tag name. Otherwise fallback to the config version.
           tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}
-          releaseName: 'cmdRelay ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}'
+          releaseName: "cmdRelay ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}"
 
             # We removed `releaseBody` so GitHub automatically creates a changelog based on the previous tag
 
