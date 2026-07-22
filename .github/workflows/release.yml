@@ -43,6 +43,8 @@ jobs:
           targets: ${{ matrix.platform == 'macos-latest' && 'aarch64-apple-darwin,x86_64-apple-darwin' || '' }}
 
       - name: install frontend dependencies
+          # Tell GitHub to go into the client folder first
+        working-directory: ./client
         run: npm install
 
       - name: build and publish Tauri app
