@@ -48,13 +48,16 @@ jobs:
         run: npm install
 
       - name: build and publish Tauri app
-        uses: tauri-apps/tauri-action@v0 # <-- CHANGE THIS LINE FROM v2 TO v0
+        uses: tauri-apps/tauri-action@v0
         env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
-            tagName: v__VERSION__
-            releaseName: 'cmdRelay v__VERSION__'
-            releaseBody: 'See the assets below to download and install this version.'
-            releaseDraft: true
-            prerelease: false
-            args: ${{ matrix.args }}
+            # If triggered by a tag, use that exact tag name. Otherwise fallback to the config version.
+          tagName: ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}
+          releaseName: 'cmdRelay ${{ github.ref_type == 'tag' && github.ref_name || 'v__VERSION__' }}'
+
+            # We removed `releaseBody` so GitHub automatically creates a changelog based on the previous tag
+
+          releaseDraft: true
+          prerelease: false
+          args: ${{ matrix.args }}
