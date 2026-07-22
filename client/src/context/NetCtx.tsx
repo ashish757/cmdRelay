@@ -11,10 +11,10 @@ export function useNet() {
 export function NetProvider({ children }: { children: ReactNode }) {
     const { setActiveLayoutId, viewMode } = useUI();
 
-    const { connectionStatus, sendPayload, currentApp, layouts, knownApps } = useWebSocket(setActiveLayoutId, viewMode);
+    const { connectionStatus, sendPayload, currentApp, layouts, knownApps, sysInfo } = useWebSocket(setActiveLayoutId, viewMode);
 
     return (
-        <Net.Provider value={{ connectionStatus, sendPayload, currentApp, layouts, knownApps }}>
+        <Net.Provider value={{ connectionStatus, sendPayload, currentApp, layouts, knownApps, sysInfo }}>
             {children}
         </Net.Provider>
     );

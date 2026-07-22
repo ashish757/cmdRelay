@@ -7,11 +7,34 @@ import { ControlLayoutBuilder } from "./builder/ControlLayoutBuilder.tsx";
 import { ServerPairing } from "./components/ServerPairing";
 import { useNet } from "./context/NetCtx.tsx";
 import { useTheme } from './hooks/useTheme';
+import { SystemTelemetryDashboard } from './components/SystemTelemetry.tsx';
 
 function MainInterface() {
     const { viewMode, isMenuOpen, setIsMenuOpen, activeLayoutId } = useUI();
     const { currentApp } = useNet();
     useTheme();
+
+
+    const renderActiveView = () =>
+    {
+        switch (viewMode) {
+            case "controlLayout":
+                return <ControlLayoutRenderer activeLayout={activeLayoutId || ""} />;
+            case "layoutBuilder":
+                return <ControlLayoutBuilder/>;
+            case "systemInfo":
+                return <SystemTelemetryDashboard />;
+            default:
+                return (
+                    <div className="flex items-center justify-center h-full w-full bg-surface text-text-muted font-semibold tracking-wide">
+                        Invalid View
+                    </div>
+                )
+
+        }
+
+    }
+
 
     return (
         <main className="h-screen w-screen bg-background flex flex-col overflow-hidden select-none touch-none text-text-main font-sans relative transition-colors duration-200">
@@ -34,17 +57,9 @@ function MainInterface() {
             </button>
 
             <div className="flex-1 w-full h-full relative">
-                {viewMode === 'builder' ? (
-                    <ControlLayoutBuilder />
-                ) : (
-                    activeLayoutId ? (
-                        <ControlLayoutRenderer key={activeLayoutId} activeLayout={activeLayoutId} />
-                    ) : (
-                        <div className="flex items-center justify-center h-full w-full bg-surface text-text-muted font-semibold tracking-wide">
-                            No layout selected.
-                        </div>
-                    )
-                )}
+                    {
+                        renderActiveView()
+                    }
             </div>
             <div className="absolute top-1 left-1 text-[10px] text-text-muted/50 pointer-events-none">
                 {currentApp}
