@@ -1,5 +1,7 @@
 use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder, Manager};
 use local_ip_address::local_ip;
+use std::sync::atomic::AtomicBool;
+use std::sync::Arc;
 
 pub mod types;
 pub mod system_actions;
@@ -9,7 +11,7 @@ pub mod controllers;
 
 pub mod scan_installed_apps;
 
-use crate::telemetry_service::watch_active_window;
+use crate::telemetry_service::watch_system_state;
 
 use crate::server::run_server;
 
@@ -33,6 +35,9 @@ pub fn run() {
             let tx_clone_server = tx.clone();
             let tx_clone_telemetry = tx.clone();
 
+            let telemetry_active = Arc::new(AtomicBool::new(false));
+            let active_clone_server = telemetry_active.clone();
+            let active_clone_telemetry = telemetry_active.clone();
 
             let show_btn = MenuItem::with_id(app, "show", "Show QR Code", true, None::<&str>)?;
             let quit_btn = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
@@ -57,8 +62,9 @@ pub fn run() {
                 })
                 .build(app)?;
 
-            tauri::async_runtime::spawn(run_server(tx_clone_server));
-            tauri::async_runtime::spawn(watch_active_window(tx_clone_telemetry));
+            tauri::async_runtime::spawn(run_server(tx_clone_server, active_clone_server));
+            tauri::async_runtime::spawn(watch_system_state(tx_clone_telemetry, active_clone_telemetry));
+
 
             Ok(())
         })

@@ -2,6 +2,11 @@ use active_win_pos_rs::get_active_window;
 use tokio::time::{sleep, Duration};
 use tokio::sync::broadcast;
 use std::fs;
+use sysinfo::System;
+use std::sync::atomic::{AtomicBool, Ordering};
+use std::sync::Arc;
+use serde_json::json;
+use crate::types::{ProcessInfo};
 
 use crate::types::AppSettings;
 use crate::scan_installed_apps::scan_installed_apps;
@@ -24,8 +29,11 @@ fn load_or_init_settings() -> AppSettings {
     settings
 }
 
-pub async fn watch_active_window(tx: broadcast::Sender<String>) {
+pub async fn watch_system_state(tx: broadcast::Sender<String>, is_active: Arc<AtomicBool>) {
     let mut last_app_name = String::new();
+
+    let mut sys = System::new_all();
+    sys.refresh_all();
 
     loop {
         if let Ok(active_window) = get_active_window() {
@@ -58,6 +66,42 @@ pub async fn watch_active_window(tx: broadcast::Sender<String>) {
                 }
             }
         }
+
+        if is_active.load(Ordering::Relaxed) {
+            sys.refresh_cpu_all();
+            sys.refresh_memory();
+            sys.refresh_processes(sysinfo::ProcessesToUpdate::All, true);
+
+            let cpu_usage = sys.global_cpu_usage();
+            let bytes_to_gb = 1_073_741_824.0;
+            let ram_used = sys.used_memory() as f64 / bytes_to_gb;
+            let ram_total = sys.total_memory() as f64 / bytes_to_gb;
+
+            let mut processes: Vec<ProcessInfo> = sys.processes()
+                .values()
+                .map(|p| ProcessInfo {
+                    name: p.name().to_string_lossy().into_owned(),
+                    cpu_usage: p.cpu_usage(),
+                    ram_used: p.memory() as f64 / bytes_to_gb,
+                })
+                .collect();
+
+            processes.sort_by(|a, b| b.ram_used.partial_cmp(&a.ram_used).unwrap_or(std::cmp::Ordering::Equal));
+            let top_processes: Vec<ProcessInfo> = processes.into_iter().take(5).collect();
+
+            let telemetry_payload = json!({
+                            "actionType": "systemTelemetry",
+                            "payload": {
+                            "cpuUsage": cpu_usage,
+                            "ramUsed": ram_used,
+                            "ramTotal": ram_total,
+                            "processes": top_processes
+                        }
+                        }).to_string();
+
+            let _ = tx.send(telemetry_payload);
+        }
+
 
         sleep(Duration::from_millis(1000)).await;
     }

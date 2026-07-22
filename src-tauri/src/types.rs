@@ -63,3 +63,11 @@ pub struct AppSettings {
     #[serde(default)]
     pub discovery: DiscoverySettings,
 }
+
+#[derive(Debug, Serialize, Clone)]
+#[serde(rename_all = "camelCase")]
+pub struct ProcessInfo {
+    pub name: String,
+    pub cpu_usage: f32,
+    pub ram_used: f64,
+}

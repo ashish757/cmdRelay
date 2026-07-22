@@ -120,7 +120,6 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
 
         "terminalCommand" => {
             if let Some(cmd) = pld.payload.command {
-                // Default to opening the terminal if in_background isn't strictly true
                 let in_bg = pld.payload.in_background.unwrap_or(false);
                 execute_terminal_command(&cmd, in_bg);
             } else {
