@@ -130,7 +130,6 @@ pub fn execute_terminal_command(command: &str, in_background: bool) {
     if in_background {
         info!("Executing background shell command: {}", command);
 
-        // Spawn a non-blocking background child process on macOS/Linux
         if let Err(e) = Command::new("sh")
             .arg("-c")
             .arg(command)
@@ -141,10 +140,8 @@ pub fn execute_terminal_command(command: &str, in_background: bool) {
     } else {
         info!("Launching Terminal.app with command: {}", command);
 
-        // Sanitize double quotes and backslashes so AppleScript doesn't break
         let escaped_cmd = command.replace('\\', "\\\\").replace('"', "\\\"");
 
-        // AppleScript to open Terminal, execute command, and bring window to front
         let script = format!(
             "tell application \"Terminal\"\n do script \"{}\"\n activate\nend tell",
             escaped_cmd

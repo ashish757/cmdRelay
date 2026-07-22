@@ -16,6 +16,7 @@ use enigo::Enigo;
 use std::sync::Arc;
 use std::path::Path;
 use std::fs;
+use std::sync::atomic::{AtomicBool};
 
 use crate::types::ClientPayload;
 use crate::controllers::route_action;
@@ -27,6 +28,7 @@ struct Assets;
 struct AppState {
     action_tx: mpsc::UnboundedSender<ClientPayload>,
     telemetry_tx: broadcast::Sender<String>,
+    telemetry_active: Arc<AtomicBool>,
 }
 
 fn parse_payload(txt: &str) -> Option<ClientPayload> {
@@ -39,7 +41,7 @@ fn parse_payload(txt: &str) -> Option<ClientPayload> {
     }
 }
 
-pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
+pub async fn run_server(telemetry_tx: broadcast::Sender<String>, telemetry_active: Arc<AtomicBool>) {
     let (action_tx, mut action_rx) = mpsc::unbounded_channel::<ClientPayload>();
 
     thread::spawn(move || {
@@ -52,6 +54,7 @@ pub async fn run_server(telemetry_tx: broadcast::Sender<String>) {
     let state = Arc::new(AppState {
         action_tx,
         telemetry_tx,
+        telemetry_active,
     });
 
     let app = Router::new()
@@ -121,16 +124,27 @@ async fn handle_socket(mut socket: WebSocket, state: Arc<AppState>) {
             }
 
             incoming_msg = socket.recv() => {
-                match incoming_msg {
+               match incoming_msg {
                     Some(Ok(AxumMessage::Text(txt))) => {
                         if !txt.trim().is_empty() {
                             if let Some(pld) = parse_payload(&txt) {
-                                let _ = state.action_tx.send(pld);
+                                if pld.action_type == "subscribeSystemTelemetry" {
+                                    state.telemetry_active.store(true, std::sync::atomic::Ordering::Relaxed);
+                                    info!("Client subscribed to System Telemetry");
+                                }
+                                else if pld.action_type == "unsubscribeSystemTelemetry" {
+                                    state.telemetry_active.store(false, std::sync::atomic::Ordering::Relaxed);
+                                    info!("Client unsubscribed from System Telemetry");
+                                }
+                                else {
+                                    let _ = state.action_tx.send(pld);
+                                }
                             }
                         }
                     }
                     Some(Ok(AxumMessage::Close(_))) | None => {
-                        info!("WebSocket connection closed cleanly by client");
+                        state.telemetry_active.store(false, std::sync::atomic::Ordering::Relaxed);
+                        info!("WebSocket disconnected. Pausing telemetry and closing connection.");
                         break;
                     }
                     _ => continue,
