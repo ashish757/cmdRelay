@@ -129,8 +129,8 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                 ${isActive && !hasCustomBg
                 ? 'bg-primary border-primary text-white shadow-[inset_0_4px_12px_rgba(0,0,0,0.3)]'
                 : !hasCustomBg
-                    ? 'bg-surface border-border/50 text-text-main shadow-md'
-                    : 'border-transparent shadow-md'
+                    ? `${catalogId ? "border-none" : "bg-surface border-border/50"}  text-text-main`
+                    : 'border-transparent'
             }
             `}
         >
@@ -139,7 +139,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
                     key={catalogId}
                     src={`/logos/${catalogId}.svg`}
                     alt={component.label}
-                    className="w-8 h-8 object-contain pointer-events-none"
+                    className="w-full h-full object-contain pointer-events-none"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                 />
             )}

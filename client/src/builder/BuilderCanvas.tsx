@@ -146,22 +146,23 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
                                 }}
                                 onClick={(e) => { e.stopPropagation(); setSelectedId(component.id); }}
                             >
-                                {/* Render Catalog Image */}
+
                                 {isCatalogImage && catalogId && (
-                                    <img
-                                        src={`/logos/${catalogId}.svg`}
-                                        alt={component.label}
-                                        className="w-8 h-8 object-contain pointer-events-none drop-shadow-md"
-                                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
-                                    />
+                                    <div className="absolute inset-0 w-full h-full p-2.5 flex items-center justify-center pointer-events-none">
+                                        <img
+                                            key={catalogId}
+                                            src={`/logos/${catalogId}.svg`}
+                                            alt={component.label}
+                                            className="w-full h-full object-contain drop-shadow-md"
+                                            onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                                        />
+                                    </div>
                                 )}
 
-                                {/* Render Icon */}
                                 {IconComponent && !isCatalogImage && (
                                     <IconComponent size={24} className="pointer-events-none drop-shadow-md" />
                                 )}
 
-                                {/* Render Label */}
                                 {showLabel && (
                                     <span className="truncate px-2 pointer-events-none drop-shadow-md w-full text-center">
                                         {component.label || component.type}

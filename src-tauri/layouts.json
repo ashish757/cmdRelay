@@ -411,10 +411,11 @@
           "2": "a",
           "3": "g",
           "4": "e",
-          "bg": "#ef4444",
+          "bg": "#22c55e",
           "color": "#ffffff",
-          "icon": "",
-          "image": ""
+          "icon": "Clipboard",
+          "image": "",
+          "showLabel": false
         },
         "type": "btn"
       },
@@ -461,36 +462,6 @@
           "w": 2,
           "x": 1,
           "y": 7
-        },
-        "type": "btn"
-      },
-      {
-        "appId": "Safari",
-        "data": {
-          "actionType": "openApp",
-          "actionValue": {
-            "appId": "Finder"
-          }
-        },
-        "id": "c_1784385634400",
-        "label": "Finder",
-        "landscapeGeo": {
-          "h": 2,
-          "w": 2,
-          "x": 11,
-          "y": 1
-        },
-        "portraitGeo": {
-          "h": 2,
-          "w": 2,
-          "x": 4,
-          "y": 3
-        },
-        "style": {
-          "bg": "#3b82f6",
-          "color": "#ffffff",
-          "icon": "Folder",
-          "showLabel": false
         },
         "type": "btn"
       },
@@ -645,11 +616,11 @@
         "data": {
           "actionType": "openApp",
           "actionValue": {
-            "appId": "Safari"
+            "appId": "Finder"
           }
         },
         "id": "c_1784826431118",
-        "label": "Safari",
+        "label": "Finder",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
@@ -660,11 +631,11 @@
           "h": 2,
           "w": 2,
           "x": 4,
-          "y": 1
+          "y": 3
         },
         "style": {
           "icon": "",
-          "image": "catalog:youtube",
+          "image": "catalog:finder",
           "showLabel": false
         },
         "type": "btn"
