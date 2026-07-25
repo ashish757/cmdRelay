@@ -2,9 +2,16 @@
 A high-performance, context-aware PC controller that turns your mobile device into a smart macro pad
 
 
-
-<img src="./asset/qr.png" alt="Image 1" width="250px" />
-<img src="./asset/sysMonitor.gif" alt="Image 2" width="250px" />
+<table>
+  <tr>
+    <td>
+      <img src="./asset/qr.png" alt="Image 1" />
+    </td>
+    <td>
+      <img src="./asset/sysMonitor.gif" alt="Image 2" />
+    </td>
+  </tr>
+</table>
 
 ### quick idea
 - cmdRelay basically helps you control your PC with your mobile device.

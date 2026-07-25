@@ -136,6 +136,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
         >
             {isCatalogImage && catalogId && (
                 <img
+                    key={catalogId}
                     src={`/logos/${catalogId}.svg`}
                     alt={component.label}
                     className="w-8 h-8 object-contain pointer-events-none"

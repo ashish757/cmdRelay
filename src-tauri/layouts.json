@@ -643,13 +643,13 @@
       },
       {
         "data": {
-          "actionType": "specialFunction",
+          "actionType": "openApp",
           "actionValue": {
-            "command": "brightness_up"
+            "appId": "Safari"
           }
         },
         "id": "c_1784826431118",
-        "label": "Btn",
+        "label": "Safari",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
@@ -661,6 +661,11 @@
           "w": 2,
           "x": 4,
           "y": 1
+        },
+        "style": {
+          "icon": "",
+          "image": "catalog:youtube",
+          "showLabel": false
         },
         "type": "btn"
       }
