@@ -97,6 +97,7 @@ version = "0.1.0"
 dependencies = [
  "active-win-pos-rs",
  "axum",
+ "directories",
  "enigo",
  "local-ip-address",
  "log",
@@ -986,6 +987,15 @@ dependencies = [
  "block-buffer 0.12.1",
  "const-oid",
  "crypto-common 0.2.2",
+]
+
+[[package]]
+name = "directories"
+version = "6.0.0"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "16f5094c54661b38d03bd7e50df373292118db60b585c08a411c6d840017fe7d"
+dependencies = [
+ "dirs-sys",
 ]
 
 [[package]]

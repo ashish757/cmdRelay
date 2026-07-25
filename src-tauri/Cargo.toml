@@ -32,4 +32,5 @@ rust-embed = "8.11.0"
 mime = "0.3.17"
 mime_guess = "2.0.5"
 sysinfo = "0.36.1"
+directories = "6.0.0"
 
