@@ -1,5 +1,5 @@
 use crate::types::{ClientPayload, KeyAction};
-use crate::system_actions::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click, execute_terminal_command, parse_key};
+use crate::system_actions::{double_click, drag_end, drag_start, execute_keypress, execute_text, execute_trackpad_move, scroll, secondary_click, single_click, execute_special_function, execute_terminal_command, parse_key};
 use log::{error, info};
 use enigo::Enigo;
 use enigo::KeyboardControllable;
@@ -124,6 +124,14 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
                 execute_terminal_command(&cmd, in_bg);
             } else {
                 log::error!("Received terminalCommand without a command string");
+            }
+        }
+
+        "specialFunction" => {
+            if let Some(cmd) = pld.payload.command {
+                crate::system_actions::execute_special_function(e, &cmd);
+            } else {
+                error!("Received special_function without a command string");
             }
         }
         _ => error!("Unknown action_type: {}", pld.action_type),

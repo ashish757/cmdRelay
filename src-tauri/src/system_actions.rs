@@ -156,3 +156,71 @@ pub fn execute_terminal_command(command: &str, in_background: bool) {
         }
     }
 }
+
+
+pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
+    info!("Executing special function: {}", command_id);
+
+    if cfg!(target_os = "macos") {
+        match command_id {
+            "media_play_pause" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 100"]).spawn(); },
+            "media_next" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 101"]).spawn(); },
+            "media_prev" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 98"]).spawn(); },
+            "volume_up" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 73"]).spawn(); },
+            "volume_down" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 72"]).spawn(); },
+            "volume_mute" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to set volume output muted not (output muted of (get volume settings))"]).spawn(); },
+
+            "brightness_up" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 144"]).spawn(); },
+            "brightness_down" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 145"]).spawn(); },
+
+            "system_sleep" => { let _ = Command::new("pmset").args(&["sleepnow"]).spawn(); },
+            "system_lock" => { let _ = Command::new("pmset").args(&["displaysleepnow"]).spawn(); },
+
+            "mac_mission_control" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 160"]).spawn(); },
+            "mac_spotlight" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to keystroke space using command down"]).spawn(); },
+            "mac_dnd" => {
+                let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 97"]).spawn();
+            },
+            _ => error!("Unhandled macOS special function: {}", command_id),
+        }
+    } else if cfg!(target_os = "windows") {
+        match command_id {
+            "win_task_view" => {
+                e.key_down(Key::Meta);
+                e.key_click(Key::Tab);
+                e.key_up(Key::Meta);
+            },
+            "win_start_menu" => {
+                e.key_click(Key::Meta);
+            },
+            "system_lock" => {
+                e.key_down(Key::Meta);
+                e.key_click(Key::Layout('l'));
+                e.key_up(Key::Meta);
+            },
+            "system_sleep" => {
+                let _ = Command::new("rundll32.exe").args(&["powrprof.dll,SetSuspendState", "0,1,0"]).spawn();
+            },
+
+            "media_play_pause" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]179)"]).spawn(); },
+            "media_next" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]176)"]).spawn(); },
+            "media_prev" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]177)"]).spawn(); },
+            "volume_up" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]175)"]).spawn(); },
+            "volume_down" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]174)"]).spawn(); },
+            "volume_mute" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]173)"]).spawn(); },
+
+            "brightness_up" => {
+                let script = "$b = Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightness; $level = [math]::Min($b.CurrentBrightness + 10, 100); (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1, $level)";
+                let _ = Command::new("powershell").args(&["-c", script]).spawn();
+            },
+            "brightness_down" => {
+                let script = "$b = Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightness; $level = [math]::Max($b.CurrentBrightness - 10, 0); (Get-WmiObject -Namespace root/WMI -Class WmiMonitorBrightnessMethods).WmiSetBrightness(1, $level)";
+                let _ = Command::new("powershell").args(&["-c", script]).spawn();
+            },
+
+            _ => {
+                error!("Unhandled Windows special function: {}", command_id);
+            }
+        }
+    }
+}
