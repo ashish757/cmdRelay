@@ -50,6 +50,11 @@ pub fn parse_key(key_id: &str) -> Option<Key> {
         "F2" => Some(Key::F2),
         "F3" => Some(Key::F3),
         "F4" => Some(Key::F4),
+        "F8" => Some(Key::F8),
+        "F9" => Some(Key::F9),
+        "F10" => Some(Key::F10),
+        "F11" => Some(Key::F11),
+        "F12" => Some(Key::F12),
 
         // --- 5. Dynamic Fallback (KeyA -> 'A', KeyZ -> 'Z') ---
         id if id.starts_with("Key") => {
@@ -163,11 +168,21 @@ pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
 
     if cfg!(target_os = "macos") {
         match command_id {
-            "media_play_pause" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 100"]).spawn(); },
-            "media_next" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 101"]).spawn(); },
-            "media_prev" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 98"]).spawn(); },
-            "volume_up" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 73"]).spawn(); },
-            "volume_down" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 72"]).spawn(); },
+            "media_play_pause" => {
+                let script = "import Cocoa;let d=1048576;let e=NSEvent.otherEvent(with:.systemDefined,location:.zero,modifierFlags:NSEvent.ModifierFlags(rawValue:0xa00),timestamp:0,windowNumber:0,context:nil,subtype:8,data1:d|0xa00,data2:-1)?.cgEvent;e?.post(tap:.cghidEventTap);let u=NSEvent.otherEvent(with:.systemDefined,location:.zero,modifierFlags:NSEvent.ModifierFlags(rawValue:0xb00),timestamp:0,windowNumber:0,context:nil,subtype:8,data1:d|0xb00,data2:-1)?.cgEvent;u?.post(tap:.cghidEventTap)";
+                let _ = Command::new("swift").args(&["-e", script]).spawn();
+            },
+            "media_next" => {
+                let script = "import Cocoa;let d=1114112;let e=NSEvent.otherEvent(with:.systemDefined,location:.zero,modifierFlags:NSEvent.ModifierFlags(rawValue:0xa00),timestamp:0,windowNumber:0,context:nil,subtype:8,data1:d|0xa00,data2:-1)?.cgEvent;e?.post(tap:.cghidEventTap);let u=NSEvent.otherEvent(with:.systemDefined,location:.zero,modifierFlags:NSEvent.ModifierFlags(rawValue:0xb00),timestamp:0,windowNumber:0,context:nil,subtype:8,data1:d|0xb00,data2:-1)?.cgEvent;u?.post(tap:.cghidEventTap)";
+                let _ = Command::new("swift").args(&["-e", script]).spawn();
+            },
+            "media_prev" => {
+                let script = "import Cocoa;let d=1179648;let e=NSEvent.otherEvent(with:.systemDefined,location:.zero,modifierFlags:NSEvent.ModifierFlags(rawValue:0xa00),timestamp:0,windowNumber:0,context:nil,subtype:8,data1:d|0xa00,data2:-1)?.cgEvent;e?.post(tap:.cghidEventTap);let u=NSEvent.otherEvent(with:.systemDefined,location:.zero,modifierFlags:NSEvent.ModifierFlags(rawValue:0xb00),timestamp:0,windowNumber:0,context:nil,subtype:8,data1:d|0xb00,data2:-1)?.cgEvent;u?.post(tap:.cghidEventTap)";
+                let _ = Command::new("swift").args(&["-e", script]).spawn();
+            },
+
+            "volume_up" => { let _ = Command::new("osascript").args(&["-e", "set volume output volume ((output volume of (get volume settings)) + 6)"]).spawn(); },
+            "volume_down" => { let _ = Command::new("osascript").args(&["-e", "set volume output volume ((output volume of (get volume settings)) - 6)"]).spawn(); },
             "volume_mute" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to set volume output muted not (output muted of (get volume settings))"]).spawn(); },
 
             "brightness_up" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 144"]).spawn(); },
@@ -178,9 +193,8 @@ pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
 
             "mac_mission_control" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 160"]).spawn(); },
             "mac_spotlight" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to keystroke space using command down"]).spawn(); },
-            "mac_dnd" => {
-                let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 97"]).spawn();
-            },
+            "mac_dnd" => { let _ = Command::new("osascript").args(&["-e", "tell application \"System Events\" to key code 97"]).spawn(); },
+
             _ => error!("Unhandled macOS special function: {}", command_id),
         }
     } else if cfg!(target_os = "windows") {
@@ -205,8 +219,8 @@ pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
             "media_play_pause" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]179)"]).spawn(); },
             "media_next" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]176)"]).spawn(); },
             "media_prev" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]177)"]).spawn(); },
-            "volume_up" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]175)"]).spawn(); },
-            "volume_down" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]174)"]).spawn(); },
+            "volume_up" => { let _ = Command::new("osascript").args(&["-e", "set volume output volume ((output volume of (get volume settings)) + 5)"]).spawn(); },
+            "volume_down" => { let _ = Command::new("osascript").args(&["-e", "set volume output volume ((output volume of (get volume settings)) - 5)"]).spawn(); },
             "volume_mute" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]173)"]).spawn(); },
 
             "brightness_up" => {

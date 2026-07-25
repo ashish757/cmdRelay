@@ -14,8 +14,6 @@ use std::thread;
 use log::{error, info};
 use enigo::Enigo;
 use std::sync::Arc;
-use std::path::Path;
-use std::fs;
 use std::sync::atomic::{AtomicBool};
 
 use crate::types::ClientPayload;
@@ -94,23 +92,23 @@ async fn handle_socket(mut socket: WebSocket, state: Arc<AppState>) {
     info!("New WebSocket connection established");
     let mut current_telemetry_rx = state.telemetry_tx.subscribe();
 
-    if Path::new("layouts.json").exists() {
-        if let Ok(data) = fs::read_to_string("layouts.json") {
-            let sync_msg = format!(
-                r#"{{"actionType": "syncLayout", "payload": {}}}"#,
-                data
-            );
-            let _ = socket.send(AxumMessage::Text(sync_msg.into())).await;
-            info!("Layout sync sent to client");
-        }
+    if let Ok(data) = crate::config::read_layouts() {
+        let sync_msg = format!(
+            r#"{{"actionType": "syncLayout", "payload": {}}}"#,
+            data
+        );
+        let _ = socket.send(AxumMessage::Text(sync_msg.into())).await;
+        info!("Layout sync sent to client");
+    } else {
+        error!("Failed to read layouts for client sync");
     }
 
-    if Path::new("settings.json").exists() {
-        if let Ok(settings_data) = fs::read_to_string("settings.json") {
-            let sync_msg = format!(r#"{{"actionType": "syncApps", "payload": {}}}"#, settings_data);
-            let _ = socket.send(AxumMessage::Text(sync_msg.into())).await;
-            info!("Settings sync sent to client");
-        }
+    if let Ok(settings_data) = crate::config::read_settings() {
+        let sync_msg = format!(r#"{{"actionType": "syncApps", "payload": {}}}"#, settings_data);
+        let _ = socket.send(AxumMessage::Text(sync_msg.into())).await;
+        info!("Settings sync sent to client");
+    } else {
+        info!("No existing settings.json found to sync to client");
     }
 
     loop {

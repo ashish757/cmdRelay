@@ -8,11 +8,10 @@ pub mod system_actions;
 pub mod server;
 pub mod telemetry_service;
 pub mod controllers;
-
 pub mod scan_installed_apps;
+pub mod config;
 
 use crate::telemetry_service::watch_system_state;
-
 use crate::server::run_server;
 
 #[tauri::command]
@@ -23,12 +22,27 @@ fn get_server_url() -> Result<String, String> {
     }
 }
 
+#[tauri::command]
+fn get_layouts() -> Result<String, String> {
+    crate::config::read_layouts().map_err(|e| e.to_string())
+}
+
+#[tauri::command]
+fn save_layouts(new_json: String) -> Result<(), String> {
+    crate::config::save_layouts(&new_json).map_err(|e| e.to_string())
+}
+
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
         .setup(|app| {
             #[cfg(target_os = "macos")]
             let _ = app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
+            match crate::config::initialize_layouts() {
+                Ok(path) => log::info!("Layouts initialized successfully at {:?}", path),
+                Err(e) => log::error!("Failed to initialize layouts: {}", e),
+            }
 
             let (tx, _rx) = tokio::sync::broadcast::channel::<String>(16);
 
@@ -82,7 +96,7 @@ pub fn run() {
                 .level(log::LevelFilter::Info)
                 .build()
         )
-        .invoke_handler(tauri::generate_handler![get_server_url])
+        .invoke_handler(tauri::generate_handler![get_server_url, get_layouts, save_layouts])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
 }

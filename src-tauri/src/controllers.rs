@@ -3,7 +3,6 @@ use crate::system_actions::{double_click, drag_end, drag_start, execute_keypress
 use log::{error, info};
 use enigo::Enigo;
 use enigo::KeyboardControllable;
-use std::fs;
 use std::thread;
 use std::time::Duration;
 use std::process::Command;
@@ -89,31 +88,37 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
         "saveLayout" => {
             if let Some(layouts_array) = pld.payload.layouts {
                 if let Ok(json_string) = serde_json::to_string_pretty(&layouts_array) {
-                    let _ = fs::write("layouts.json", json_string);
-                    info!("Layout saved to layouts.json");
+                    if let Ok(_) = crate::config::save_layouts(&json_string) {
+                        info!("Layout saved via config module");
+                    } else {
+                        error!("Failed to save layout via config module");
+                    }
                 }
             }
         }
         "deleteLayout" => {
             if let Some(layout_id) = pld.payload.id {
-                if let Ok(file_content) = fs::read_to_string("layouts.json") {
+                if let Ok(file_content) = crate::config::read_layouts() {
                     if let Ok(mut layouts) = serde_json::from_str::<Vec<serde_json::Value>>(&file_content) {
                         layouts.retain(|l| l.get("id").and_then(|id| id.as_str()) != Some(layout_id.as_str()));
 
                         if let Ok(json_string) = serde_json::to_string_pretty(&layouts) {
-                            let _ = fs::write("layouts.json", json_string);
-                            info!("Layout {} successfully deleted from layouts.json", layout_id);
+                            if let Ok(_) = crate::config::save_layouts(&json_string) {
+                                info!("Layout {} successfully deleted via config module", layout_id);
+                            }
                         }
                     }
                 }
             }
         }
         "saveSettings" => {
-
             if let Some(settings_obj) = pld.payload.settings {
                 if let Ok(json_string) = serde_json::to_string_pretty(&settings_obj) {
-                    let _ = fs::write("settings.json", json_string);
-                    info!("Settings saved to disk");
+                    if let Ok(_) = crate::config::save_settings(&json_string) {
+                        info!("Settings saved to disk via config module");
+                    } else {
+                        error!("Failed to save settings via config module");
+                    }
                 }
             }
         }
@@ -129,7 +134,7 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
 
         "specialFunction" => {
             if let Some(cmd) = pld.payload.command {
-                crate::system_actions::execute_special_function(e, &cmd);
+                execute_special_function(e, &cmd);
             } else {
                 error!("Received special_function without a command string");
             }

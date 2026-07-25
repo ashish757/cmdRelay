@@ -1,7 +1,6 @@
 use active_win_pos_rs::get_active_window;
 use tokio::time::{sleep, Duration};
 use tokio::sync::broadcast;
-use std::fs;
 use sysinfo::System;
 use std::sync::atomic::{AtomicBool, Ordering};
 use std::sync::Arc;
@@ -11,10 +10,9 @@ use crate::types::{ProcessInfo};
 use crate::types::AppSettings;
 use crate::scan_installed_apps::scan_installed_apps;
 
-const SETTINGS_FILE: &str = "settings.json";
 
 fn load_or_init_settings() -> AppSettings {
-    let mut settings: AppSettings = fs::read_to_string(SETTINGS_FILE)
+    let mut settings: AppSettings = crate::config::read_settings()
         .ok()
         .and_then(|data| serde_json::from_str(&data).ok())
         .unwrap_or_default();
@@ -22,7 +20,7 @@ fn load_or_init_settings() -> AppSettings {
     if settings.discovery.known_apps.is_empty() {
         settings.discovery.known_apps = scan_installed_apps();
         if let Ok(json) = serde_json::to_string_pretty(&settings) {
-            let _ = fs::write(SETTINGS_FILE, json);
+            let _ = crate::config::save_settings(&json);
         }
     }
 
@@ -53,7 +51,7 @@ pub async fn watch_system_state(tx: broadcast::Sender<String>, is_active: Arc<At
                     settings.discovery.known_apps.sort();
 
                     if let Ok(json_string) = serde_json::to_string_pretty(&settings) {
-                        let _ = fs::write(SETTINGS_FILE, &json_string);
+                        let _ = crate::config::save_settings(&json_string);
 
                         if let Ok(apps_array_json) = serde_json::to_string(&settings.discovery.known_apps) {
                             let sync_payload = format!(
