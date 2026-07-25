@@ -809,5 +809,71 @@
         "data": { "actionType": "openApp", "actionValue": { "appId": "Spotify" } }
       }
     ]
+  },
+  {
+    "id": "l_presenter_pro",
+    "title": "Universal Presenter",
+    "targetApps": [
+      "PowerPoint",
+      "Keynote",
+      "Google Chrome",
+      "Canva"
+    ],
+    "components": [
+      {
+        "id": "pres_prev",
+        "type": "btn",
+        "label": "Previous Slide",
+        "landscapeGeo": { "h": 4, "w": 2, "x": 1, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 4, "x": 3, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "ArrowLeft", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "ArrowLeft" } }
+      },
+      {
+        "id": "pres_next",
+        "type": "btn",
+        "label": "Next Slide",
+        "landscapeGeo": { "h": 4, "w": 4, "x": 3, "y": 3 },
+        "portraitGeo": { "h": 4, "w": 4, "x": 3, "y": 3 },
+        "style": { "bg": "#22c55e", "icon": "ArrowRight", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "ArrowRight" } }
+      },
+      {
+        "id": "pres_black",
+        "type": "btn",
+        "label": "Black Screen",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "style": { "bg": "#000000", "icon": "Monitor", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyB" } }
+      },
+      {
+        "id": "pres_white",
+        "type": "btn",
+        "label": "White Screen",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "style": { "bg": "#f9fafb", "color": "#000000", "icon": "Sun", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyW" } }
+      },
+      {
+        "id": "pres_media",
+        "type": "btn",
+        "label": "Play Video",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "style": { "bg": "#3b82f6", "icon": "Play", "showLabel": true },
+        "data": { "actionType": "special_function", "actionValue": { "command": "media_play_pause" } }
+      },
+      {
+        "id": "pres_exit",
+        "type": "btn",
+        "label": "End Show",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "style": { "bg": "#ef4444", "icon": "X", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "Escape" } }
+      }
+    ]
   }
 ]
