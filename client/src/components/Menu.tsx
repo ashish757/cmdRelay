@@ -1,5 +1,5 @@
 import { useUI } from '../context/UICtx';
-import {MENU_OPTIONS, type MenuItem, preBuiltLayouts} from "../config/ctrlConfig.ts";
+import {MENU_OPTIONS, type MenuItem} from "../config/ctrlConfig.ts";
 import type { ControlLayout } from "../types/controlLayouts.ts";
 import { useTheme } from '../hooks/useTheme';
 import { Moon, Sun } from 'lucide-react';
@@ -52,20 +52,6 @@ export function MenuOverlay() {
 
             <h2 className="text-2xl mt-12 mb-6 font-bold">Templates & Tools</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-                {preBuiltLayouts.map((control: ControlLayout) => (
-                    <button
-                        key={control.id}
-                        onClick={() => handleMenuOptionClick(control, "controlLayout")}
-                        className={`p-5 text-left rounded-xl font-semibold transition-all ${
-                            activeLayoutId === control.id && viewMode === 'controlLayout'
-                                ? 'bg-primary text-white shadow-[0_0_15px_rgba(var(--color-primary-rgb),0.4)]'
-                                : 'bg-surface border border-border text-text-muted hover:text-text-main hover:border-text-muted'
-                        }`}
-                    >
-                        {control.title}
-                    </button>
-                ))}
-
                 {MENU_OPTIONS.map((menuItem) => (
                     <button
                         key={menuItem.id}

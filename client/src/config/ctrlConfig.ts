@@ -4,7 +4,7 @@ import { TextCtrl } from "../controls/TextCtrl.tsx";
 import { GenericButtonCtrl } from "../controls/GenericButtonCtrl.tsx";
 import { ButtonInspector } from '../builder/inspectors/ButtonInspector';
 import { TextInspector } from '../builder/inspectors/TextInspector';
-import type {ActionType, ControlLayout} from "../types/controlLayouts.ts";
+import type {ActionType} from "../types/controlLayouts.ts";
 import type { InspectorProps } from "../types/inspector.ts";
 import type {ViewMode} from "../types/controlLayouts.ts";
 
@@ -51,44 +51,3 @@ export const MENU_OPTIONS: MenuItem[] = [
     {id: "l_1726454", title: "System Info", viewType: "systemInfo" },
     {id: "l_412644", title: "Layout Settings", viewType: "layoutBuilder" },
 ]
-
-export const preBuiltLayouts: ControlLayout[] = [
-    {
-        id: "l_17429234",
-        title: "Gamer",
-        components: [
-            {
-                id: "32",
-                type: "btn",
-                label: "A",
-                landscapeGeo: { h: 2, w: 2, x: 5, y: 71 },
-                portraitGeo: { h: 4, w: 4, x: 1, y: 1 },
-                style: {
-                    bg: "#ef4444",
-                    color: "#ffffff",
-                    showLabel: true
-                },
-                data: {
-                    actionType: "keyPress",
-                    actionValue: { keyId: "A" }
-                }
-            },
-            {
-                id: "13233",
-                type: "btn",
-                label: "S",
-                landscapeGeo: { h: 2, w: 2, x: 5, y: 71 },
-                portraitGeo: { h: 4, w: 4, x: 1, y: 5 },
-                style: {
-                    bg: "#ef4444",
-                    color: "#ffffff",
-                    showLabel: true,
-                },
-                data: {
-                    actionType: "keyPress",
-                    actionValue: { keyId: "S" }
-                }
-            }
-        ]
-    }
-];

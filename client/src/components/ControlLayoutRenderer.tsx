@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { preBuiltLayouts, controlElementsRegistry } from "../config/ctrlConfig.ts";
+import { controlElementsRegistry } from "../config/ctrlConfig.ts";
 import { type ControlLayout } from "../types/controlLayouts.ts";
 
 const useDeviceOrientation = () => {
@@ -22,9 +22,9 @@ const legacyTypeMap: Record<string, string> = {
 export default function ControlLayoutRenderer({ activeLayout }: { activeLayout: string }) {
     const isLandscape = useDeviceOrientation();
 
-    const customLayouts: ControlLayout[] = JSON.parse(localStorage.getItem("layouts") || "[]");
+    const layouts: ControlLayout[] = JSON.parse(localStorage.getItem("layouts") || "[]");
 
-    const layout: ControlLayout | undefined = [...preBuiltLayouts, ...customLayouts].find(
+    const layout: ControlLayout | undefined = [...layouts].find(
         (currentLayout) => currentLayout.id === activeLayout
     );
 
