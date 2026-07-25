@@ -38,7 +38,7 @@ export function BuilderSidebar(props: SidebarProps) {
     const SpecificInspector = selectedComp ? controlElementsRegistry[selectedComp.type]?.inspector : null;
 
     return (
-        <div className="w-[440px] shrink-0 bg-background flex flex-col shadow-2xl border-l border-border relative z-20">
+        <div className="w-[440px] shrink-0 bg-background flex flex-col shadow-2xl border-l border-border relative z-20 overflow-y-auto custom-scrollbar">
 
             <div className="p-5 border-b border-border bg-surface/40">
                 <div className="flex items-center justify-between mb-4">
@@ -128,11 +128,10 @@ export function BuilderSidebar(props: SidebarProps) {
                 </button>
             </div>
 
-            <div className="flex-1 p-1 overflow-y-auto custom-scrollbar">
+            <div className="flex-1 p-1">
                 {selectedComp && activeGeo ? (
                     <div className="space-y-2 pb-10">
-                        <Accordion title="Control Appearance" defaultExpanded={true}>
-                            <div className="grid gap-2">
+                            <div className="grid gap-2 p-3">
                                 <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Widget Type</label>
                                 <select
                                     value={selectedComp.type}
@@ -146,15 +145,12 @@ export function BuilderSidebar(props: SidebarProps) {
                                     ))}
                                 </select>
                             </div>
-                        </Accordion>
 
                         {SpecificInspector && (
-                            <Accordion title="Button Actions" defaultExpanded={true}>
                                 <SpecificInspector
                                     selectedComp={selectedComp}
                                     updateControlComponent={updateControlComponent}
                                 />
-                            </Accordion>
                         )}
 
                         <Accordion title={`Size & Position (${isLandscape ? 'Landscape' : 'Portrait'})`} defaultExpanded={false}>

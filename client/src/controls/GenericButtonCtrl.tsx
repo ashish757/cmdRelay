@@ -1,9 +1,11 @@
 import React, { useState, useRef, useEffect } from "react";
 import { useNet } from "../context/NetCtx.tsx";
 import type { ControlComponent } from "../types/controlLayouts.ts";
+import { ICON_MAP } from "../config/appearance";
 
 export const GenericButtonCtrl = ({ component }: { component: ControlComponent }) => {
     const data = component.data;
+    const style = component.style || {};
     const { sendPayload } = useNet();
 
     const [isPressed, setIsPressed] = useState(false);
@@ -103,20 +105,53 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
         }
     };
 
+    const isActive = isPressed || isLatched;
+    const hasCustomBg = style.bg && style.bg !== 'transparent';
+    const showLabel = style.showLabel !== false;
+
+    const IconComponent = style.icon ? ICON_MAP[style.icon] : null;
+    const isCatalogImage = style.image?.startsWith('catalog:');
+    const catalogId = isCatalogImage ? style.image?.split(':')[1] : null;
+
     return (
         <div
             onPointerDown={handlePointerDown}
             onPointerUp={handlePointerRelease}
             onPointerCancel={handlePointerRelease}
+            style={{
+                backgroundColor: hasCustomBg ? style.bg : undefined,
+                color: style.color ? style.color : undefined,
+                transform: isActive ? 'scale(0.97)' : 'scale(1)',
+                filter: isActive && hasCustomBg ? 'brightness(0.8)' : 'none',
+            }}
             className={`
-                w-full h-full rounded-lg transition-all duration-75 flex items-center justify-center text-sm md:text-lg font-bold shadow-md select-none touch-none border-2
-                ${isPressed || isLatched
-                ? 'bg-primary border-primary text-white scale-[0.97] shadow-[inset_0_4px_12px_rgba(0,0,0,0.3)]'
-                : 'bg-surface border-border/50 text-text-main'
+                w-full h-full rounded-lg transition-all duration-75 flex flex-col gap-1 items-center justify-center text-sm md:text-lg font-bold select-none touch-none border-2
+                ${isActive && !hasCustomBg
+                ? 'bg-primary border-primary text-white shadow-[inset_0_4px_12px_rgba(0,0,0,0.3)]'
+                : !hasCustomBg
+                    ? 'bg-surface border-border/50 text-text-main shadow-md'
+                    : 'border-transparent shadow-md'
             }
             `}
         >
-            {component.label || "Btn"}
+            {isCatalogImage && catalogId && (
+                <img
+                    src={`/logos/${catalogId}.svg`}
+                    alt={component.label}
+                    className="w-8 h-8 object-contain pointer-events-none"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                />
+            )}
+
+            {IconComponent && !isCatalogImage && (
+                <IconComponent size={24} className="pointer-events-none" />
+            )}
+
+            {showLabel && (
+                <span className="pointer-events-none text-center leading-tight truncate px-2 w-full">
+                    {component.label || "Btn"}
+                </span>
+            )}
         </div>
     );
 };

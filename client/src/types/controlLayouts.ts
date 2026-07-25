@@ -1,4 +1,4 @@
-export type ActionType = 'none' | 'keyPress' | 'keyHoldToggle' | 'macro' | 'openApp' | 'terminalCommand';
+export type ActionType =  'keyPress' | 'keyHoldToggle' | 'macro' | 'openApp' | 'terminalCommand' | 'specialFunction';
 
 export type ViewMode = 'controlLayout' | 'layoutBuilder' | "systemInfo";
 
@@ -23,12 +23,21 @@ export interface ActionValue {
     inBackground?: boolean;
 }
 
+export interface ComponentStyle {
+    bg?: string;
+    color?: string;
+    showLabel?: boolean;
+    icon?: string;
+    image?: string;
+}
+
 export interface ControlComponent {
     id: string;
     type: string;
     label: string;
     portraitGeo: Geo;
     landscapeGeo: Geo;
+    style: ComponentStyle;
     data: {
         actionType: ActionType;
         actionValue: ActionValue;

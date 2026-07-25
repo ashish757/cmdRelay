@@ -35,7 +35,7 @@ export const Accordion: React.FC<AccordionProps> = ({ title, children, defaultEx
             </button>
 
             <div className={`overflow-hidden transition-all duration-300 ease-in-out ${isExpanded ? 'max-h-[1000px] opacity-100 pb-4' : 'max-h-0 opacity-0'}`}>
-                <div className="pt-2 px-1">
+                <div className="p-3 space-y-3">
                     {children}
                 </div>
             </div>

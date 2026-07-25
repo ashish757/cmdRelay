@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import type { ControlComponent } from "../types/controlLayouts.ts";
+import { ICON_MAP } from "../config/appearance";
 
 interface CanvasProps {
     isLandscape: boolean;
@@ -30,7 +31,7 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
         const landscapeGeo = !isLandscape ? { x: Math.min(targetX, 15), y: Math.min(targetY, 7), w: 2, h: 2 } : { x: targetX, y: targetY, w: 2, h: 2 };
 
         setComponentArray([...componentArray, {
-            id: newId, type: 'btn', label: 'Btn', portraitGeo, landscapeGeo,
+            id: newId, type: 'btn', label: 'Btn', portraitGeo, landscapeGeo, style: {},
             data: { actionType: 'keyPress', actionValue: { keyId: 'Space' } }
         }]);
         setSelectedId(newId);
@@ -111,6 +112,14 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
                         const componentGeometry = isLandscape ? component.landscapeGeo : component.portraitGeo;
                         const isSelected = selectedId === component.id;
 
+                        const style = component.style || {};
+                        const hasCustomBg = style.bg && style.bg !== 'transparent';
+                        const showLabel = style.showLabel !== false;
+
+                        const IconComponent = style.icon ? ICON_MAP[style.icon] : null;
+                        const isCatalogImage = style.image?.startsWith('catalog:');
+                        const catalogId = isCatalogImage ? style.image?.split(':')[1] : null;
+
                         return (
                             <div
                                 key={component.id}
@@ -118,32 +127,70 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
                                 onPointerMove={handlePointerMove}
                                 onPointerUp={handlePointerUp}
                                 onPointerCancel={handlePointerUp}
-                                className={`flex items-center justify-center rounded-md font-bold text-sm tracking-wide select-none w-full h-full cursor-grab active:cursor-grabbing backdrop-blur-md transition-all duration-200 ${isSelected ? 'border-2 border-primary bg-primary/20 text-text-main shadow-md z-20 scale-[1.02]' : 'border-2 border-border/50 bg-surface/80 text-text-muted z-10 hover:border-border hover:bg-surface'}`}
-                                style={{ gridColumnStart: componentGeometry.x, gridColumnEnd: `span ${componentGeometry.w}`, gridRowStart: componentGeometry.y, gridRowEnd: `span ${componentGeometry.h}`, position: 'relative', touchAction: 'none' }}
+                                className={`flex flex-col gap-1 items-center justify-center rounded-md font-bold text-sm tracking-wide select-none w-full h-full cursor-grab active:cursor-grabbing backdrop-blur-md transition-all duration-200 
+                                    ${isSelected ? 'ring-4 ring-primary ring-offset-1 ring-offset-background z-20 scale-[1.02]' : 'z-10'}
+                                    ${!hasCustomBg
+                                    ? (isSelected ? 'border-2 border-primary bg-primary/20 text-text-main shadow-md' : 'border-2 border-border/50 bg-surface/80 text-text-muted hover:border-border hover:bg-surface')
+                                    : 'border-2 border-transparent shadow-md'
+                                }
+                                `}
+                                style={{
+                                    gridColumnStart: componentGeometry.x,
+                                    gridColumnEnd: `span ${componentGeometry.w}`,
+                                    gridRowStart: componentGeometry.y,
+                                    gridRowEnd: `span ${componentGeometry.h}`,
+                                    position: 'relative',
+                                    touchAction: 'none',
+                                    backgroundColor: hasCustomBg ? style.bg : undefined,
+                                    color: style.color ? style.color : undefined,
+                                }}
                                 onClick={(e) => { e.stopPropagation(); setSelectedId(component.id); }}
                             >
-                                <span className="truncate px-2 pointer-events-none drop-shadow-md">{component.label || component.type}</span>
+                                {/* Render Catalog Image */}
+                                {isCatalogImage && catalogId && (
+                                    <img
+                                        src={`/logos/${catalogId}.svg`}
+                                        alt={component.label}
+                                        className="w-8 h-8 object-contain pointer-events-none drop-shadow-md"
+                                        onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                                    />
+                                )}
+
+                                {/* Render Icon */}
+                                {IconComponent && !isCatalogImage && (
+                                    <IconComponent size={24} className="pointer-events-none drop-shadow-md" />
+                                )}
+
+                                {/* Render Label */}
+                                {showLabel && (
+                                    <span className="truncate px-2 pointer-events-none drop-shadow-md w-full text-center">
+                                        {component.label || component.type}
+                                    </span>
+                                )}
+
                                 {isSelected && (
                                     <>
-                                    <div
-                                        onPointerDown={(event) => { event.stopPropagation(); handlePointerDown(event, component.id, 'resize'); }}
-                                        onPointerMove={handlePointerMove}
-                                        onPointerUp={handlePointerUp}
-                                        onPointerCancel={handlePointerUp}
-                                        className="absolute -bottom-2 -right-2 w-6 h-6 bg-text-main rounded-full cursor-nwse-resize shadow-lg z-30 flex items-center justify-center border-2 border-primary hover:scale-110 transition-transform"
-                                    ><div className="w-1.5 h-1.5 bg-primary rounded-full pointer-events-none" /></div>
-                                    <button
-                                    onPointerDown={(e) => {
-                                    e.stopPropagation();
-                                    removeControlComponent(component.id);
-                                }}
-                                className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center cursor-pointer shadow-lg z-40 border-2 border-background hover:scale-110 hover:bg-red-400 transition-transform"
-                            >
-                                <span className="text-white text-[10px] font-bold">✕</span>
-                            </button>         </>
+                                        <div
+                                            onPointerDown={(event) => { event.stopPropagation(); handlePointerDown(event, component.id, 'resize'); }}
+                                            onPointerMove={handlePointerMove}
+                                            onPointerUp={handlePointerUp}
+                                            onPointerCancel={handlePointerUp}
+                                            className="absolute -bottom-2 -right-2 w-6 h-6 bg-text-main rounded-full cursor-nwse-resize shadow-lg z-30 flex items-center justify-center border-2 border-primary hover:scale-110 transition-transform"
+                                        >
+                                            <div className="w-1.5 h-1.5 bg-primary rounded-full pointer-events-none" />
+                                        </div>
+                                        <button
+                                            onPointerDown={(e) => {
+                                                e.stopPropagation();
+                                                removeControlComponent(component.id);
+                                            }}
+                                            className="absolute -top-2 -right-2 w-6 h-6 bg-red-500 rounded-full flex items-center justify-center cursor-pointer shadow-lg z-40 border-2 border-background hover:scale-110 hover:bg-red-400 transition-transform"
+                                        >
+                                            <span className="text-white text-[10px] font-bold">✕</span>
+                                        </button>
+                                    </>
                                 )}
                             </div>
-
                         );
                     })}
                 </div>

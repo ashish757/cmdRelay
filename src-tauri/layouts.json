@@ -7,7 +7,7 @@
           "actionValue": {}
         },
         "id": "232242",
-        "label": "Track pad",
+        "label": "Track pad...",
         "landscapeGeo": {
           "h": 8,
           "w": 16,
@@ -45,7 +45,7 @@
           "h": 15,
           "w": 8,
           "x": 1,
-          "y": 2
+          "y": 1
         },
         "type": "text"
       }
@@ -405,6 +405,17 @@
           "x": 7,
           "y": 3
         },
+        "style": {
+          "0": "i",
+          "1": "m",
+          "2": "a",
+          "3": "g",
+          "4": "e",
+          "bg": "#ef4444",
+          "color": "#ffffff",
+          "icon": "",
+          "image": ""
+        },
         "type": "btn"
       },
       {
@@ -474,6 +485,12 @@
           "w": 2,
           "x": 4,
           "y": 3
+        },
+        "style": {
+          "bg": "#3b82f6",
+          "color": "#ffffff",
+          "icon": "Folder",
+          "showLabel": false
         },
         "type": "btn"
       },
@@ -621,6 +638,29 @@
           "w": 1,
           "x": 2,
           "y": 6
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "specialFunction",
+          "actionValue": {
+            "command": "brightness_up"
+          }
+        },
+        "id": "c_1784826431118",
+        "label": "Btn",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 4,
+          "y": 1
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 4,
+          "y": 1
         },
         "type": "btn"
       }

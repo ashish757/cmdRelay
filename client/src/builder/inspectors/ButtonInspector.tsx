@@ -4,9 +4,12 @@ import { KeyCaptureInput } from '../../components/KeyCaptureInput';
 import { AppOpenerInspector } from './AppOpenerInspector';
 import { MacroInspector } from './MacroInspector';
 import { CommandInspector } from './CommandInspector';
+import {SpecialInspector} from "./SpecialInspector.tsx";
 
 import { ACTION_TYPE_OPTIONS } from '../../config/ctrlConfig';
 import type { ActionType } from '../../types/controlLayouts';
+import {AppearanceInspector} from "./AppearanceInspector.tsx";
+import {Accordion} from "../../components/Accordion.tsx";
 
 export const ButtonInspector: React.FC<InspectorProps> = (props) => {
     const { selectedComp, updateControlComponent } = props;
@@ -14,6 +17,8 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
 
     return (
         <>
+            <Accordion title={"INSPECTOR"} defaultExpanded={true}>
+
             <div className="grid gap-2">
                 <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Action Behavior</label>
                 <select
@@ -31,7 +36,7 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                 </select>
             </div>
 
-            <div className="space-y-3 pt-4 border-t border-border mt-4">
+
                 <div className="grid gap-2">
                     <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Button Title</label>
                     <input
@@ -42,32 +47,37 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                     />
                 </div>
 
-                <div className="mt-4">
-                    {(actionType === 'keyPress' || actionType === 'keyHoldToggle') && (
-                        <div className="grid gap-2">
-                            <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Key Value</label>
-                            <KeyCaptureInput
-                                value={selectedComp.data?.actionValue?.keyId || ''}
-                                onChange={(newVal: string) => updateControlComponent(selectedComp.id, {
-                                    data: { ...selectedComp.data, actionValue: { ...selectedComp.data.actionValue, keyId: newVal } }
-                                })}
-                            />
-                        </div>
-                    )}
+                {(actionType === 'keyPress' || actionType === 'keyHoldToggle') && (
+                    <div className="grid gap-2">
+                        <label className="text-[10px] uppercase text-text-muted tracking-widest font-bold">Key Value</label>
+                        <KeyCaptureInput
+                            value={selectedComp.data?.actionValue?.keyId || ''}
+                            onChange={(newVal: string) => updateControlComponent(selectedComp.id, {
+                                data: { ...selectedComp.data, actionValue: { ...selectedComp.data.actionValue, keyId: newVal } }
+                            })}
+                        />
+                    </div>
+                )}
 
-                    {actionType === 'openApp' && (
-                        <AppOpenerInspector {...props} />
-                    )}
+                {actionType === 'openApp' && (
+                    <AppOpenerInspector {...props} />
+                )}
+                {actionType === 'macro' && (
+                    <MacroInspector {...props} />
+                )}
+                {actionType === 'terminalCommand' && (
+                    <CommandInspector {...props} />
+                )}
+                {actionType === 'specialFunction' && (
+                    <SpecialInspector {...props} />
+                )}
 
-                    {actionType === 'macro' && (
-                        <MacroInspector {...props} />
-                    )}
+           </Accordion>
+            
+           <Accordion title={"APPEARANCE"} defaultExpanded={true}>
+                    <AppearanceInspector {...props} />
+                </Accordion>
+    </>
 
-                    {actionType === 'terminalCommand' && (
-                        <CommandInspector {...props} />
-                    )}
-                </div>
-            </div>
-        </>
     );
 };
