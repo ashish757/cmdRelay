@@ -15,7 +15,7 @@ export interface ControlConfig {
 }
 
 export const ACTION_TYPE_OPTIONS: { value: ActionType; label: string }[] = [
-    { value: 'none', label: 'None' },
+    { value: 'specialFunction', label: 'Special Functions' },
     { value: 'keyPress', label: 'Trigger Key Press' },
     { value: 'keyHoldToggle', label: 'Hold Key (Toggle)' },
     { value: 'macro', label: 'Run Macro Sequence' },
@@ -33,7 +33,7 @@ export const controlElementsRegistry: Record<string, ControlConfig> = {
     'trackpad': {
         title: 'Trackpad',
         component: TrackpadCtrl,
-        inspector: null,
+        inspector: TextInspector,
     },
     'text': {
         title: 'Text Input/Typing',

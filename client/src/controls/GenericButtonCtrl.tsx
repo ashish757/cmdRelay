@@ -24,7 +24,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
     const handlePointerDown = (event: React.PointerEvent) => {
         event.preventDefault();
 
-        if (!data.actionType || data.actionType === "none" || isPressed) return;
+        if (!data.actionType || isPressed) return;
 
         setIsPressed(true);
         (event.target as HTMLElement).setPointerCapture(event.pointerId);
@@ -32,54 +32,45 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
         if (data.actionType === "macro") {
             sendPayload({
                 actionType: "macro",
-                payload: {
-                    steps: data.actionValue?.steps
-                }
+                payload: { steps: data.actionValue?.steps }
             });
         }
         else if(data.actionType === "terminalCommand") {
-            const termData = data.actionValue;
-
             sendPayload({
                 actionType: data.actionType,
                 payload: {
-                    command: termData.command,
-                    inBackground: !!termData?.inBackground,
+                    command: data.actionValue?.command,
+                    inBackground: !!data.actionValue?.inBackground,
                 }
             });
-
         }
         else if (data.actionType === "openApp") {
             sendPayload({
                 actionType: data.actionType,
-                payload: {
-                    appId: data.actionValue?.appId
-                }
+                payload: { appId: data.actionValue?.appId }
+            })
+        }
+        else if (data.actionType === "specialFunction") {
+            sendPayload({
+                actionType: data.actionType,
+                payload: { command: data.actionValue?.command }
             })
         }
         else if (data.actionType === "keyPress") {
             sendPayload({
                 actionType: data.actionType,
-                payload: {
-                    keyId: data.actionValue?.keyId,
-                    state: "down"
-                }
+                payload: { keyId: data.actionValue?.keyId, state: "down" }
             });
 
             const modifiers = ["Shift", "Control", "Alt", "Meta", "OS"];
             const isModifier = modifiers.includes(data.actionValue?.keyId || "");
 
-            if (!isModifier && data.actionType === "keyPress") {
-
+            if (!isModifier) {
                 repeatTimeout.current = setTimeout(() => {
-
                     repeatInterval.current = setInterval(() => {
                         sendPayload({
                             actionType: data.actionType,
-                            payload: {
-                                keyId: data.actionValue?.keyId,
-                                state: "click"
-                            }
+                            payload: { keyId: data.actionValue?.keyId, state: "click" }
                         });
                     }, 50);
                 }, 400);
@@ -98,20 +89,16 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
     const handlePointerRelease = (event: React.PointerEvent) => {
         event.preventDefault();
 
-        if (!data.actionType || data.actionType === "none" || !isPressed) return;
+        if (!data.actionType || !isPressed) return;
 
         setIsPressed(false);
         (event.target as HTMLElement).releasePointerCapture(event.pointerId);
-
         stopRepeat();
 
         if (data.actionType === "keyPress") {
             sendPayload({
                 actionType: data.actionType,
-                payload: {
-                    keyId: data.actionValue?.keyId,
-                    state: "up"
-                }
+                payload: { keyId: data.actionValue?.keyId, state: "up" }
             });
         }
     };
