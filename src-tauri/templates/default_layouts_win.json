@@ -1,0 +1,813 @@
+[
+  {
+    "id": "l_vscode_pro",
+    "title": "VS Code Professional",
+    "targetApps": [
+      "Code",
+      "VS Code"
+    ],
+    "components": [
+      {
+        "id": "vs_palette",
+        "type": "btn",
+        "label": "Palette",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "style": { "bg": "#3b82f6", "icon": "Search", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "p1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "p2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "p3", "keyId": "KeyP", "state": "click" },
+          { "id": "p4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "p5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_search",
+        "type": "btn",
+        "label": "Find in Files",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "Search", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "f1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "f2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "f3", "keyId": "KeyF", "state": "click" },
+          { "id": "f4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "f5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_explorer",
+        "type": "btn",
+        "label": "Explorer",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "Folder", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "e1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "e2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "e3", "keyId": "KeyE", "state": "click" },
+          { "id": "e4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "e5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_git",
+        "type": "btn",
+        "label": "Source Control",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "GitBranch", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "g1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "g2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "g3", "keyId": "KeyG", "state": "click" },
+          { "id": "g4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "g5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_terminal",
+        "type": "btn",
+        "label": "Terminal",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Terminal", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "t1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "t2", "keyId": "Backquote", "state": "click" },
+          { "id": "t3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_format",
+        "type": "btn",
+        "label": "Format",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Code", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "fmt1", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "fmt2", "keyId": "AltLeft", "state": "down" },
+          { "id": "fmt3", "keyId": "KeyF", "state": "click" },
+          { "id": "fmt4", "keyId": "AltLeft", "state": "up" },
+          { "id": "fmt5", "keyId": "ShiftLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_comment",
+        "type": "btn",
+        "label": "Comment",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "FileText", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "c1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "c2", "keyId": "Slash", "state": "click" },
+          { "id": "c3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_rename",
+        "type": "btn",
+        "label": "Rename",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "style": { "bg": "#eab308", "color": "#000000", "icon": "Scissors", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "F2" } }
+      },
+      {
+        "id": "vs_save",
+        "type": "btn",
+        "label": "Save",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "style": { "bg": "#22c55e", "icon": "CheckSquare", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "s1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "s2", "keyId": "KeyS", "state": "click" },
+          { "id": "s3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_close",
+        "type": "btn",
+        "label": "Close Tab",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "style": { "bg": "#ef4444", "icon": "X", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "cl1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "cl2", "keyId": "KeyW", "state": "click" },
+          { "id": "cl3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_prev_tab",
+        "type": "btn",
+        "label": "Prev Tab",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "ChevronLeft", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "pt1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "pt2", "keyId": "PageUp", "state": "click" },
+          { "id": "pt3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_next_tab",
+        "type": "btn",
+        "label": "Next Tab",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "ChevronRight", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "nt1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "nt2", "keyId": "PageDown", "state": "click" },
+          { "id": "nt3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_split",
+        "type": "btn",
+        "label": "Split Ed",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 9 },
+        "style": { "bg": "#1f2937", "icon": "LayoutDashboard", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "sp1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "sp2", "keyId": "Backslash", "state": "click" },
+          { "id": "sp3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "vs_debug",
+        "type": "btn",
+        "label": "Start Debug",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 9 },
+        "style": { "bg": "#a855f7", "icon": "Bug", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "F5" } }
+      },
+      {
+        "id": "vs_step_over",
+        "type": "btn",
+        "label": "Step Over",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 9 },
+        "style": { "bg": "#1f2937", "icon": "ArrowRight", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "F10" } }
+      },
+      {
+        "id": "vs_step_into",
+        "type": "btn",
+        "label": "Step Into",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 11 },
+        "style": { "bg": "#1f2937", "icon": "ArrowDown", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "F11" } }
+      }
+    ]
+  },
+  {
+    "id": "l_fusion_360_pro",
+    "title": "Fusion 360 Pro",
+    "targetApps": [
+      "Fusion 360",
+      "Autodesk Fusion 360"
+    ],
+    "components": [
+      {
+        "id": "f3_extrude",
+        "type": "btn",
+        "label": "Extrude",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "style": { "bg": "#eab308", "color": "#000000", "icon": "ArrowUp", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyE" } }
+      },
+      {
+        "id": "f3_fillet",
+        "type": "btn",
+        "label": "Fillet",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "style": { "bg": "#3b82f6", "icon": "Scissors", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyF" } }
+      },
+      {
+        "id": "f3_move",
+        "type": "btn",
+        "label": "Move/Copy",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "Maximize", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyM" } }
+      },
+      {
+        "id": "f3_joint",
+        "type": "btn",
+        "label": "Joint",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "GitBranch", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyJ" } }
+      },
+      {
+        "id": "f3_line",
+        "type": "btn",
+        "label": "Line",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Activity", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyL" } }
+      },
+      {
+        "id": "f3_rectangle",
+        "type": "btn",
+        "label": "Rectangle",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Monitor", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyR" } }
+      },
+      {
+        "id": "f3_circle",
+        "type": "btn",
+        "label": "Circle",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Globe", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyC" } }
+      },
+      {
+        "id": "f3_project",
+        "type": "btn",
+        "label": "Project",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Camera", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyP" } }
+      },
+      {
+        "id": "f3_dimension",
+        "type": "btn",
+        "label": "Dimension",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Maximize", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyD" } }
+      },
+      {
+        "id": "f3_measure",
+        "type": "btn",
+        "label": "Measure",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Activity", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyI" } }
+      },
+      {
+        "id": "f3_appearance",
+        "type": "btn",
+        "label": "Appearance",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Eye", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyA" } }
+      },
+      {
+        "id": "f3_offset",
+        "type": "btn",
+        "label": "Offset",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Copy", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyO" } }
+      },
+      {
+        "id": "f3_save",
+        "type": "btn",
+        "label": "Save",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "style": { "bg": "#22c55e", "icon": "CheckSquare", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "fs1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "fs2", "keyId": "KeyS", "state": "click" },
+          { "id": "fs3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "f3_undo",
+        "type": "btn",
+        "label": "Undo",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "Undo", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "fu1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "fu2", "keyId": "KeyZ", "state": "click" },
+          { "id": "fu3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "f3_delete",
+        "type": "btn",
+        "label": "Delete",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "style": { "bg": "#ef4444", "icon": "X", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "Delete" } }
+      },
+      {
+        "id": "f3_visibility",
+        "type": "btn",
+        "label": "Toggle Vis",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "EyeOff", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyV" } }
+      }
+    ]
+  },
+  {
+    "id": "l_photoshop_pro",
+    "title": "Photoshop Pro",
+    "targetApps": [
+      "Adobe Photoshop",
+      "Photoshop"
+    ],
+    "components": [
+      {
+        "id": "ps_brush",
+        "type": "btn",
+        "label": "Brush",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "style": { "bg": "#3b82f6", "icon": "Activity", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyB" } }
+      },
+      {
+        "id": "ps_eraser",
+        "type": "btn",
+        "label": "Eraser",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "X", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyE" } }
+      },
+      {
+        "id": "ps_heal",
+        "type": "btn",
+        "label": "Heal/Patch",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "Heart", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyJ" } }
+      },
+      {
+        "id": "ps_clone",
+        "type": "btn",
+        "label": "Clone Stamp",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "Copy", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyS" } }
+      },
+      {
+        "id": "ps_move",
+        "type": "btn",
+        "label": "Move Tool",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "style": { "bg": "#eab308", "color": "#000000", "icon": "Maximize", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyV" } }
+      },
+      {
+        "id": "ps_marquee",
+        "type": "btn",
+        "label": "Marquee",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "LayoutDashboard", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyM" } }
+      },
+      {
+        "id": "ps_wand",
+        "type": "btn",
+        "label": "Quick Select",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Zap", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyW" } }
+      },
+      {
+        "id": "ps_text",
+        "type": "btn",
+        "label": "Type Tool",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "FileText", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "KeyT" } }
+      },
+      {
+        "id": "ps_transform",
+        "type": "btn",
+        "label": "Transform",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "style": { "bg": "#a855f7", "icon": "RefreshCw", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "t1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "t2", "keyId": "KeyT", "state": "click" },
+          { "id": "t3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_deselect",
+        "type": "btn",
+        "label": "Deselect",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "X", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "d1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "d2", "keyId": "KeyD", "state": "click" },
+          { "id": "d3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_duplicate",
+        "type": "btn",
+        "label": "Dup Layer",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Copy", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "dup1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "dup2", "keyId": "KeyJ", "state": "click" },
+          { "id": "dup3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_new_layer",
+        "type": "btn",
+        "label": "New Layer",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Layers", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "nl1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "nl2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "nl3", "keyId": "KeyN", "state": "click" },
+          { "id": "nl4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "nl5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_undo",
+        "type": "btn",
+        "label": "Undo",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "style": { "bg": "#ef4444", "icon": "Undo", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "u1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "u2", "keyId": "KeyZ", "state": "click" },
+          { "id": "u3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_redo",
+        "type": "btn",
+        "label": "Redo",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "Redo", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "r1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "r2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "r3", "keyId": "KeyZ", "state": "click" },
+          { "id": "r4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "r5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_merge",
+        "type": "btn",
+        "label": "Merge Down",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "ArrowDown", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "m1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "m2", "keyId": "KeyE", "state": "click" },
+          { "id": "m3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "ps_save",
+        "type": "btn",
+        "label": "Save",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "style": { "bg": "#22c55e", "icon": "CheckSquare", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "s1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "s2", "keyId": "KeyS", "state": "click" },
+          { "id": "s3", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      }
+    ]
+  },
+  {
+    "id": "l_global_desktop",
+    "title": "Global Desktop",
+    "targetApps": [],
+    "components": [
+      {
+        "id": "gd_chrome",
+        "type": "btn",
+        "label": "Browser",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
+        "style": { "bg": "#1f2937", "image": "catalog:chrome", "showLabel": false },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "Chrome" } }
+      },
+      {
+        "id": "gd_vscode",
+        "type": "btn",
+        "label": "VS Code",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
+        "style": { "bg": "#1f2937", "image": "catalog:vs-code", "showLabel": false },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "Code" } }
+      },
+      {
+        "id": "gd_discord",
+        "type": "btn",
+        "label": "Discord",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 1 },
+        "style": { "bg": "#1f2937", "image": "catalog:discord", "showLabel": false },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "Discord" } }
+      },
+      {
+        "id": "gd_files",
+        "type": "btn",
+        "label": "Files",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 1 },
+        "style": { "bg": "#3b82f6", "icon": "Folder", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "f1", "keyId": "MetaLeft", "state": "down" },
+          { "id": "f2", "keyId": "KeyE", "state": "click" },
+          { "id": "f3", "keyId": "MetaLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "gd_vol_up",
+        "type": "btn",
+        "label": "Vol Up",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Volume2", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "volume_up" } }
+      },
+      {
+        "id": "gd_vol_down",
+        "type": "btn",
+        "label": "Vol Down",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 3 },
+        "style": { "bg": "#1f2937", "icon": "Volume1", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "volume_down" } }
+      },
+      {
+        "id": "gd_mute",
+        "type": "btn",
+        "label": "Mute",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 3 },
+        "style": { "bg": "#ef4444", "icon": "VolumeX", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "volume_mute" } }
+      },
+      {
+        "id": "gd_play_pause",
+        "type": "btn",
+        "label": "Play/Pause",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 3 },
+        "style": { "bg": "#22c55e", "icon": "Play", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "media_play_pause" } }
+      },
+      {
+        "id": "gd_bright_up",
+        "type": "btn",
+        "label": "Bright +",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Sun", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "brightness_up" } }
+      },
+      {
+        "id": "gd_bright_down",
+        "type": "btn",
+        "label": "Bright -",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "SunDim", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "brightness_down" } }
+      },
+      {
+        "id": "gd_show_desktop",
+        "type": "btn",
+        "label": "Desktop",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Monitor", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "sd1", "keyId": "MetaLeft", "state": "down" },
+          { "id": "sd2", "keyId": "KeyD", "state": "click" },
+          { "id": "sd3", "keyId": "MetaLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "gd_task_mgr",
+        "type": "btn",
+        "label": "Tasks",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 5 },
+        "style": { "bg": "#1f2937", "icon": "Activity", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "tm1", "keyId": "ControlLeft", "state": "down" },
+          { "id": "tm2", "keyId": "ShiftLeft", "state": "down" },
+          { "id": "tm3", "keyId": "Escape", "state": "click" },
+          { "id": "tm4", "keyId": "ShiftLeft", "state": "up" },
+          { "id": "tm5", "keyId": "ControlLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "gd_lock",
+        "type": "btn",
+        "label": "Lock PC",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 7 },
+        "style": { "bg": "#ef4444", "icon": "Lock", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "lck1", "keyId": "MetaLeft", "state": "down" },
+          { "id": "lck2", "keyId": "KeyL", "state": "click" },
+          { "id": "lck3", "keyId": "MetaLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "gd_settings",
+        "type": "btn",
+        "label": "Settings",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "Settings", "showLabel": true },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "System Settings" } }
+      },
+      {
+        "id": "gd_close_app",
+        "type": "btn",
+        "label": "Close App",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 5, "y": 7 },
+        "style": { "bg": "#ef4444", "icon": "X", "showLabel": true },
+        "data": { "actionType": "macro", "actionValue": { "steps": [
+          { "id": "ca1", "keyId": "AltLeft", "state": "down" },
+          { "id": "ca2", "keyId": "F4", "state": "click" },
+          { "id": "ca3", "keyId": "AltLeft", "state": "up" }
+        ]}}
+      },
+      {
+        "id": "gd_refresh",
+        "type": "btn",
+        "label": "Refresh",
+        "landscapeGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 2, "x": 7, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "RefreshCw", "showLabel": true },
+        "data": { "actionType": "keyPress", "actionValue": { "keyId": "F5" } }
+      }
+    ]
+  },
+  {
+    "id": "l_media_pro",
+    "title": "Media Control Pro",
+    "targetApps": [
+      "Spotify",
+      "VLC",
+      "Apple Music"
+    ],
+    "components": [
+      {
+        "id": "md_play",
+        "type": "btn",
+        "label": "Play/Pause",
+        "landscapeGeo": { "h": 4, "w": 4, "x": 3, "y": 1 },
+        "portraitGeo": { "h": 4, "w": 4, "x": 3, "y": 1 },
+        "style": { "bg": "#22c55e", "icon": "Play", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "media_play_pause" } }
+      },
+      {
+        "id": "md_prev",
+        "type": "btn",
+        "label": "Prev",
+        "landscapeGeo": { "h": 4, "w": 2, "x": 1, "y": 1 },
+        "portraitGeo": { "h": 4, "w": 2, "x": 1, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "SkipBack", "showLabel": false },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "media_prev" } }
+      },
+      {
+        "id": "md_next",
+        "type": "btn",
+        "label": "Next",
+        "landscapeGeo": { "h": 4, "w": 2, "x": 7, "y": 1 },
+        "portraitGeo": { "h": 4, "w": 2, "x": 7, "y": 1 },
+        "style": { "bg": "#1f2937", "icon": "SkipForward", "showLabel": false },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "media_next" } }
+      },
+      {
+        "id": "md_volup",
+        "type": "btn",
+        "label": "Vol +",
+        "landscapeGeo": { "h": 2, "w": 4, "x": 3, "y": 5 },
+        "portraitGeo": { "h": 2, "w": 4, "x": 3, "y": 5 },
+        "style": { "bg": "#3b82f6", "icon": "Volume2", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "volume_up" } }
+      },
+      {
+        "id": "md_voldown",
+        "type": "btn",
+        "label": "Vol -",
+        "landscapeGeo": { "h": 2, "w": 4, "x": 3, "y": 7 },
+        "portraitGeo": { "h": 2, "w": 4, "x": 3, "y": 7 },
+        "style": { "bg": "#1f2937", "icon": "Volume1", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "volume_down" } }
+      },
+      {
+        "id": "md_mute",
+        "type": "btn",
+        "label": "Mute",
+        "landscapeGeo": { "h": 4, "w": 2, "x": 1, "y": 5 },
+        "portraitGeo": { "h": 4, "w": 2, "x": 1, "y": 5 },
+        "style": { "bg": "#ef4444", "icon": "VolumeX", "showLabel": true },
+        "data": { "actionType": "specialFunction", "actionValue": { "command": "volume_mute" } }
+      },
+      {
+        "id": "md_spotify",
+        "type": "btn",
+        "label": "Spotify",
+        "landscapeGeo": { "h": 4, "w": 2, "x": 7, "y": 5 },
+        "portraitGeo": { "h": 4, "w": 2, "x": 7, "y": 5 },
+        "style": { "bg": "#1f2937", "image": "catalog:spotify-color", "showLabel": false },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "Spotify" } }
+      }
+    ]
+  }
+]
