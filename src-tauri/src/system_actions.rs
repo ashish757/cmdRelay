@@ -239,35 +239,58 @@ pub fn drag_end(e: &mut Enigo) {
 
 pub fn execute_terminal_command(command: &str, in_background: bool) {
     if in_background {
-        info!("Executing background shell command: {}", command);
+        log::info!("Executing background shell command: {}", command);
 
-        if let Err(e) = Command::new("sh")
-            .arg("-c")
-            .arg(command)
-            .spawn()
-        {
-            error!("Failed to run background command: {}", e);
+        #[cfg(any(target_os = "macos", target_os = "linux"))]
+        let mut cmd = std::process::Command::new("sh");
+        #[cfg(any(target_os = "macos", target_os = "linux"))]
+        cmd.arg("-c").arg(command);
+
+        #[cfg(target_os = "windows")]
+        let mut cmd = std::process::Command::new("cmd");
+        #[cfg(target_os = "windows")]
+        cmd.args(["/C", command]);
+
+        if let Err(e) = cmd.spawn() {
+            log::error!("Failed to run background command: {}", e);
         }
     } else {
-        info!("Launching Terminal.app with command: {}", command);
+        log::info!("Launching terminal with command: {}", command);
 
-        let escaped_cmd = command.replace('\\', "\\\\").replace('"', "\\\"");
-
-        let script = format!(
-            "tell application \"Terminal\"\n do script \"{}\"\n activate\nend tell",
-            escaped_cmd
-        );
-
-        if let Err(e) = Command::new("osascript")
-            .arg("-e")
-            .arg(&script)
-            .spawn()
+        #[cfg(target_os = "macos")]
         {
-            error!("Failed to launch Terminal via osascript: {}", e);
+            let escaped_cmd = command.replace('\\', "\\\\").replace('"', "\\\"");
+            let script = format!(
+                "tell application \"Terminal\"\n do script \"{}\"\n activate\nend tell",
+                escaped_cmd
+            );
+            if let Err(e) = std::process::Command::new("osascript").arg("-e").arg(&script).spawn() {
+                log::error!("Failed to launch Terminal via osascript: {}", e);
+            }
+        }
+
+        #[cfg(target_os = "windows")]
+        {
+            if let Err(e) = std::process::Command::new("cmd")
+                .args(["/C", "start", "cmd", "/K", command])
+                .spawn()
+            {
+                log::error!("Failed to launch visible cmd: {}", e);
+            }
+        }
+
+        #[cfg(target_os = "linux")]
+        {
+            if let Err(e) = std::process::Command::new("x-terminal-emulator")
+                .arg("-e")
+                .arg(command)
+                .spawn()
+            {
+                log::error!("Failed to launch terminal emulator: {}", e);
+            }
         }
     }
 }
-
 
 pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
     info!("Executing special function: {}", command_id);
@@ -325,8 +348,9 @@ pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
             "media_play_pause" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]179)"]).spawn(); },
             "media_next" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]176)"]).spawn(); },
             "media_prev" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]177)"]).spawn(); },
-            "volume_up" => { let _ = Command::new("osascript").args(&["-e", "set volume output volume ((output volume of (get volume settings)) + 5)"]).spawn(); },
-            "volume_down" => { let _ = Command::new("osascript").args(&["-e", "set volume output volume ((output volume of (get volume settings)) - 5)"]).spawn(); },
+
+            "volume_up" => { let _ = std::process::Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]175)"]).spawn(); },
+            "volume_down" => { let _ = std::process::Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]174)"]).spawn(); },
             "volume_mute" => { let _ = Command::new("powershell").args(&["-c", "(New-Object -ComObject WScript.Shell).SendKeys([char]173)"]).spawn(); },
 
             "brightness_up" => {
@@ -347,6 +371,13 @@ pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
             "media_play_pause" => { let _ = Command::new("playerctl").arg("play-pause").spawn(); },
             "media_next" => { let _ = Command::new("playerctl").arg("next").spawn(); },
             "media_prev" => { let _ = Command::new("playerctl").arg("previous").spawn(); },
+
+            "brightness_up" => {
+                let _ = Command::new("brightnessctl").args(&["set", "+10%"]).spawn();
+            },
+            "brightness_down" => {
+                let _ = Command::new("brightnessctl").args(&["set", "10%-"]).spawn();
+            },
 
             "volume_up" => { let _ = Command::new("pactl").args(&["set-sink-volume", "@DEFAULT_SINK@", "+5%"]).spawn(); },
             "volume_down" => { let _ = Command::new("pactl").args(&["set-sink-volume", "@DEFAULT_SINK@", "-5%"]).spawn(); },
