@@ -31,4 +31,13 @@
 
 body {
     @apply bg-background text-text-main;
+    overscroll-behavior-y: contain;
+    -webkit-user-select: none;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+}
+
+button {
+    touch-action: manipulation;
 }
