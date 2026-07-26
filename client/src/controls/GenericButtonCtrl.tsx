@@ -137,7 +137,7 @@ export const GenericButtonCtrl = ({ component }: { component: ControlComponent }
             {isCatalogImage && catalogId && (
                 <img
                     key={catalogId}
-                    src={`/logos/${catalogId}.svg`}
+                    src={`/catalog/${catalogId}.svg`}
                     alt={component.label}
                     className="w-full h-full object-contain pointer-events-none"
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}

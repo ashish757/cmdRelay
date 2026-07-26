@@ -151,7 +151,7 @@ export function BuilderCanvas({ isLandscape, setIsLandscape, componentArray, set
                                     <div className="absolute inset-0 w-full h-full p-2.5 flex items-center justify-center pointer-events-none">
                                         <img
                                             key={catalogId}
-                                            src={`/logos/${catalogId}.svg`}
+                                            src={`/catalog/${catalogId}.svg`}
                                             alt={component.label}
                                             className="w-full h-full object-contain drop-shadow-md"
                                             onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}

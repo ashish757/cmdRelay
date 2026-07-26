@@ -197,7 +197,7 @@ export const AppearanceInspector: React.FC<InspectorProps> = ({ selectedComp, up
                                     >
                                         <div className="w-5 h-5 flex items-center justify-center bg-background rounded-sm border border-border/50">
                                             <img
-                                                src={`/logos/${app.id}.svg`}
+                                                src={`/catalog/${app.id}.svg`}
                                                 alt={app.label}
                                                 className="w-3.5 h-3.5 object-contain"
                                                 onError={(e) => { (e.target as HTMLImageElement).style.opacity = '0'; }}
