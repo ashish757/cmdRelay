@@ -70,7 +70,20 @@ function MainInterface() {
 
 export default function App() {
     const isDesktopDaemon = '__TAURI_INTERNALS__' in window;
-    if (isDesktopDaemon) return <ServerPairing />;
+
+    const params = new URLSearchParams(window.location.search);
+    const requestedView = params.get('view');
+    if(isDesktopDaemon) {
+        if(requestedView === "settings") {
+            return  <Provider> <ControlLayoutBuilder /> </Provider>
+        }
+        else  {
+            return <ServerPairing />;
+        }
+    }
+
+
+
     return (
         <Provider>
             <MainInterface />

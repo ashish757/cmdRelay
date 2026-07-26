@@ -49,5 +49,5 @@ export interface MenuItem {
 }
 export const MENU_OPTIONS: MenuItem[] = [
     {id: "l_1726454", title: "System Info", viewType: "systemInfo" },
-    {id: "l_412644", title: "Layout Settings", viewType: "layoutBuilder" },
+    // {id: "l_412644", title: "Layout Settings", viewType: "layoutBuilder" },
 ]

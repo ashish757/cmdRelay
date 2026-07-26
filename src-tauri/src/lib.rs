@@ -1,4 +1,4 @@
-use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder, Manager};
+use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder, Manager, WebviewUrl};
 use local_ip_address::local_ip;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
@@ -53,9 +53,10 @@ pub fn run() {
             let active_clone_server = telemetry_active.clone();
             let active_clone_telemetry = telemetry_active.clone();
 
-            let show_btn = MenuItem::with_id(app, "show", "Show QR Code", true, None::<&str>)?;
+            let settings = MenuItem::with_id(app, "settings", "Layout Settings", true, None::<&str>)?;
+            let show_btn = MenuItem::with_id(app, "show", "Connect with QR Code", true, None::<&str>)?;
             let quit_btn = MenuItem::with_id(app, "quit", "Quit", true, None::<&str>)?;
-            let menu = Menu::with_items(app, &[&show_btn, &quit_btn])?;
+            let menu = Menu::with_items(app, &[&settings, &show_btn, &quit_btn])?;
 
             TrayIconBuilder::new()
                 .icon(app.default_window_icon().unwrap().clone())
@@ -64,6 +65,25 @@ pub fn run() {
                     match event.id.as_ref() {
                         "show" => {
                             if let Some(window) = app.get_webview_window("main") {
+                                let _ = window.show();
+                                let _ = window.set_focus();
+                            }
+                        }
+                        "settings" => {
+                            let app_handle = app.app_handle();
+
+                            if app_handle.get_webview_window("settings").is_none() {
+                                tauri::WebviewWindowBuilder::new(
+                                    app_handle,
+                                    "settings",
+                                    WebviewUrl::App("index.html?view=settings".into())
+                                )
+                                    .title("settings")
+                                    .maximized(true)
+                                    .build()
+                                    .unwrap();
+                            } else {
+                                let window = app_handle.get_webview_window("settings").unwrap();
                                 let _ = window.show();
                                 let _ = window.set_focus();
                             }
