@@ -23,8 +23,8 @@ export function UIProvider({ children }: { children: ReactNode }) {
     const savedLayout = localStorage.getItem('activeLayoutId');
     const savedViewMode: ViewMode = localStorage.getItem('viewMode') as ViewMode;
 
-    const [activeLayoutId, setActiveLayoutIdState] = useState<string | null>(savedLayout);
-    const [viewMode, setView] = useState<ViewMode>(savedViewMode);
+    const [activeLayoutId, setActiveLayoutIdState] = useState<string | null>(savedLayout || 'l_global_desktop');
+    const [viewMode, setView] = useState<ViewMode>(savedViewMode || 'controlLayout');
     const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const setViewMode = (mode: ViewMode) => {

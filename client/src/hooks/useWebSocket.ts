@@ -20,8 +20,9 @@ export function useWebSocket(setActiveLayoutId: (id: string) => void, viewMode: 
         setActiveLayoutIdRef.current = setActiveLayoutId;
     }, [viewMode, setActiveLayoutId]);
 
-    const serverIp = window.location.hostname;
-    const url = `ws://${serverIp}:3000/ws`;
+    const isDesktopDaemon = '__TAURI_INTERNALS__' in window;
+    const serverIp = isDesktopDaemon ? '127.0.0.1' : window.location.hostname;
+    const url = `ws://${serverIp}:42911/ws`;
 
     useEffect(() => {
         const connect = () => {

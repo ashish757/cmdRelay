@@ -15,7 +15,7 @@ use log::{error, info};
 use enigo::Enigo;
 use std::sync::Arc;
 use std::sync::atomic::{AtomicBool};
-
+use crate::config::{SERVER_PORT};
 use crate::types::ClientPayload;
 use crate::controllers::route_action;
 
@@ -60,8 +60,8 @@ pub async fn run_server(telemetry_tx: broadcast::Sender<String>, telemetry_activ
         .fallback(static_handler)
         .with_state(state);
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:3000").await.unwrap();
-    info!("HTTP and WebSocket Server listening on 0.0.0.0:3000");
+    let listener = tokio::net::TcpListener::bind(format!("0.0.0.0:{}", SERVER_PORT)).await.unwrap();
+    info!("HTTP and WebSocket Server listening on 0.0.0.0:{}", SERVER_PORT);
 
     axum::serve(listener, app).await.unwrap();
 }

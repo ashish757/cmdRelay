@@ -3,6 +3,9 @@ use std::fs;
 use std::io;
 use std::path::PathBuf;
 
+pub const SERVER_PORT: u16 = 42911;
+
+
 #[cfg(target_os = "macos")]
 const DEFAULT_LAYOUTS: &str = include_str!("../templates/default_layouts_mac.json");
 

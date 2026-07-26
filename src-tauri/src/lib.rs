@@ -13,11 +13,13 @@ pub mod config;
 
 use crate::telemetry_service::watch_system_state;
 use crate::server::run_server;
+use crate::config::{SERVER_PORT};
+
 
 #[tauri::command]
 fn get_server_url() -> Result<String, String> {
     match local_ip() {
-        Ok(ip) => Ok(format!("http://{}:3000", ip)),
+        Ok(ip) => Ok(format!("http://{}:{}", ip, SERVER_PORT)),
         Err(e) => Err(format!("Failed to get local IP: {}", e)),
     }
 }
