@@ -6,27 +6,87 @@ use crate::types::KeyAction;
 
 pub fn parse_key(key_id: &str) -> Option<Key> {
     match key_id {
-        "Digit0" => Some(Key::Raw(29)),
-        "Digit1" => Some(Key::Raw(18)),
-        "Digit2" => Some(Key::Raw(19)),
-        "Digit3" => Some(Key::Raw(20)),
-        "Digit4" => Some(Key::Raw(21)),
-        "Digit5" => Some(Key::Raw(23)),
-        "Digit6" => Some(Key::Raw(22)),
-        "Digit7" => Some(Key::Raw(26)),
-        "Digit8" => Some(Key::Raw(28)),
-        "Digit9" => Some(Key::Raw(25)),
+        "Digit0" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(29));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('0'));
+        },
+        "Digit1" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(18));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('1'));
+        },
+        "Digit2" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(19));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('2'));
+        },
+        "Digit3" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(20));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('3'));
+        },
+        "Digit4" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(21));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('4'));
+        },
+        "Digit5" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(23));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('5'));
+        },
+        "Digit6" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(22));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('6'));
+        },
+        "Digit7" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(26));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('7'));
+        },
+        "Digit8" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(28));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('8'));
+        },
+        "Digit9" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(25));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('9'));
+        },
 
-        "Numpad0" => Some(Key::Raw(82)),
-        "Numpad1" => Some(Key::Raw(83)),
-        "Numpad2" => Some(Key::Raw(84)),
-        "Numpad3" => Some(Key::Raw(85)),
-        "Numpad4" => Some(Key::Raw(86)),
-        "Numpad5" => Some(Key::Raw(87)),
-        "Numpad6" => Some(Key::Raw(88)),
-        "Numpad7" => Some(Key::Raw(89)),
-        "Numpad8" => Some(Key::Raw(91)),
-        "Numpad9" => Some(Key::Raw(92)),
+        "Numpad0" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(82));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('0'));
+        },
+        "Numpad1" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(83));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('1'));
+        },
+        "Numpad2" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(84));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('2'));
+        },
+        "Numpad3" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(85));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('3'));
+        },
+        "Numpad4" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(86));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('4'));
+        },
+        "Numpad5" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(87));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('5'));
+        },
+        "Numpad6" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(88));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('6'));
+        },
+        "Numpad7" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(89));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('7'));
+        },
+        "Numpad8" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(91));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('8'));
+        },
+        "Numpad9" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(92));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('9'));
+        },
 
         "Backquote" => {
             #[cfg(target_os = "macos")] return Some(Key::Raw(50));
@@ -280,6 +340,27 @@ pub fn execute_special_function(e: &mut Enigo, command_id: &str) {
 
             _ => {
                 error!("Unhandled Windows special function: {}", command_id);
+            }
+        }
+    } else if cfg!(target_os = "linux") {
+        match command_id {
+            "media_play_pause" => { let _ = Command::new("playerctl").arg("play-pause").spawn(); },
+            "media_next" => { let _ = Command::new("playerctl").arg("next").spawn(); },
+            "media_prev" => { let _ = Command::new("playerctl").arg("previous").spawn(); },
+
+            "volume_up" => { let _ = Command::new("pactl").args(&["set-sink-volume", "@DEFAULT_SINK@", "+5%"]).spawn(); },
+            "volume_down" => { let _ = Command::new("pactl").args(&["set-sink-volume", "@DEFAULT_SINK@", "-5%"]).spawn(); },
+            "volume_mute" => { let _ = Command::new("pactl").args(&["set-sink-mute", "@DEFAULT_SINK@", "toggle"]).spawn(); },
+
+            "system_lock" => {
+                let _ = Command::new("xdg-screensaver").arg("lock").spawn();
+            },
+            "system_sleep" => {
+                let _ = Command::new("systemctl").arg("suspend").spawn();
+            },
+
+            _ => {
+                error!("Unhandled Linux special function: {}", command_id);
             }
         }
     }
