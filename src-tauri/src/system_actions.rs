@@ -4,8 +4,6 @@ use std::process::Command;
 
 use crate::types::KeyAction;
 
-
-
 pub fn parse_key(key_id: &str) -> Option<Key> {
     match key_id {
         "Digit0" => Some(Key::Raw(29)),
@@ -30,11 +28,60 @@ pub fn parse_key(key_id: &str) -> Option<Key> {
         "Numpad8" => Some(Key::Raw(91)),
         "Numpad9" => Some(Key::Raw(92)),
 
+        "Backquote" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(50));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('`'));
+        },
+        "Slash" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(44));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('/'));
+        },
+        "Minus" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(27));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('-'));
+        },
+        "Equal" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(24));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('='));
+        },
+        "BracketLeft" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(33));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('['));
+        },
+        "BracketRight" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(30));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout(']'));
+        },
+        "Backslash" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(42));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('\\'));
+        },
+        "Semicolon" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(41));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout(';'));
+        },
+        "Quote" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(39));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('\''));
+        },
+        "Comma" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(43));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout(','));
+        },
+        "Period" => {
+            #[cfg(target_os = "macos")] return Some(Key::Raw(47));
+            #[cfg(not(target_os = "macos"))] return Some(Key::Layout('.'));
+        },
+
+        "PageUp" => Some(Key::PageUp),
+        "PageDown" => Some(Key::PageDown),
+        "Home" => Some(Key::Home),
+        "End" => Some(Key::End),
+
         "MetaLeft" | "MetaRight" | "Meta" => Some(Key::Meta),
         "ShiftLeft" | "ShiftRight" | "Shift" => Some(Key::Shift),
         "ControlLeft" | "ControlRight" | "Control" => Some(Key::Control),
         "AltLeft" | "AltRight" | "Alt" => Some(Key::Alt),
-
 
         "Escape" => Some(Key::Escape),
         "Backspace" => Some(Key::Backspace),
@@ -50,15 +97,17 @@ pub fn parse_key(key_id: &str) -> Option<Key> {
         "F2" => Some(Key::F2),
         "F3" => Some(Key::F3),
         "F4" => Some(Key::F4),
+        "F5" => Some(Key::F5),
+        "F6" => Some(Key::F6),
+        "F7" => Some(Key::F7),
         "F8" => Some(Key::F8),
         "F9" => Some(Key::F9),
         "F10" => Some(Key::F10),
         "F11" => Some(Key::F11),
         "F12" => Some(Key::F12),
 
-        // --- 5. Dynamic Fallback (KeyA -> 'A', KeyZ -> 'Z') ---
         id if id.starts_with("Key") => {
-            id.chars().last().map(|c| Key::Layout(c))
+            id.chars().last().map(|c| Key::Layout(c.to_ascii_lowercase()))
         },
 
         _ => None,
@@ -95,7 +144,6 @@ pub fn execute_trackpad_move(e: &mut Enigo, dx: f64, dy: f64){
 }
 
 pub fn execute_text(e: &mut Enigo, text: &str){
-
     e.key_sequence(text);
 }
 
@@ -128,8 +176,6 @@ pub fn drag_start(e: &mut Enigo) {
 pub fn drag_end(e: &mut Enigo) {
     e.mouse_up(MouseButton::Left);
 }
-
-
 
 pub fn execute_terminal_command(command: &str, in_background: bool) {
     if in_background {
