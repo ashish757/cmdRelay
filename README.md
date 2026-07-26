@@ -19,7 +19,7 @@ A high-performance, context-aware PC controller that turns your mobile device in
 - **Read below to know how it's unique and more useful from the existing solutions**
 
 
-![img_1.png](asset/img_1.png)
+![hld.png](asset/hld.png)
 
 ## 1. High Performance
 - Built on a custom Rust WebSocket server - Blazing Fast low level access
