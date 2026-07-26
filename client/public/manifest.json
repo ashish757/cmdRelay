@@ -1,6 +1,6 @@
 {
-  "short_name": "MacroPad",
-  "name": "MacroPad Remote Control",
+  "short_name": "cmdRelay",
+  "name": "Remote Control",
   "start_url": "/",
   "display": "standalone",
   "theme_color": "#09090b",
