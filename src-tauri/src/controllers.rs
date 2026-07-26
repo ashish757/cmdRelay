@@ -5,7 +5,6 @@ use enigo::Enigo;
 use enigo::KeyboardControllable;
 use std::thread;
 use std::time::Duration;
-use std::process::Command;
 
 pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
     match pld.action_type.as_str() {

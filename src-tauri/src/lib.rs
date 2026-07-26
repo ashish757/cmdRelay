@@ -67,6 +67,11 @@ pub fn run() {
                     match event.id.as_ref() {
                         "show" => {
                             if let Some(window) = app.get_webview_window("main") {
+                                #[cfg(target_os = "macos")]
+                                let _ = app.app_handle().set_activation_policy(tauri::ActivationPolicy::Regular);
+
+                                let _ = window.set_skip_taskbar(false);
+
                                 let _ = window.show();
                                 let _ = window.set_focus();
                             }
@@ -74,18 +79,24 @@ pub fn run() {
                         "settings" => {
                             let app_handle = app.app_handle();
 
+                            #[cfg(target_os = "macos")]
+                            let _ = app_handle.set_activation_policy(tauri::ActivationPolicy::Regular);
+
                             if app_handle.get_webview_window("settings").is_none() {
                                 tauri::WebviewWindowBuilder::new(
                                     app_handle,
                                     "settings",
                                     WebviewUrl::App("index.html?view=settings".into())
                                 )
-                                    .title("settings")
+                                    .title("Layout Settings")
                                     .maximized(true)
                                     .build()
                                     .unwrap();
                             } else {
                                 let window = app_handle.get_webview_window("settings").unwrap();
+
+                                let _ = window.set_skip_taskbar(false);
+
                                 let _ = window.show();
                                 let _ = window.set_focus();
                             }
@@ -108,6 +119,23 @@ pub fn run() {
             if let tauri::WindowEvent::CloseRequested { api, .. } = event {
                 let _ = window.hide();
                 api.prevent_close();
+
+                let app_handle = window.app_handle();
+
+                let mut any_visible = false;
+                for (label, win) in app_handle.webview_windows() {
+                    if label != window.label() {
+                        if win.is_visible().unwrap_or(false) {
+                            any_visible = true;
+                            break;
+                        }
+                    }
+                }
+
+                if !any_visible {
+                    #[cfg(target_os = "macos")]
+                    let _ = app_handle.set_activation_policy(tauri::ActivationPolicy::Accessory);
+                }
             }
         })
         .plugin(
