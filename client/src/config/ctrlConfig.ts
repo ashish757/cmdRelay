@@ -21,6 +21,7 @@ export const ACTION_TYPE_OPTIONS: { value: ActionType; label: string }[] = [
     { value: 'macro', label: 'Run Macro Sequence' },
     { value: 'openApp', label: 'Launch Application' },
     { value: 'terminalCommand', label: 'Execute Command' },
+    { value: "openWebsite", label: 'Open Website' },
 ];
 
 
@@ -49,5 +50,5 @@ export interface MenuItem {
 }
 export const MENU_OPTIONS: MenuItem[] = [
     {id: "l_1726454", title: "System Info", viewType: "systemInfo" },
-    // {id: "l_412644", title: "Layout Settings", viewType: "layoutBuilder" },
+    {id: "l_412644", title: "Layout Settings", viewType: "layoutBuilder" },
 ]

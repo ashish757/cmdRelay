@@ -22,12 +22,42 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
         }
         "openApp" => {
             if let Some(app_id) = pld.payload.app_id {
-                info!("Attempting to open/focus application: {}", app_id);
-                match Command::new("open").arg("-a").arg(&app_id).status() {
-                    Ok(s) if s.success() => info!("Successfully targeted {}", app_id),
-                    Ok(_) => error!("Failed to target {}: command returned non-zero status", app_id),
-                    Err(err) => error!("Failed to execute focus command for {}: {}", app_id, err),
+                log::info!("Attempting to open/focus application: {}", app_id);
+
+                #[cfg(target_os = "macos")]
+                let mut cmd = std::process::Command::new("open");
+                #[cfg(target_os = "macos")]
+                cmd.arg("-a").arg(&app_id);
+
+                #[cfg(target_os = "windows")]
+                let mut cmd = std::process::Command::new("cmd");
+
+                #[cfg(target_os = "windows")]
+                cmd.args(["/C", "start", "", &app_id]);
+
+                #[cfg(target_os = "linux")]
+                let mut cmd = std::process::Command::new(&app_id);
+
+                match cmd.spawn() {
+                    Ok(_) => log::info!("Successfully executed command for {}", app_id),
+                    Err(err) => log::error!("Failed to execute focus command for {}: {}", app_id, err),
                 }
+            }
+        }
+
+
+
+        "openWebsite" => {
+            if let Some(url) = pld.payload.web_url {
+
+                if let Err(e) = open::that(&url) {
+                    log::error!("Failed to open website '{}': {}", url, e);
+                } else {
+                    log::info!("Successfully opened website: {}", url);
+                }
+
+            } else {
+                log::warn!("Received 'openWebsite' command, but no 'url' was provided in the payload.");
             }
         }
         "macro" => {

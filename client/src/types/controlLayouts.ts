@@ -1,4 +1,4 @@
-export type ActionType =  'keyPress' | 'keyHoldToggle' | 'macro' | 'openApp' | 'terminalCommand' | 'specialFunction';
+export type ActionType =  'keyPress' | 'keyHoldToggle' | 'macro' | 'openApp' | 'terminalCommand' | 'specialFunction' | 'openWebsite';
 
 export type ViewMode = 'controlLayout' | 'layoutBuilder' | "systemInfo";
 

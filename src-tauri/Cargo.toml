@@ -33,4 +33,5 @@ mime = "0.3.17"
 mime_guess = "2.0.5"
 sysinfo = "0.36.1"
 directories = "6.0.0"
+open = "5.4.0"
 

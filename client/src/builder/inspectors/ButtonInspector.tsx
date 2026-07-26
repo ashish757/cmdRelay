@@ -71,6 +71,9 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                 {actionType === 'specialFunction' && (
                     <SpecialInspector {...props} />
                 )}
+                {actionType === 'openWebsite' && (
+                    <SpecialInspector {...props} />
+                )}
 
            </Accordion>
             

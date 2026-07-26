@@ -13,6 +13,7 @@ pub struct PayloadData {
     pub id: Option<String>,
     pub key_id: Option<String>,
     pub app_id: Option<String>,
+    pub web_url: Option<String>,
     pub state: Option<String>,
     pub steps: Option<Vec<MacroStep>>,
     pub dx: Option<f64>,
