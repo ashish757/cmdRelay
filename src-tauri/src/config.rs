@@ -10,7 +10,7 @@ const DEFAULT_LAYOUTS: &str = include_str!("../templates/default_layouts_mac.jso
 const DEFAULT_LAYOUTS: &str = include_str!("../templates/default_layouts_win.json");
 
 fn get_config_dir() -> PathBuf {
-    if let Some(proj_dirs) = ProjectDirs::from("com", "yourorg", "macropad") {
+    if let Some(proj_dirs) = ProjectDirs::from("com", "cmdRelay", "daemon") {
         proj_dirs.config_dir().to_path_buf()
     } else {
         PathBuf::from(".")

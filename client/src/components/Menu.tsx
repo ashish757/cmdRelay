@@ -23,7 +23,7 @@ export function MenuOverlay() {
         <div className="fixed inset-0 bg-background/95 backdrop-blur-md z-40 flex flex-col p-10 text-text-main overflow-y-auto">
             
             <div className="flex justify-between items-center mb-6 pr-4">
-                <h2 className="text-2xl font-bold">Your Layouts</h2>
+                <h2 className="text-2xl font-bold">Layouts</h2>
                 
                 <button
                     onClick={toggleTheme}
@@ -50,7 +50,7 @@ export function MenuOverlay() {
                 ))}
             </div>
 
-            <h2 className="text-2xl mt-12 mb-6 font-bold">Templates & Tools</h2>
+            <h2 className="text-2xl mt-12 mb-6 font-bold">Tools</h2>
             <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
                 {MENU_OPTIONS.map((menuItem) => (
                     <button
