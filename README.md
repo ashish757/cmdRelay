@@ -49,11 +49,22 @@ A high-performance, context-aware PC controller that turns your mobile device in
 - `Apple Silicon` Download the aarch64.dmg file.
 - `Intel Macs` Download the x86_64.dmg file.
 
-### Because the app isn't signed with an Apple Developer certificate yet, macOS will prevent you from opening it normally. To bypass this:
-1. Try opening the application once (it will fail, but still do open)
-2. Open System Settings, in sidebar look for `Privacy & Secuity` Option.
-3. Scroll down and under `Security`, there you will see option to open the App anyway
-- After this install the program and run it, you will the app icon in the `Menu Bar`. Then you can click on the `Show QR Code option` to connect you mobile.
+1. Click and install the application normally
+
+### Because the app isn't signed with an Apple Developer certificate yet, macOS will prevent you from opening it normally
+2. after this when you will try to open the application, you will see errors and it won't open
+    - this is because this application is from an unknown developer, which is blocked by Apple's gatekeeper by default
+    - you may not face this problem, if you have an intel chip,  
+    - but modern Apple silicon chips, M series have more security
+3. run the below command in terminal and enter password
+```bash
+sudo xattr -cr /Applications/cmdRelay.app
+```
+4. After this command, you would be able to run the application
+   (this completely safe command, this commands simply tells that your computer that you trust the application)
+
+> If you still could not run this application on your Apple silicon chips then Download the Intel version and install it. it will be able to run without any concern because intel chips allowed running unsigned applications. Keep in mind that you must have rosetta downloaded on your system.
+
 
 ## Windows
 1. Download the correct package for you system from [Latest Releases](https://github.com/ashish757/cmdRelay/releases).
