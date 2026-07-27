@@ -92,29 +92,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "7f202df86484c868dbad7eaa557ef785d5c66295e41b460ef922eca0723b842c"
 
 [[package]]
-name = "app"
-version = "0.1.0"
-dependencies = [
- "active-win-pos-rs",
- "axum",
- "directories",
- "enigo",
- "local-ip-address",
- "log",
- "mime",
- "mime_guess",
- "open",
- "rust-embed",
- "serde",
- "serde_json",
- "sysinfo",
- "tauri",
- "tauri-build",
- "tauri-plugin-log",
- "tokio",
-]
-
-[[package]]
 name = "appkit-nsworkspace-bindings"
 version = "0.1.2"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -609,6 +586,29 @@ dependencies = [
  "glob",
  "libc",
  "libloading 0.8.9",
+]
+
+[[package]]
+name = "cmdRelay"
+version = "1.3.0"
+dependencies = [
+ "active-win-pos-rs",
+ "axum",
+ "directories",
+ "enigo",
+ "local-ip-address",
+ "log",
+ "mime",
+ "mime_guess",
+ "open",
+ "rust-embed",
+ "serde",
+ "serde_json",
+ "sysinfo",
+ "tauri",
+ "tauri-build",
+ "tauri-plugin-log",
+ "tokio",
 ]
 
 [[package]]
