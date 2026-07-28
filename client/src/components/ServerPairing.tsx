@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { invoke } from '@tauri-apps/api/core';
 import QRCode from 'react-qr-code';
+import {ConnectionErrorHelp} from "./ConnectionErrorHelp.tsx";
 
 export function ServerPairing() {
     const [serverUrl, setServerUrl] = useState<string>('');
@@ -13,7 +14,7 @@ export function ServerPairing() {
     }, []);
 
     return (
-        <div className="w-screen h-screen bg-background flex flex-col items-center justify-center p-6 cursor-default select-none overflow-hidden font-sans">
+        <div className="w-screen h-full bg-background flex flex-col items-center justify-center p-6 cursor-default select-none font-sans">
 
             <h2 className="text-[20px] font-semibold tracking-tight text-center text-text-main mb-1.5">
                 Scan to open the Controller.
@@ -41,11 +42,13 @@ export function ServerPairing() {
                     Or open this address
                 </span>
                 <div className="bg-surface border border-border px-4 py-2 rounded-lg w-full max-w-[240px]">
-
                     <p className="text-primary font-mono text-[13px] tracking-wide select-all text-center m-0">
                         {serverUrl || '...'}
                     </p>
                 </div>
+
+                <ConnectionErrorHelp />
+
             </div>
         </div>
     );

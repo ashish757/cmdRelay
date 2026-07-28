@@ -47,6 +47,9 @@ A high-performance, context-aware PC controller that turns your mobile device in
 
 ## usage
 
+> There are some bugs on the windows and Linux version, as i only have acces to mac machine, i could not test the application on the other platform
+Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it
+
 ### **when using this application, make sure your mobile device and your computer are on same local network, that is connected with same Wi-Fi**
 
 ### This application requires a lot of `system` & `network` permission, if you are not willing to give such permissions then you may just watch the video demo below to `evaluate`, but i will requirest you to try to run the application on your system for best experience.
@@ -79,6 +82,8 @@ sudo xattr -cr /Applications/cmdRelay.app
 
 > If you still could not run this application on your Apple silicon chips then Download the Intel version and install it. it will be able to run without any concern because intel chips allowed running unsigned applications. Keep in mind that you must have rosetta downloaded on your system.
 
+> Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it
+
 
 ## Windows
 1. Download the correct package for you system from [Latest Releases](https://github.com/ashish757/cmdRelay/releases).
@@ -89,8 +94,13 @@ sudo xattr -cr /Applications/cmdRelay.app
 - If you are facing any connectivity issues
 - Simply search google for "how to allow app to connect over privte network in windows"
 
+> Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it
+
+
 ## Linux
 - I dont think i need to tell you guys anything, just get the correct binary from the [Latest Releases](https://github.com/ashish757/cmdRelay/releases) and then you know it better then me
+
+> Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it
 
 # 🛠️ Tech Stack
 ### Backend (App on computer)

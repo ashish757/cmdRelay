@@ -4,24 +4,35 @@ import type { ControlComponent, Geo, ControlLayout } from "../types/controlLayou
 import { BuilderCanvas } from './BuilderCanvas';
 import { BuilderSidebar } from './BuilderSidebar';
 
+import { getCurrentWindow } from '@tauri-apps/api/window';
+
+
+
 export function ControlLayoutBuilder() {
     const { sendPayload, layouts: globalLayouts } = useNet();
 
-    // 1. Core State
     const [allControlLayouts, setAllControlLayouts] = useState<ControlLayout[]>([]);
     const [activeId, setActiveId] = useState<string>(localStorage.getItem("builderLayoutId") || "");
     const [layoutTitle, setLayoutTitle] = useState<string>('');
     const [componentArray, setComponentArray] = useState<ControlComponent[]>([]);
 
-    // 2. UI View State
     const [isLandscape, setIsLandscape] = useState<boolean>(false);
     const [selectedId, setSelectedId] = useState<string | null>(null);
 
-    // 3. Status/Interaction State
     const [isListening, setIsListening] = useState<boolean>(false);
     const [saveStatus, setSaveStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
     const hasLoadedData = useRef(false);
+
+    useEffect(() => {
+        const forceWindowsScaleUpdate = async () => {
+            const appWindow = getCurrentWindow();
+            const size = await appWindow.innerSize();
+            await appWindow.setSize(size);
+        };
+
+        forceWindowsScaleUpdate();
+    }, []);
 
     useEffect(() => {
         if (!globalLayouts) return;
