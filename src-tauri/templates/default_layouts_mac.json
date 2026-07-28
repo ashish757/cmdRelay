@@ -1746,7 +1746,7 @@
         "data": {
           "actionType": "openApp",
           "actionValue": {
-            "appId": "Chrome"
+            "appId": "Google Chrome"
           }
         },
         "id": "gd_chrome",
@@ -1778,7 +1778,7 @@
           }
         },
         "id": "gd_vscode",
-        "label": "VS Code",
+        "label": "Visual Studio Code",
         "landscapeGeo": {
           "h": 2,
           "w": 2,

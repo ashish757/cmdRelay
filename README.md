@@ -44,6 +44,20 @@ A high-performance, context-aware PC controller that turns your mobile device in
 
 
 # Installation & Usage
+
+## usage
+
+### **when using this application, make sure your mobile device and your computer are on same local network, that is connected with same Wi-Fi**
+
+### This application requires a lot of `system` & `network` permission, if you are not willing to give such permissions then you may just watch the video demo below to `evaluate`, but i will requirest you to try to run the application on your system for best experience.
+
+### Network Issues
+- Sometimes Router or computer settings can block the communication over the websocket, in that case you are requested to use your own mobile hotspot and connect with the computer to test the application.
+- Windows Firewall issue
+   1. Simply search google for "how to allow app to connect over private network in windows"
+- If Router's `Client Isolation` Setting is turned on
+- If this setting is on, you need to connect with your personal hotspot
+- 
 ## MacOs
 - [Latest Releases](https://github.com/ashish757/cmdRelay/releases)
 - `Apple Silicon` Download the aarch64.dmg file.
@@ -60,7 +74,7 @@ A high-performance, context-aware PC controller that turns your mobile device in
 ```bash
 sudo xattr -cr /Applications/cmdRelay.app
 ```
-4. After this command, you would be able to run the application
+4. After this command, you would be able to run the application, look for app icon the top menu bar
    (this completely safe command, this commands simply tells that your computer that you trust the application)
 
 > If you still could not run this application on your Apple silicon chips then Download the Intel version and install it. it will be able to run without any concern because intel chips allowed running unsigned applications. Keep in mind that you must have rosetta downloaded on your system.
@@ -71,6 +85,9 @@ sudo xattr -cr /Applications/cmdRelay.app
 2. Try to run the application,
 3. but since this is a new, unsigned application, Windows Defender might block it. Click `More info` and then `Run anyway`
 - Once installed launch cmdRelay from your Start menu. The app will minimize to your system tray—click the tray icon to view and connect mobile with `QR code`.
+
+- If you are facing any connectivity issues
+- Simply search google for "how to allow app to connect over privte network in windows"
 
 ## Linux
 - I dont think i need to tell you guys anything, just get the correct binary from the [Latest Releases](https://github.com/ashish757/cmdRelay/releases) and then you know it better then me

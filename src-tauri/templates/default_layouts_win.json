@@ -637,7 +637,7 @@
         "type": "btn"
       },
       {
-        "data": { "actionType": "openApp", "actionValue": { "appId": "Code" } },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "Visual Studio Code" } },
         "id": "gd_vscode", "label": "VS Code",
         "landscapeGeo": { "h": 2, "w": 2, "x": 3, "y": 1 },
         "portraitGeo": { "h": 2, "w": 2, "x": 3, "y": 12 },
