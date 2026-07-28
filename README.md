@@ -13,6 +13,13 @@ A high-performance, context-aware PC controller that turns your mobile device in
   </tr>
 </table>
 
+## Table of Contents
+* [Features](#Features)
+* [Usage](#usage)
+* [Installation](#installation)
+* [Credits](#credits)
+* [Demo Video](#demo-video)
+
 ### quick idea
 - cmdRelay basically helps you control your PC with your mobile device.
 - But in a unique way not like any other remote controller
@@ -21,6 +28,7 @@ A high-performance, context-aware PC controller that turns your mobile device in
 
 ![hld.png](asset/hld.png)
 
+# Features
 ## 1. High Performance
 - Built on a custom Rust WebSocket server - Blazing Fast low level access
 - control commands execute over your local network -  latency under 5ms
@@ -43,9 +51,9 @@ A high-performance, context-aware PC controller that turns your mobile device in
 - Safely handles complex, concurrent key combinations and macro executions without blocking the main server thread.
 
 
-# Installation & Usage
+## Installation & Usage
 
-## usage
+# usage
 
 > There are some bugs on the windows and Linux version, as i only have acces to mac machine, i could not test the application on the other platform
 Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it
@@ -60,7 +68,8 @@ Please Watch the `Demo video` (link presenet at the bottom) to get to know about
    1. Simply search google for "how to allow app to connect over private network in windows"
 - If Router's `Client Isolation` Setting is turned on
 - If this setting is on, you need to connect with your personal hotspot
-- 
+
+# Installation
 ## MacOs
 - [Latest Releases](https://github.com/ashish757/cmdRelay/releases)
 - `Apple Silicon` Download the aarch64.dmg file.
@@ -115,8 +124,12 @@ sudo xattr -cr /Applications/cmdRelay.app
 - **`Tailwind CSS`** utility-first styling for a fluid mobile experience.
 - **`Lucide-react`** for SVG icons
 
+## Credits
+- Used SVG icons from https://simpleicons.org for app logos.
 
 ## AI use
 - Used JetBrain's RustRover's Auto inline code completion
 - Took AI help in creation of `UI` elements, especially the control layout builder `canvas`
 - I am fairly new in Rust and `low level` coding (coming from `web development`), took AI code help from `Gemini` in implementation of `Threading`
+
+# Demo Video
