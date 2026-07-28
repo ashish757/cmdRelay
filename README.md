@@ -56,7 +56,9 @@ A high-performance, context-aware PC controller that turns your mobile device in
 # usage
 
 > There are some bugs on the windows and Linux version, as i only have acces to mac machine, i could not test the application on the other platform
-Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it
+Please Watch the `Demo video` (link presenet at the bottom) to get to know about the application, if you could not run it as this application requires a proper system setting and permissions
+
+NOTE: The pre-built layouts provided in application, may or may not work , as they jsut trigger key board shortcuts and your system might have different key mappings, so you may edit them in layout settings.
 
 ### **when using this application, make sure your mobile device and your computer are on same local network, that is connected with same Wi-Fi**
 
