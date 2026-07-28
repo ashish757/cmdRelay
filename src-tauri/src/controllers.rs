@@ -25,6 +25,7 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
 
                 #[cfg(target_os = "macos")]
                 let mut cmd = std::process::Command::new("open");
+
                 #[cfg(target_os = "macos")]
                 cmd.arg("-a").arg(&app_id);
 
@@ -33,6 +34,13 @@ pub fn route_action(e: &mut Enigo, pld: ClientPayload) {
 
                 #[cfg(target_os = "windows")]
                 cmd.args(["/C", "start", "", &app_id]);
+
+                #[cfg(target_os = "windows")]
+                {
+                    use std::os::windows::process::CommandExt;
+                    const CREATE_NO_WINDOW: u32 = 0x08000000;
+                    cmd.creation_flags(CREATE_NO_WINDOW);
+                }
 
                 #[cfg(target_os = "linux")]
                 let mut cmd = std::process::Command::new(&app_id);

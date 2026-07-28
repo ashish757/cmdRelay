@@ -22,7 +22,6 @@ export function ServerPairing() {
             {error ? (
                 <div className="text-red-400 text-sm">{error}</div>
             ) : serverUrl ? (
-                // Tighter padding around the QR code, rounded corners
                 <div className="bg-white p-3.5 rounded-xl shadow-[0_4px_24px_rgba(0,0,0,0.4)] my-8">
                     <QRCode
                         value={serverUrl}
@@ -42,7 +41,7 @@ export function ServerPairing() {
                     Or open this address
                 </span>
                 <div className="bg-surface border border-border px-4 py-2 rounded-lg w-full max-w-[240px]">
-                    {/* Only the URL is selectable */}
+
                     <p className="text-primary font-mono text-[13px] tracking-wide select-all text-center m-0">
                         {serverUrl || '...'}
                     </p>
