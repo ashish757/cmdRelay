@@ -629,7 +629,7 @@
   {
     "components": [
       {
-        "data": { "actionType": "openApp", "actionValue": { "appId": "Chrome" } },
+        "data": { "actionType": "openApp", "actionValue": { "appId": "Google Chrome" } },
         "id": "gd_chrome", "label": "Browser",
         "landscapeGeo": { "h": 2, "w": 2, "x": 1, "y": 1 },
         "portraitGeo": { "h": 2, "w": 2, "x": 1, "y": 12 },
