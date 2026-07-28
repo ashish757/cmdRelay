@@ -133,3 +133,8 @@ sudo xattr -cr /Applications/cmdRelay.app
 - I am fairly new in Rust and `low level` coding (coming from `web development`), took AI code help from `Gemini` in implementation of `Threading`
 
 # Demo Video
+
+
+https://github.com/user-attachments/assets/6da8a9b3-adca-49f0-8552-399b4c0bd15f
+
+
