@@ -718,12 +718,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 5,
-          "y": 1
+          "w": 3,
+          "x": 6,
+          "y": 7
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Maximize",
           "showLabel": true
         },
@@ -747,11 +747,11 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 7,
-          "y": 1
+          "x": 3,
+          "y": 9
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "GitBranch",
           "showLabel": true
         },
@@ -779,7 +779,7 @@
           "y": 3
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Activity",
           "showLabel": true
         },
@@ -802,12 +802,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
+          "w": 3,
           "x": 3,
           "y": 3
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Monitor",
           "showLabel": true
         },
@@ -831,11 +831,11 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 5,
-          "y": 3
+          "x": 1,
+          "y": 9
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Globe",
           "showLabel": true
         },
@@ -859,11 +859,11 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 7,
-          "y": 3
+          "x": 1,
+          "y": 5
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Camera",
           "showLabel": true
         },
@@ -886,12 +886,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 1,
-          "y": 5
+          "w": 3,
+          "x": 3,
+          "y": 7
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Maximize",
           "showLabel": true
         },
@@ -919,7 +919,7 @@
           "y": 5
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Activity",
           "showLabel": true
         },
@@ -947,7 +947,7 @@
           "y": 5
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Eye",
           "showLabel": true
         },
@@ -975,7 +975,7 @@
           "y": 5
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Copy",
           "showLabel": true
         },
@@ -1059,11 +1059,11 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 3,
-          "y": 7
+          "x": 5,
+          "y": 9
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Undo",
           "showLabel": true
         },
@@ -1088,7 +1088,7 @@
           "h": 2,
           "w": 2,
           "x": 5,
-          "y": 7
+          "y": 1
         },
         "style": {
           "bg": "#ef4444",
@@ -1114,12 +1114,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 7,
-          "y": 7
+          "w": 3,
+          "x": 6,
+          "y": 3
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "EyeOff",
           "showLabel": true
         },
@@ -1182,10 +1182,10 @@
           "h": 2,
           "w": 2,
           "x": 3,
-          "y": 1
+          "y": 3
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "X",
           "showLabel": true
         },
@@ -1208,12 +1208,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 5,
-          "y": 1
+          "w": 3,
+          "x": 3,
+          "y": 5
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Heart",
           "showLabel": true
         },
@@ -1236,12 +1236,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 7,
-          "y": 1
+          "w": 3,
+          "x": 3,
+          "y": 9
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Copy",
           "showLabel": true
         },
@@ -1295,10 +1295,10 @@
           "h": 2,
           "w": 2,
           "x": 3,
-          "y": 3
+          "y": 1
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "LayoutDashboard",
           "showLabel": true
         },
@@ -1321,12 +1321,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
+          "w": 3,
           "x": 5,
-          "y": 3
+          "y": 1
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Zap",
           "showLabel": true
         },
@@ -1340,7 +1340,7 @@
           }
         },
         "id": "ps_text",
-        "label": "Type Tool",
+        "label": "Type",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
@@ -1354,7 +1354,7 @@
           "y": 3
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "FileText",
           "showLabel": true
         },
@@ -1438,11 +1438,11 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 3,
-          "y": 5
+          "x": 5,
+          "y": 3
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "X",
           "showLabel": true
         },
@@ -1481,12 +1481,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 5,
+          "w": 3,
+          "x": 6,
           "y": 5
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Copy",
           "showLabel": true
         },
@@ -1535,13 +1535,14 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 7,
-          "y": 5
+          "w": 3,
+          "x": 5,
+          "y": 7
         },
         "style": {
-          "bg": "#1f2937",
-          "icon": "Layers",
+          "bg": "transparent",
+          "icon": "Copy",
+          "image": "",
           "showLabel": true
         },
         "type": "btn"
@@ -1638,7 +1639,7 @@
           "y": 7
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "Redo",
           "showLabel": true
         },
@@ -1677,12 +1678,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 5,
-          "y": 7
+          "w": 3,
+          "x": 6,
+          "y": 9
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "ArrowDown",
           "showLabel": true
         },
@@ -1722,8 +1723,8 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 7,
-          "y": 7
+          "x": 1,
+          "y": 9
         },
         "style": {
           "bg": "#22c55e",
@@ -1761,7 +1762,7 @@
           "h": 2,
           "w": 2,
           "x": 1,
-          "y": 12
+          "y": 10
         },
         "style": {
           "bg": "transparent",
@@ -1774,11 +1775,11 @@
         "data": {
           "actionType": "openApp",
           "actionValue": {
-            "appId": "Code"
+            "appId": "Visual Studio Code"
           }
         },
         "id": "gd_vscode",
-        "label": "Visual Studio Code",
+        "label": "VS Code",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
@@ -1788,8 +1789,8 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 3,
-          "y": 12
+          "x": 7,
+          "y": 10
         },
         "style": {
           "bg": "transparent",
@@ -1817,7 +1818,7 @@
           "h": 2,
           "w": 2,
           "x": 5,
-          "y": 12
+          "y": 10
         },
         "style": {
           "bg": "transparent",
@@ -2143,27 +2144,27 @@
             "steps": [
               {
                 "id": "lck1",
-                "keyId": "MetaLeft",
+                "keyId": "ControlLeft",
                 "state": "down"
               },
               {
                 "id": "step_1785045629511_us44shn",
-                "keyId": "ControlLeft",
+                "keyId": "MetaLeft",
                 "state": "down"
               },
               {
                 "id": "lck2",
-                "keyId": "KeyL",
+                "keyId": "KeyQ",
                 "state": "click"
               },
               {
                 "id": "step_1785045630195_gngpnem",
-                "keyId": "ControlLeft",
+                "keyId": "MetaLeft",
                 "state": "up"
               },
               {
                 "id": "lck3",
-                "keyId": "MetaLeft",
+                "keyId": "ControlLeft",
                 "state": "up"
               }
             ]
@@ -2314,6 +2315,34 @@
         "style": {
           "icon": "",
           "image": "catalog:finder",
+          "showLabel": false
+        },
+        "type": "btn"
+      },
+      {
+        "data": {
+          "actionType": "openWebsite",
+          "actionValue": {
+            "webUrl": "https://www.youtube.com"
+          }
+        },
+        "id": "c_1785088113047",
+        "label": "Btn",
+        "landscapeGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 7
+        },
+        "portraitGeo": {
+          "h": 2,
+          "w": 2,
+          "x": 3,
+          "y": 10
+        },
+        "style": {
+          "icon": "",
+          "image": "catalog:youtube",
           "showLabel": false
         },
         "type": "btn"
@@ -2553,10 +2582,10 @@
           "h": 2,
           "w": 4,
           "x": 3,
-          "y": 1
+          "y": 9
         },
         "style": {
-          "bg": "#1f2937",
+          "bg": "transparent",
           "icon": "ArrowLeft",
           "showLabel": true
         },
@@ -2581,7 +2610,7 @@
           "h": 4,
           "w": 4,
           "x": 3,
-          "y": 3
+          "y": 11
         },
         "style": {
           "bg": "#22c55e",
@@ -2607,12 +2636,12 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 1,
+          "w": 3,
+          "x": 2,
           "y": 7
         },
         "style": {
-          "bg": "#000000",
+          "bg": "transparent",
           "icon": "Monitor",
           "showLabel": true
         },
@@ -2635,8 +2664,8 @@
         },
         "portraitGeo": {
           "h": 2,
-          "w": 2,
-          "x": 3,
+          "w": 3,
+          "x": 6,
           "y": 7
         },
         "style": {
@@ -2655,7 +2684,7 @@
           }
         },
         "id": "pres_media",
-        "label": "Play Video",
+        "label": "Play",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
@@ -2665,8 +2694,8 @@
         "portraitGeo": {
           "h": 2,
           "w": 2,
-          "x": 5,
-          "y": 7
+          "x": 7,
+          "y": 11
         },
         "style": {
           "bg": "#3b82f6",
@@ -2694,7 +2723,7 @@
           "h": 2,
           "w": 2,
           "x": 7,
-          "y": 7
+          "y": 13
         },
         "style": {
           "bg": "#ef4444",
@@ -2753,7 +2782,7 @@
           }
         },
         "id": "c_1785045784477",
-        "label": "Live Typing...",
+        "label": "Live Typing",
         "landscapeGeo": {
           "h": 2,
           "w": 2,
