@@ -10,6 +10,7 @@ import { ACTION_TYPE_OPTIONS } from '../../config/ctrlConfig';
 import type { ActionType } from '../../types/controlLayouts';
 import {AppearanceInspector} from "./AppearanceInspector.tsx";
 import {Accordion} from "../../components/Accordion.tsx";
+import {WebsiteOpenerInspector} from "./WebsiteOpenerInspector.tsx";
 
 export const ButtonInspector: React.FC<InspectorProps> = (props) => {
     const { selectedComp, updateControlComponent } = props;
@@ -72,7 +73,7 @@ export const ButtonInspector: React.FC<InspectorProps> = (props) => {
                     <SpecialInspector {...props} />
                 )}
                 {actionType === 'openWebsite' && (
-                    <SpecialInspector {...props} />
+                    <WebsiteOpenerInspector {...props} />
                 )}
 
            </Accordion>

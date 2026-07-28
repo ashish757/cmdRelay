@@ -1,5 +1,5 @@
 export function WebsiteOpenerInspector({ selectedComp, updateControlComponent }: any) {
-    const currentValue = selectedComp.data?.actionValue?.url || "";
+    const currentValue = selectedComp.data?.actionValue?.webUrl || "";
 
     const handleUrlChange = (newUrl: string) => {
         updateControlComponent(selectedComp.id, {
