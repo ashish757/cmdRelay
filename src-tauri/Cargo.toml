@@ -35,3 +35,5 @@ sysinfo = "0.36.1"
 directories = "6.0.0"
 open = "5.4.0"
 
+[target.'cfg(target_os="macos")'.dependencies]
+macos-accessibility-client = "0.0.2"

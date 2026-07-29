@@ -2,6 +2,7 @@ use tauri::{menu::{Menu, MenuItem}, tray::TrayIconBuilder, Manager, WebviewUrl};
 use local_ip_address::local_ip;
 use std::sync::atomic::AtomicBool;
 use std::sync::Arc;
+use macos_accessibility_client::accessibility;
 
 pub mod types;
 pub mod system_actions;
@@ -40,6 +41,24 @@ pub fn run() {
         .setup(|app| {
             #[cfg(target_os = "macos")]
             let _ = app.set_activation_policy(tauri::ActivationPolicy::Accessory);
+
+            #[cfg(target_os = "macos")]
+            {
+                let is_trusted = accessibility::application_is_trusted_with_prompt();
+                if !is_trusted {
+                    log::warn!("macOS Accessibility permissions missing. System prompt triggered.");
+                } else {
+                    log::info!("macOS Accessibility permissions granted.");
+                }
+            }
+
+            match crate::config::initialize_layouts() {
+                Ok(path) => log::info!("Layouts initialized successfully at {:?}", path),
+                Err(e) => log::error!("Failed to initialize layouts: {}", e),
+            }
+
+            let (tx, _rx) = tokio::sync::broadcast::channel::<String>(16);
+
 
             match crate::config::initialize_layouts() {
                 Ok(path) => log::info!("Layouts initialized successfully at {:?}", path),
